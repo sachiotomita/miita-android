@@ -8,6 +8,6 @@ public final class API {
     private API() {}
 
     public static void request() {
-        
+
     }
 }
