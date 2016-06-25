@@ -12,6 +12,9 @@ import java.util.Map;
  */
 public final class APIHeader {
 
+    private static final String AUTHORIZATION_KEY = "Authorization";
+    private static final String AUTHORIZATION_VALUE = "Bearer ";
+
     private Context context;
     private Map<String, String> header;
     private CurrentUser currentUser;
@@ -31,8 +34,8 @@ public final class APIHeader {
         if (this.currentUser.isAuthorize(this.context)) {
             String token = this.currentUser.getToken(this.context);
             this.header.put(
-                    "Authorization",
-                    "Bearer " + token
+                    AUTHORIZATION_KEY,
+                    AUTHORIZATION_VALUE + token
             );
         }
     }
