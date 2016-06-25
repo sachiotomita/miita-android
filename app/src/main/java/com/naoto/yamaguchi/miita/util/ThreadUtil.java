@@ -21,12 +21,12 @@ public final class ThreadUtil {
         }
     }
 
-    public static void executeOnMainThread(Runnable runnable) {
+    private static void executeOnMainThread(Runnable runnable) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(runnable);
     }
 
-    public static void executeOnWorkerThread(Runnable runnable) {
+    private static void executeOnWorkerThread(Runnable runnable) {
         Thread thread = new Thread(runnable);
         thread.start();
     }
