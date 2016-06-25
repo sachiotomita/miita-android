@@ -18,6 +18,7 @@ public final class APIRunnable implements Runnable {
     private byte[] body;
     private Logger logger;
 
+    // TODO: urlStringとmethod逆にする
     public APIRunnable(Context context,
                        String urlString,
                        String method,
