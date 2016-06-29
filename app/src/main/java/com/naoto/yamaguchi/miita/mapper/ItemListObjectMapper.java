@@ -1,5 +1,6 @@
 package com.naoto.yamaguchi.miita.mapper;
 
+import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.BaseItem;
 import com.naoto.yamaguchi.miita.entity.User;
 
@@ -15,18 +16,18 @@ import java.util.List;
  */
 public final class ItemListObjectMapper {
 
-    // usage: ItemListObjectMapper.<AllItem>map(jsonArray, AllItem.class);
-
     private static final String ID_KEY = "id";
     private static final String TITLE_KEY = "title";
     private static final String BODY_KEY = "rendered_body";
     private static final String URL_KEY = "url";
     private static final String USER_KEY = "user";
 
-    public static <T extends BaseItem> List<T> map(JSONArray jsonArray, Class<T> aClass)
-            throws JSONException, IllegalAccessException, InstantiationException {
+    // usage: ItemListObjectMapper.map(jsonArray, AllItem.class);
+    // TODO: 引数の順番入れ替える
+    public static <T extends BaseItem> List<T> map(String jsonString, Class<T> aClass) throws APIException {
         try {
             List<T> itemList = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray(jsonString);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 T item = aClass.newInstance();
@@ -54,11 +55,11 @@ public final class ItemListObjectMapper {
             return itemList;
 
         } catch (JSONException e) {
-            throw e;
+            throw new APIException(e.toString());
         } catch (IllegalAccessException e) {
-            throw e;
+            throw new APIException(e.toString());
         } catch (InstantiationException e) {
-            throw e;
+            throw new APIException(e.toString());
         }
     }
 }
