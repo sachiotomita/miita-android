@@ -8,6 +8,8 @@ import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.StockItemService;
 import com.naoto.yamaguchi.miita.util.RequestType;
+import com.naoto.yamaguchi.miita.util.ThreadType;
+import com.naoto.yamaguchi.miita.util.ThreadUtil;
 
 import java.util.List;
 
@@ -89,11 +91,38 @@ public final class StockItemModel {
         this.listener = listener;
     }
 
-    private void deliverSuccess(RequestType type, List<StockItem> results) {
+    private void deliverSuccess(final RequestType type, final List<StockItem> results) {
+        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
+            @Override
+            public void run() {
+                isPaging = false;
+                List<StockItem> items = null;
 
+                switch (type) {
+                    case FIRST:
+                    case REFRESH:
+                        dao.truncate();
+                        items = dao.insert(results);
+                        break;
+                    case PAGING:
+                        items = dao.insert(results);
+                        break;
+                }
+
+                listener.onSuccess(items);
+                listener.onComplete();
+            }
+        });
     }
 
-    private void deliverError(APIException e) {
-
+    private void deliverError(final APIException e) {
+        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
+            @Override
+            public void run() {
+                isPaging = false;
+                listener.onError(e);
+                listener.onComplete();
+            }
+        });
     }
 }
