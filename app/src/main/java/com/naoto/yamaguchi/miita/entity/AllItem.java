@@ -15,6 +15,8 @@ public class AllItem extends RealmObject implements BaseItem {
     private String urlString;
     private User user;
 
+    public AllItem() {}
+
     public String getId() {
         return this.id;
     }
