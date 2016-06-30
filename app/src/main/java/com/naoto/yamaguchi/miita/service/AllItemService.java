@@ -14,6 +14,7 @@ import java.util.List;
  */
 public final class AllItemService extends DeliverResponseService<List<AllItem>> {
 
+    // TODO: result -> results
     public interface OnRequestListener {
         void onSuccess(List<AllItem> result);
         void onError(APIException e);
