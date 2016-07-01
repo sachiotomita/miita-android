@@ -28,4 +28,21 @@ public final class UserObjectMapper {
             throw e;
         }
     }
+
+    public static User map(String jsonString) throws JSONException {
+        try {
+            User user = new User();
+            JSONObject json = new JSONObject(jsonString);
+
+            String id = json.getString(ID_KEY);
+            user.setId(id);
+
+            String imageUrlString = json.getString(IMAGE_KEY);
+            user.setImageUrlString(imageUrlString);
+
+            return user;
+        } catch (JSONException e) {
+            throw e;
+        }
+    }
 }
