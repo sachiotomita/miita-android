@@ -13,6 +13,7 @@ public final class UserObjectMapper {
     private static final String ID_KEY = "id";
     private static final String IMAGE_KEY = "profile_image_url";
 
+    // TODO: map処理共通化
     public static User map(JSONObject json) throws JSONException {
         try {
             User user = new User();
