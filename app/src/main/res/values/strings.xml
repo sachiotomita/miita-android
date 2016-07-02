@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Miita</string>
     <string name="action_settings">Settings</string>
+
+    <string name="nav_all_item">すべての投稿</string>
+    <string name="nav_stock_item">ストックした投稿</string>
+    <string name="nav_follow_tag">フォローしたタグ</string>
+    <string name="nav_setting">設定</string>
 </resources>
