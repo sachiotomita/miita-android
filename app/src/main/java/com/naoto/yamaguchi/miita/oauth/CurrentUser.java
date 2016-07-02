@@ -23,9 +23,7 @@ public final class CurrentUser {
         return instance;
     }
 
-    private CurrentUser() {
-
-    }
+    private CurrentUser() {}
 
     public boolean isAuthorize(Context context) {
         return AccessToken.isExist(context);
