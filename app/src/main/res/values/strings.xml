@@ -6,4 +6,7 @@
     <string name="nav_stock_item">ストックした投稿</string>
     <string name="nav_follow_tag">フォローしたタグ</string>
     <string name="nav_setting">設定</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
