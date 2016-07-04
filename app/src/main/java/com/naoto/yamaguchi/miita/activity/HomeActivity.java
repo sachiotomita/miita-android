@@ -1,8 +1,12 @@
 package com.naoto.yamaguchi.miita.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,24 +14,59 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
+
+    // FIXME: NavMenuType, FragmentTypeをenumにする
+    public class NavMenuType {
+        public static final int ALL_ITEM = 0;
+        public static final int STCOK_ITEM = 1;
+        public static final int FOLLOW_TAG = 2;
+        public static final int SETTING = 3;
+
+        private NavMenuType() {}
+    }
+
+    public class FragmentType {
+        public static final String ALL_ITEM = "AllItemFragment";
+        public static final String STOCK_ITEM = "StockItemFragment";
+        public static final String FOLLOW_TAG = "FollowTagFragment";
+        public static final String SETTING = "SettingFragment";
+
+        private FragmentType() {}
+    }
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private CurrentUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        this.init();
+        this.setLayout();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -51,4 +90,35 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return false;
+    }
+
+    private void init() {
+        this.currentUser = CurrentUser.getInstance();
+    }
+
+    private void setLayout() {
+        this.toolbar = (Toolbar)findViewById(R.id.toolbar);
+        this.toolbar.setTitle("");
+        setSupportActionBar(this.toolbar);
+
+        this.drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        this.drawerToggle = new ActionBarDrawerToggle(
+                this,
+                this.drawerLayout,
+                this.toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close
+        );
+        // FIXME: may be unnecessary
+        this.drawerLayout.setDrawerListener(this.drawerToggle);
+        this.drawerToggle.syncState();
+
+        this.navigationView = (NavigationView)findViewById(R.id.nav_view);
+        this.navigationView.setNavigationItemSelectedListener(this);
+    }
+
 }
