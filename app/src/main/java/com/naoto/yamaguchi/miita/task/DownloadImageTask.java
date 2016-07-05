@@ -30,6 +30,7 @@ public final class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... strings) {
+        // TODO: argsがcontextだとおかしいっぽい
         synchronized (this.context) {
             try {
                 String urlString = strings[0];
