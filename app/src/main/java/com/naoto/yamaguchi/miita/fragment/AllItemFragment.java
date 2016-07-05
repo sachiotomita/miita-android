@@ -3,11 +3,15 @@ package com.naoto.yamaguchi.miita.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.AllItemModel;
 
@@ -22,6 +26,11 @@ public class AllItemFragment extends Fragment {
     private OnItemClickListener listener;
     private AllItemModel model;
     private List<AllItem> items;
+    private ListView listView;
+    private SwipeRefreshLayout refreshLayout;
+    private View footerView;
+    private ProgressBar spinner;
+    private ItemListAdapter<AllItem> adapter;
 
     public AllItemFragment() {
         // Required empty public constructor
