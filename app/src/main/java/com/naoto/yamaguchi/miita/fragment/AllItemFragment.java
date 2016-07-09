@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -78,6 +79,16 @@ public class AllItemFragment extends Fragment implements
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (this.items.size() > 0) {
+            this.adapter.notifyDataSetChanged();
+        } else {
+            this.request(RequestType.FIRST);
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -98,20 +109,39 @@ public class AllItemFragment extends Fragment implements
 
     @Override
     public void onRefresh() {
-
+        this.request(RequestType.REFRESH);
     }
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {}
 
     @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        // TODO: per page
+        if (totalItemCount < (30 * this.model.getPage())) {
+            return;
+        }
 
+        if (this.model.isPaging()) {
+            return;
+        }
+
+        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+            this.request(RequestType.PAGING);
+        }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+        if (this.listener == null) {
+            return;
+        }
 
+        ListView listView = (ListView)parent;
+        if (listView.getId() == R.id.listView) {
+            AllItem item = (AllItem)listView.getItemAtPosition(position);
+            this.listener.onItemClick(item);
+        }
     }
 
     private void request(RequestType type) {
