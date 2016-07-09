@@ -3,83 +3,99 @@ package com.naoto.yamaguchi.miita.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.activity.HomeActivity;
+import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
+import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.entity.StockItem;
+import com.naoto.yamaguchi.miita.model.StockItemModel;
+import com.naoto.yamaguchi.miita.util.RequestType;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link StockItemFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link StockItemFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class StockItemFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class StockItemFragment extends Fragment implements
+        SwipeRefreshLayout.OnRefreshListener,
+        AbsListView.OnScrollListener,
+        AdapterView.OnItemClickListener {
 
-    private OnFragmentInteractionListener mListener;
-
-    public StockItemFragment() {
-        // Required empty public constructor
+    public interface OnItemClickListener {
+        void onItemClick(StockItem item);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StockItemFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StockItemFragment newInstance(String param1, String param2) {
+    private OnItemClickListener listener;
+    private StockItemModel model;
+    private List<StockItem> items;
+    private ListView listView;
+    private SwipeRefreshLayout refreshLayout;
+    private View footerView;
+    private ProgressBar spinner;
+    private ItemListAdapter<StockItem> adapter;
+
+    public StockItemFragment() {}
+
+    public static StockItemFragment newInstance() {
         StockItemFragment fragment = new StockItemFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        this.model = new StockItemModel(this.getContext());
+        this.items = this.model.loadItem();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stock_item, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_stock_item, container, false);
+
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_stock_item);
+
+        this.refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_widget);
+        this.refreshLayout.setOnRefreshListener(this);
+
+        this.listView = (ListView)rootView.findViewById(R.id.listView);
+        this.listView.setOnScrollListener(this);
+        this.listView.setOnItemClickListener(this);
+
+        this.adapter = new ItemListAdapter<>(this.getContext(), this.items);
+        this.listView.setAdapter(this.adapter);
+
+        this.spinner = (ProgressBar)rootView.findViewById(R.id.progress_bar);
+        this.spinner.setVisibility(View.GONE);
+
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (this.items.size() > 0) {
+            this.adapter.notifyDataSetChanged();
+        } else {
+            this.request(RequestType.FIRST);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnItemClickListener) {
+            this.listener = (OnItemClickListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -89,21 +105,111 @@ public class StockItemFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        this.listener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onRefresh() {
+        this.request(RequestType.REFRESH);
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {}
+
+    @Override
+    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        // TODO: per page
+        if (totalItemCount < (30 * this.model.getPage())) {
+            return;
+        }
+
+        if (this.model.isPaging()) {
+            return;
+        }
+
+        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+            this.request(RequestType.PAGING);
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+        if (this.listener == null) {
+            return;
+        }
+
+        ListView listView = (ListView)parent;
+        if (listView.getId() == R.id.listView) {
+            StockItem item = (StockItem)listView.getItemAtPosition(position);
+            this.listener.onItemClick(item);
+        }
+    }
+
+    private void request(RequestType type) {
+        switch (type) {
+            case FIRST:
+                this.listView.setVisibility(View.GONE);
+                this.spinner.setVisibility(View.VISIBLE);
+                this.model.request(RequestType.FIRST, this.getListener(RequestType.FIRST));
+                break;
+            case REFRESH:
+                this.refreshLayout.setEnabled(false);
+                this.model.request(RequestType.REFRESH, this.getListener(RequestType.REFRESH));
+                break;
+            case PAGING:
+                this.footerView = getActivity().getLayoutInflater().inflate(R.layout.progress_footer, null);
+                this.listView.addFooterView(this.footerView);
+                this.model.request(RequestType.PAGING, this.getListener(RequestType.PAGING));
+                break;
+        }
+    }
+
+    private StockItemModel.OnRequestListener getListener(final RequestType type) {
+        return new StockItemModel.OnRequestListener() {
+            @Override
+            public void onSuccess(List<StockItem> results) {
+                notifyDataSetChanged(type, results);
+            }
+
+            @Override
+            public void onError(APIException e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                invalidateView(type);
+            }
+        };
+    }
+
+    private void notifyDataSetChanged(RequestType type, List<StockItem> items) {
+        switch (type) {
+            case FIRST:
+            case REFRESH:
+                this.adapter.clear();
+                this.adapter.addAll(items);
+                break;
+            case PAGING:
+                this.adapter.addAll(items);
+                break;
+        }
+        this.adapter.notifyDataSetChanged();
+    }
+
+    private void invalidateView(RequestType type) {
+        switch (type) {
+            case FIRST:
+                this.listView.setVisibility(View.VISIBLE);
+                this.spinner.setVisibility(View.GONE);
+                break;
+            case REFRESH:
+                this.refreshLayout.setEnabled(true);
+                this.refreshLayout.setRefreshing(false);
+                break;
+            case PAGING:
+                this.listView.removeFooterView(this.footerView);
+                break;
+        }
     }
 }
