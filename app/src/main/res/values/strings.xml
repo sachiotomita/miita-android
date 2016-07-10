@@ -2,6 +2,10 @@
     <string name="app_name">Miita</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Navigation Header Default -->
+    <string name="nav_default_user_name">anonymous</string>
+    <string name="nav_default_user_id">@anonymous</string>
+
     <!-- Navigation Item Name -->
     <string name="nav_all_item">すべての投稿</string>
     <string name="nav_stock_item">ストックした投稿</string>
