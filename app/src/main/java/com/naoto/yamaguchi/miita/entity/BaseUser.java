@@ -6,6 +6,14 @@ package com.naoto.yamaguchi.miita.entity;
 public interface BaseUser {
     String getId();
     void setId(String id);
+    String getName();
+    void setName(String name);
+    String getDescription();
+    void setDescription(String description);
     String getImageUrlString();
     void setImageUrlString(String imageUrlString);
+    int getFolloweesCount();
+    void setFolloweesCount(int count);
+    int getFollowersCount();
+    void setFollowersCount(int count);
 }
