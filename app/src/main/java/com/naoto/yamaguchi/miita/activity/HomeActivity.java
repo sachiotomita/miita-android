@@ -32,7 +32,8 @@ import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 
 public class HomeActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        AllItemFragment.OnItemClickListener, StockItemFragment.OnItemClickListener {
+        AllItemFragment.OnItemClickListener,
+        StockItemFragment.OnItemClickListener {
 
     // FIXME: NavMenuType, FragmentTypeをenumにする
     public class NavMenuType {
