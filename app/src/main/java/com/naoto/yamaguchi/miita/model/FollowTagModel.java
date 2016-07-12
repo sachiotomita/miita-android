@@ -30,7 +30,7 @@ public final class FollowTagModel {
         this.page = 1;
         this.isPaging = false;
         this.service = new FollowTagService(this.context);
-        
+
     }
 
 
