@@ -4,7 +4,7 @@
 
     <!-- Navigation Header Default -->
     <string name="nav_default_user_name">anonymous</string>
-    <string name="nav_default_user_id">@anonymous</string>
+    <string name="nav_default_user_id">anonymous</string>
 
     <!-- Navigation Item Name -->
     <string name="nav_all_item">すべての投稿</string>
