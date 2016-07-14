@@ -9,46 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.entity.FollowTag;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FollowTagFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FollowTagFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FollowTagFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public FollowTagFragment() {
-        // Required empty public constructor
+    public interface OnTagClickListener {
+        void onTagClick(FollowTag tag);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FollowTagFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FollowTagFragment newInstance(String param1, String param2) {
+    private static final String ARG_FORCE_UPDATE = "force_update";
+
+    private OnTagClickListener listener;
+    private String forceUpdate;
+
+    public FollowTagFragment() {}
+
+    public static FollowTagFragment newInstance(String forceUpdate) {
         FollowTagFragment fragment = new FollowTagFragment();
+
+        // FIXME: for example
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_FORCE_UPDATE, forceUpdate);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -56,8 +39,7 @@ public class FollowTagFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            this.forceUpdate = getArguments().getString(ARG_FORCE_UPDATE);
         }
     }
 
@@ -68,18 +50,11 @@ public class FollowTagFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_follow_tag, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnTagClickListener) {
+            this.listener = (OnTagClickListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -89,21 +64,7 @@ public class FollowTagFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        this.listener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
