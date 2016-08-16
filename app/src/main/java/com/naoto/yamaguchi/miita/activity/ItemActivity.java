@@ -17,6 +17,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.model.ItemModel;
 
 public class ItemActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,7 +28,7 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton stockButton;
     private WebView webView;
 
-    // ItemModel
+    private ItemModel model;
     private String itemId;
     private String itemTitle;
     private String itemUrl;
@@ -38,7 +39,14 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
+        this.init();
+        this.parseIntent();
+        this.setLayout();
+        this.checkStock();
+    }
 
+    private void init() {
+        this.model = new ItemModel(this);
     }
 
     private void parseIntent() {
@@ -72,24 +80,33 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+
+                webView.setVisibility(View.GONE);
+                spinner.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+                webView.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
+                // TODO: error handle
             }
         });
+    }
+
+    private void checkStock() {
+        // TODO:
     }
 
     @Override
     public void onClick(View view) {
 
     }
-
-
 }
