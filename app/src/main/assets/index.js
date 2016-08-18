@@ -1,0 +1,1 @@
+var preArray = document.getElementsByTagName("pre");for (var i = 0; i < preArray.length; i++) {hljs.highlightBlock(preArray[i])}

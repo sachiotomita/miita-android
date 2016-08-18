@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="github.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="highlight.js"></script>
+</head>
+<body>%s</body>
+<script>
+    var preArray = document.getElementsByTagName("pre");
+    for (var i = 0; i < preArray.length; i++) {
+        hljs.highlightBlock(preArray[i])
+    }
+</script>
+</html>
