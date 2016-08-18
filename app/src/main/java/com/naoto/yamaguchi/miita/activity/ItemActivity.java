@@ -1,6 +1,7 @@
 package com.naoto.yamaguchi.miita.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -18,7 +19,9 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.model.ItemModel;
+import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 
 public class ItemActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,6 +31,7 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressBar spinner;
     private FloatingActionButton stockButton;
     private WebView webView;
+    private CurrentUser currentUser;
 
     private ItemModel model;
     private String itemId;
@@ -44,10 +48,12 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
         this.parseIntent();
         this.setLayout();
         this.checkStock();
+        this.loadBody();
     }
 
     private void init() {
         this.model = new ItemModel(this);
+        this.currentUser = CurrentUser.getInstance();
     }
 
     private void parseIntent() {
@@ -103,7 +109,62 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void checkStock() {
-        // TODO:
+        this.stockButton.setEnabled(false);
+
+        if (!this.currentUser.isAuthorize(this)) {
+            return;
+        }
+
+        this.model.check(this.itemId, new ItemModel.OnRequestListener() {
+            @Override
+            public void onSuccess() {
+                stockButton.setBackgroundTintList(
+                        ColorStateList.valueOf(getResources().getColor(R.color.red))
+                );
+            }
+
+            @Override
+            public void onError(APIException e) {
+                stockButton.setBackgroundTintList(
+                        ColorStateList.valueOf(getResources().getColor(R.color.green))
+                );
+            }
+
+            @Override
+            public void onComplete() {
+                stockButton.setEnabled(true);
+            }
+        });
+    }
+
+    private void loadBody() {
+        String html = this.createHTML(this.itemBody);
+        this.webView.loadDataWithBaseURL(
+                "file:///android_asset/",
+                html,
+                "text/html",
+                "utf−8",
+                null
+        );
+    }
+
+    public String createHTML(String body) {
+        StringBuffer htmlBuilder = new StringBuffer();
+
+        htmlBuilder.append("<html>");
+        htmlBuilder.append("<head>");
+        htmlBuilder.append("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />");
+        htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
+        htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"github.css\">");
+        htmlBuilder.append("<script type=\"text/javascript\" src=\"highlight.js\"></script>");
+        htmlBuilder.append("</head>");
+        htmlBuilder.append("<body>");
+        htmlBuilder.append(body);
+        htmlBuilder.append("</body>");
+        htmlBuilder.append("<script>var preArray = document.getElementsByTagName(\"pre\");for (var i = 0; i < preArray.length; i++) {hljs.highlightBlock(preArray[i])}</script>");
+        htmlBuilder.append("</html>");
+
+        return htmlBuilder.toString();
     }
 
     @Override
