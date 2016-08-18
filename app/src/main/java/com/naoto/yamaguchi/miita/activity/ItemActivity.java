@@ -169,7 +169,47 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        this.stockButton.setEnabled(false);
 
+        if (this.model.getIsStock()) {
+            this.model.unstock(this.itemId, new ItemModel.OnRequestListener() {
+                @Override
+                public void onSuccess() {
+                    stockButton.setBackgroundTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.green))
+                    );
+                }
+
+                @Override
+                public void onError(APIException e) {
+                    // TODO: show alert
+                }
+
+                @Override
+                public void onComplete() {
+                    stockButton.setEnabled(true);
+                }
+            });
+        } else {
+            this.model.stock(this.itemId, new ItemModel.OnRequestListener() {
+                @Override
+                public void onSuccess() {
+                    stockButton.setBackgroundTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.red))
+                    );
+                }
+
+                @Override
+                public void onError(APIException e) {
+                    // TODO: show alert
+                }
+
+                @Override
+                public void onComplete() {
+                    stockButton.setEnabled(true);
+                }
+            });
+        }
     }
 
     @Override
