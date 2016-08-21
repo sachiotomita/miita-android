@@ -12,7 +12,7 @@ import com.naoto.yamaguchi.miita.application.Constants;
 /**
  * Created by naoto on 16/08/21.
  */
-public class MiitaAlertDialogBuilder {
+public final class MiitaAlertDialogBuilder {
 
     private Context context;
     private AlertDialog.Builder alert;
