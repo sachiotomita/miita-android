@@ -21,7 +21,15 @@
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
 
+    <!-- Alert Dialog Login -->
+    <string name="alert_login_ok">OK</string>
+    <string name="alert_login_cancel">Cancel</string>
+    <string name="alert_login_title">ログインしますか？</string>
+    <string name="alert_login_message">ログインすることで使用できます</string>
+
+
     <!-- Home / Item Activity Intent params -->
+    <!-- TODO: item_id, item_title, etc,,, -->
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
