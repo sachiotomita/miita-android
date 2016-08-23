@@ -225,7 +225,8 @@ public class HomeActivity extends AppCompatActivity implements
                 }
                 break;
             case R.id.nav_setting:
-                // TODO: setting activity
+                Intent intent = new Intent(this, SettingsActivity.class);
+                this.startActivity(intent);
                 break;
         }
 
