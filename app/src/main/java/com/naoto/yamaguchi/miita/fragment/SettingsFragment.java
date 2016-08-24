@@ -14,7 +14,7 @@ public final class SettingsFragment extends PreferenceFragment {
         setHasOptionsMenu(true); // TODO: 調べる
 
         // NOTE:
-        // 1. FeedBack
+        // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
         // 2. 取得件数
         // 3. LICENSE Intent
         // 4. Version (No Action)
