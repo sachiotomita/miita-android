@@ -16,6 +16,7 @@
     <string name="title_all_item">すべての投稿</string>
     <string name="title_stock_item">ストックした投稿</string>
     <string name="title_follow_tag"></string>
+    <string name="title_settings">設定</string>
 
     <!-- Drawer Layout -->
     <string name="drawer_open">Open Drawer</string>
@@ -27,7 +28,6 @@
     <string name="alert_login_title">ログインしますか？</string>
     <string name="alert_login_message">ログインすることで使用できます</string>
 
-
     <!-- Home / Item Activity Intent params -->
     <!-- TODO: item_id, item_title, etc,,, -->
 
@@ -35,6 +35,39 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_item">ItemActivity</string>
     <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference -->
+    <!-- Feedback -->
+    <string name="pref_title_feedback">ご意見・ご要望</string>
+
+    <!-- Fetch PerPage -->
+    <string name="pref_title_per_page">取得件数</string>
+    <string-array name="pref_per_page_titles">
+        <item>50</item>
+        <item>40</item>
+        <item>30</item>
+        <item>20</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="pref_per_page_values">
+        <item>50</item>
+        <item>40</item>
+        <item>30</item>
+        <item>20</item>
+        <item>10</item>
+    </string-array>
+
+    <!-- LICENSE -->
+    <string name="pref_title_license">LICENSE</string>
+
+    <!-- Version -->
+    <!-- No Action -->
+    <string name="pref_title_version">Version</string>
+
+
+
+    <!-- Following After Delete -->
+    <!-- Preference Sample -->
 
     <!-- Strings related to Settings -->
 
