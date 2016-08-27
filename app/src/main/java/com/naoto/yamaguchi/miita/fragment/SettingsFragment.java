@@ -28,6 +28,9 @@ public final class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // TODO:
+        // logoutのlistを表示するために、xmlを2種類用意する
         addPreferencesFromResource(R.xml.pref_all);
         setHasOptionsMenu(true); // TODO: 調べる
         this.init();
