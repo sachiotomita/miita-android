@@ -39,9 +39,11 @@
     <!-- Preference -->
     <!-- Feedback -->
     <string name="pref_title_feedback">ご意見・ご要望</string>
+    <string name="pref_key_feedback">pref_key_feedback</string>
 
     <!-- Fetch PerPage -->
     <string name="pref_title_per_page">取得件数</string>
+    <string name="pref_key_per_page">pref_key_per_page</string>
     <string-array name="pref_per_page_titles">
         <item>50</item>
         <item>40</item>
@@ -59,11 +61,12 @@
 
     <!-- LICENSE -->
     <string name="pref_title_license">LICENSE</string>
+    <string name="pref_key_license">pref_key_license</string>
 
     <!-- Version -->
     <!-- No Action -->
     <string name="pref_title_version">Version</string>
-
+    <string name="pref_key_version">pref_key_version</string>
 
 
     <!-- Following After Delete -->
