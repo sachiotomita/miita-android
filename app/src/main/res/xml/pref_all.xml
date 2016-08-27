@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- フィードバック -->
-    <Preference android:title="@string/pref_title_feedback">
+    <Preference
+        android:title="@string/pref_title_feedback"
+        android:key="@string/pref_key_feedback">
         <intent android:action="android.intent.action.BUG_REPORT" />
     </Preference>
 
     <!-- 取得件数 -->
     <ListPreference
         android:title="@string/pref_title_per_page"
-        android:key="per_page"
+        android:key="@string/pref_key_per_page"
         android:defaultValue="30"
         android:entries="@array/pref_per_page_titles"
         android:entryValues="@array/pref_per_page_values"
@@ -17,12 +19,16 @@
         />
 
     <!-- LICENSE -->
-    <Preference android:title="@string/pref_title_license">
+    <Preference
+        android:title="@string/pref_title_license"
+        android:key="@string/pref_key_license">
         <!-- intent -->
     </Preference>
 
     <!-- Version -->
-    <Preference android:title="@string/pref_title_version">
+    <Preference
+        android:title="@string/pref_title_version"
+        android:key="@string/pref_key_version">
         <!-- NOOP -->
     </Preference>
 
