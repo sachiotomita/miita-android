@@ -29,7 +29,7 @@ public final class CurrentUser {
         return AccessToken.isExist(context);
     }
 
-    public void signout(Context context) {
+    public void logout(Context context) {
         AccessToken.deleteToken(context);
     }
 
