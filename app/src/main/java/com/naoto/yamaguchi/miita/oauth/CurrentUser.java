@@ -29,6 +29,10 @@ public final class CurrentUser {
         return AccessToken.isExist(context);
     }
 
+    public void signout(Context context) {
+        AccessToken.deleteToken(context);
+    }
+
     public String getToken(Context context) {
         return AccessToken.getToken(context);
     }
