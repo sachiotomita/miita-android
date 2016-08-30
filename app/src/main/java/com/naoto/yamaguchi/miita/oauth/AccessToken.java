@@ -13,6 +13,7 @@ public final class AccessToken {
     private static final String DEFAULT_VALUE = "";
 
     public static boolean isExist(Context context) {
+        // TODO: TextUtil empty?
         if (getToken(context).length() > 0) {
             return true;
         } else {
@@ -30,6 +31,13 @@ public final class AccessToken {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN_KEY, token);
+        editor.apply();
+    }
+
+    public static void deleteToken(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(TOKEN_KEY);
         editor.apply();
     }
 }
