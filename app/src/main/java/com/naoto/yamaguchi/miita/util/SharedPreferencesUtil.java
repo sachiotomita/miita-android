@@ -27,6 +27,14 @@ public final class SharedPreferencesUtil {
         editor.apply();
     }
 
+    public static void deleteString(Context context, String key) {
+        SharedPreferences sp =
+                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
     public static boolean getBool(Context context, String key, boolean defaultValue) {
         SharedPreferences sp =
                 context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
@@ -39,6 +47,14 @@ public final class SharedPreferencesUtil {
                 context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static void deleteBool(Context context, String key) {
+        SharedPreferences sp =
+                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key);
         editor.apply();
     }
 }
