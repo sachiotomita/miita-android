@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.util.SharedPreferencesUtil;
 
 /**
  * Created by naoto on 16/08/24.
@@ -27,8 +27,8 @@ public final class SettingsFragment extends PreferenceFragment {
     // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
     // 2. 取得件数
     // 3. LICENSE Intent
-    //
-    // 4. Version (No Action)
+    // 4. Logout (ログインしてたら。)
+    // 5. Version (No Action)
 
     public SettingsFragment() {
         this.currentUser = CurrentUser.getInstance();
@@ -51,7 +51,6 @@ public final class SettingsFragment extends PreferenceFragment {
     }
 
     private void init() {
-
         this.perPagePref = (ListPreference)findPreference(PER_PAGE_KEY);
         this.perPagePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -64,10 +63,8 @@ public final class SettingsFragment extends PreferenceFragment {
             }
         });
 
-        // TODO: sharedPreference Util
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String perPage = sharedPreferences.getString(PER_PAGE_KEY, DEFAULT_VALUE_PER_PAGE);
+        String perPage =
+                SharedPreferencesUtil.getString(getActivity(), PER_PAGE_KEY, DEFAULT_VALUE_PER_PAGE);
         this.perPagePref.setSummary(perPage + "件");
 
         if (this.currentUser.isAuthorize(getActivity())) {
