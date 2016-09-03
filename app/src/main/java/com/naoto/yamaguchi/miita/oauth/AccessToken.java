@@ -3,6 +3,8 @@ package com.naoto.yamaguchi.miita.oauth;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.naoto.yamaguchi.miita.util.SharedPreferencesUtil;
+
 /**
  * Created by naoto on 16/06/24.
  */
@@ -22,16 +24,11 @@ public final class AccessToken {
     }
 
     public static String getToken(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(TOKEN_KEY, DEFAULT_VALUE);
-        return token;
+        return SharedPreferencesUtil.getString(context, TOKEN_KEY, DEFAULT_VALUE);
     }
 
     public static void setToken(Context context, String token) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TOKEN_KEY, token);
-        editor.apply();
+        SharedPreferencesUtil.setString(context, TOKEN_KEY, token);
     }
 
     public static void deleteToken(Context context) {
