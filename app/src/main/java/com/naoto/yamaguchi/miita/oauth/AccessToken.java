@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.oauth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.naoto.yamaguchi.miita.util.SharedPreferencesUtil;
 
@@ -10,17 +11,15 @@ import com.naoto.yamaguchi.miita.util.SharedPreferencesUtil;
  */
 public final class AccessToken {
 
-    private static final String SERVICE_NAME = "Miita";
     private static final String TOKEN_KEY = "Qiita.AccessToken";
     private static final String DEFAULT_VALUE = "";
 
     public static boolean isExist(Context context) {
-        // TODO: TextUtil empty?
-        if (getToken(context).length() > 0) {
-            return true;
-        } else {
+        if (TextUtils.isEmpty(getToken(context))) {
             return false;
         }
+
+        return true;
     }
 
     public static String getToken(Context context) {
@@ -32,9 +31,6 @@ public final class AccessToken {
     }
 
     public static void deleteToken(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(TOKEN_KEY);
-        editor.apply();
+        SharedPreferencesUtil.deleteString(context, TOKEN_KEY);
     }
 }
