@@ -38,7 +38,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        // TODO: display setting fragment
+        // TODO: use Util class
+        SettingsFragment fragment = SettingsFragment.newInstance();
+        this.getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .commit();
     }
 
     /**
