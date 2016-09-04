@@ -29,6 +29,11 @@ public final class SettingsFragment extends PreferenceFragment {
     // 4. Logout (ログインしてたら。)
     // 5. Version (No Action)
 
+    public static SettingsFragment newInstance() {
+        SettingsFragment fragment =  new SettingsFragment();
+        return fragment;
+    }
+
     public SettingsFragment() {
         this.currentUser = CurrentUser.getInstance();
     }
