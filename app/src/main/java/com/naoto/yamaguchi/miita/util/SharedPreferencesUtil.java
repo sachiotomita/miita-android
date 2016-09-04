@@ -13,48 +13,42 @@ public final class SharedPreferencesUtil {
     private SharedPreferencesUtil() {}
 
     public static String getString(Context context, String key, String defaultValue) {
-        SharedPreferences sp =
-                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
-        String value = sp.getString(key, defaultValue);
-        return value;
+        return context
+                .getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE)
+                .getString(key, defaultValue);
     }
 
     public static void setString(Context context, String key, String value) {
-        SharedPreferences sp =
-                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(key, value);
-        editor.apply();
+        context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE)
+                .edit()
+                .putString(key, value)
+                .apply();
     }
 
     public static void deleteString(Context context, String key) {
-        SharedPreferences sp =
-                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.remove(key);
-        editor.apply();
+        context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE)
+                .edit()
+                .remove(key)
+                .apply();
     }
 
     public static boolean getBool(Context context, String key, boolean defaultValue) {
-        SharedPreferences sp =
-                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
-        boolean value = sp.getBoolean(key, defaultValue);
-        return value;
+        return context
+                .getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE)
+                .getBoolean(key, defaultValue);
     }
 
     public static void setBool(Context context, String key, boolean value) {
-        SharedPreferences sp =
-                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(key, value);
-        editor.apply();
+        context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(key, value)
+                .apply();
     }
 
     public static void deleteBool(Context context, String key) {
-        SharedPreferences sp =
-                context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.remove(key);
-        editor.apply();
+        context.getSharedPreferences(SERVICE_KEY, Context.MODE_PRIVATE)
+                .edit()
+                .remove(key)
+                .apply();
     }
 }
