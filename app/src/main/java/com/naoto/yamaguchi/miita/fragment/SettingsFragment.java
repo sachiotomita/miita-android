@@ -1,6 +1,5 @@
 package com.naoto.yamaguchi.miita.fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -68,7 +67,7 @@ public final class SettingsFragment extends PreferenceFragment {
         this.perPagePref.setSummary(perPage + "件");
 
         if (this.currentUser.isAuthorize(getActivity())) {
-            this.logoutPref = (Preference)findPreference(LOGOUT_KEY);
+            this.logoutPref = findPreference(LOGOUT_KEY);
             this.logoutPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
