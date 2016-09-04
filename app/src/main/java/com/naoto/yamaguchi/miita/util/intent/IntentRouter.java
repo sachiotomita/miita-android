@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.util.Intent;
+package com.naoto.yamaguchi.miita.util.intent;
 
 /**
  * Created by naoto on 16/09/04.
