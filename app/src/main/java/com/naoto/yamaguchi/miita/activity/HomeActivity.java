@@ -282,9 +282,9 @@ public class HomeActivity extends AppCompatActivity implements
 
     // TODO: create alert class
     private void showLoginAlert() {
-        new AlertDialog.Builder(this).setTitle("ログインしますか？")
-                .setMessage("ログインすることで使用できます")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(this).setTitle(R.string.alert_login_title)
+                .setMessage(R.string.alert_login_message)
+                .setPositiveButton(R.string.alert_login_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Uri uri = Uri.parse(Constants.AUTHORIZE_URL);
@@ -292,7 +292,7 @@ public class HomeActivity extends AppCompatActivity implements
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.alert_login_cancel, null)
                 .show();
     }
 
