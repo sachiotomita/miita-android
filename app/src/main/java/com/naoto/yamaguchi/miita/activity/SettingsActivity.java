@@ -37,12 +37,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
-
-        // TODO: use Util class
-        SettingsFragment fragment = SettingsFragment.newInstance();
-        this.getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, fragment)
-                .commit();
+        this.setSettingsFragment();
     }
 
     /**
@@ -71,5 +66,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || SettingsFragment.class.getName().equals(fragmentName);
+    }
+
+    private void setSettingsFragment() {
+        // FIXME: use Util class
+        SettingsFragment fragment = SettingsFragment.newInstance();
+        this.getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .commit();
     }
 }
