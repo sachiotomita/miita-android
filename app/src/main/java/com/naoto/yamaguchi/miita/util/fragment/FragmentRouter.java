@@ -27,11 +27,18 @@ public final class FragmentRouter {
         this.logger = Logger.getInstance();
     }
 
-    public FragmentRouter begin(FragmentManager manager, Class<Fragment> aClass)
+    // FIXME: Class<T> -> T fragment
+    public <T extends Fragment> FragmentRouter begin(FragmentManager manager, Class<T> aClass)
             throws IllegalAccessException, InstantiationException {
-        this.fragment = aClass.newInstance();
-        this.manager = manager;
-        return this;
+        try {
+            this.fragment = aClass.newInstance();
+            this.manager = manager;
+            return this;
+        } catch (IllegalAccessException e) {
+            return null;
+        } catch (InstantiationException e) {
+            return null;
+        }
     }
 
     public FragmentRouter replace(@IdRes int viewId) {
