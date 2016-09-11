@@ -30,6 +30,8 @@ import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
+import com.naoto.yamaguchi.miita.view.MiitaAlertDialogBuilder;
+import com.naoto.yamaguchi.miita.view.MiitaAlertDialogType;
 
 public class HomeActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -267,19 +269,9 @@ public class HomeActivity extends AppCompatActivity implements
         task.execute(imageUrlString);
     }
 
-    // TODO: create alert class
     private void showLoginAlert() {
-        new AlertDialog.Builder(this).setTitle(R.string.alert_login_title)
-                .setMessage(R.string.alert_login_message)
-                .setPositiveButton(R.string.alert_login_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri uri = Uri.parse(Constants.AUTHORIZE_URL);
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton(R.string.alert_login_cancel, null)
+        new MiitaAlertDialogBuilder(this)
+                .build(MiitaAlertDialogType.LOGIN)
                 .show();
     }
 
