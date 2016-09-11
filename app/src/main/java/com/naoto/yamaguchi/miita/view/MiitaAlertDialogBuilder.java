@@ -17,12 +17,12 @@ public final class MiitaAlertDialogBuilder {
     private Context context;
     private AlertDialog.Builder alert;
 
-    private MiitaAlertDialogBuilder(Context context) {
+    public MiitaAlertDialogBuilder(Context context) {
         this.context = context;
     }
 
-    public MiitaAlertDialogBuilder build(Context context, MiitaAlertDialogType type) {
-        this.alert = new AlertDialog.Builder(context);
+    public MiitaAlertDialogBuilder build(MiitaAlertDialogType type) {
+        this.alert = new AlertDialog.Builder(this.context);
         this.setType(type);
         return this;
     }
