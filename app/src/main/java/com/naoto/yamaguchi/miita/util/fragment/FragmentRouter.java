@@ -28,8 +28,8 @@ public final class FragmentRouter {
     }
 
     // FIXME: Class<T> -> T fragment
-    public <T extends Fragment> FragmentRouter begin(FragmentManager manager, Class<T> aClass)
-            throws IllegalAccessException, InstantiationException {
+    // FIXME: handle exception
+    public <T extends Fragment> FragmentRouter begin(FragmentManager manager, Class<T> aClass) {
         try {
             this.fragment = aClass.newInstance();
             this.manager = manager;
