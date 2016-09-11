@@ -27,6 +27,6 @@ public class LicenseActivity extends AppCompatActivity {
     }
 
     private void loadLicense() {
-        
+
     }
 }
