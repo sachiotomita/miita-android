@@ -29,6 +29,7 @@ import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
+import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 
 public class HomeActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -69,11 +70,9 @@ public class HomeActivity extends AppCompatActivity implements
         this.init();
         this.setLayout();
 
-        // FIXME: use Util Class
-        AllItemFragment allItemFragment = AllItemFragment.newInstance();
-        FragmentManager manager = this.getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.home_container_view, allItemFragment)
+        FragmentRouter.newInstance()
+                .begin(this.getSupportFragmentManager(), AllItemFragment.newInstance())
+                .replace(R.id.home_container_view)
                 .commit();
     }
 
@@ -187,31 +186,19 @@ public class HomeActivity extends AppCompatActivity implements
         // TODO: use util class
         switch (id) {
             case R.id.nav_all_item:
-                AllItemFragment allItemFragment = AllItemFragment.newInstance();
-                if (isSameItem) {
-                    manager.beginTransaction()
-                            .replace(R.id.home_container_view, allItemFragment)
-                            .commit();
-                } else {
-                    manager.beginTransaction()
-                            .replace(R.id.home_container_view, allItemFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
+                FragmentRouter.newInstance()
+                        .begin(manager, AllItemFragment.newInstance())
+                        .replace(R.id.home_container_view)
+                        .addStack(isSameItem)
+                        .commit();
                 break;
             case R.id.nav_stock_item:
                 if (this.currentUser.isAuthorize(this)) {
-                    StockItemFragment stockItemFragment = StockItemFragment.newInstance();
-                    if (isSameItem) {
-                        manager.beginTransaction()
-                                .replace(R.id.home_container_view, stockItemFragment)
-                                .commit();
-                    } else {
-                        manager.beginTransaction()
-                                .replace(R.id.home_container_view, stockItemFragment)
-                                .addToBackStack(null)
-                                .commit();
-                    }
+                    FragmentRouter.newInstance()
+                            .begin(manager, StockItemFragment.newInstance())
+                            .replace(R.id.home_container_view)
+                            .addStack(isSameItem)
+                            .commit();
                 } else {
                     this.showLoginAlert();
                 }
