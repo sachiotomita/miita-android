@@ -23,7 +23,7 @@ public final class MiitaAlertDialogBuilder {
 
     public MiitaAlertDialogBuilder build(Context context, MiitaAlertDialogType type) {
         this.alert = new AlertDialog.Builder(context);
-        this.setTypeParams(type);
+        this.setType(type);
         return this;
     }
 
@@ -33,7 +33,7 @@ public final class MiitaAlertDialogBuilder {
 
     // TODO: more setter Alert Params
 
-    private void setTypeParams(MiitaAlertDialogType type) {
+    private void setType(MiitaAlertDialogType type) {
         switch (type) {
             case LOGIN:
                 this.alert.setTitle(R.string.alert_login_title)
