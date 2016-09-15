@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.naoto.yamaguchi.miita.activity.LicenseActivity">
 
-    <!-- include -->
+    <include layout="@layout/app_bar_license" />
 
 </RelativeLayout>
