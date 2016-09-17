@@ -10,7 +10,7 @@ import io.realm.RealmResults;
  * Created by naoto on 16/09/17.
  */
 public abstract class BaseItemDao<T extends RealmObject>
-        implements BaseDao<List<T>, RealmResults<T>> {
+        implements BaseDaoType<List<T>, RealmResults<T>> {
 
     protected Realm realm;
     protected Class<T> aClass;
