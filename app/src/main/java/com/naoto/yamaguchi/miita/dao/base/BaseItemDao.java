@@ -1,7 +1,5 @@
 package com.naoto.yamaguchi.miita.dao.base;
 
-import android.content.Context;
-
 import java.util.List;
 
 import io.realm.Realm;
@@ -13,12 +11,10 @@ import io.realm.RealmResults;
  */
 public abstract class BaseItemDao<T extends RealmObject> implements BaseDao {
 
-    protected Context context;
     protected Realm realm;
     protected Class<T> aClass;
 
-    public BaseItemDao(Context context, Class<T> aClass) {
-        this.context = context;
+    public BaseItemDao(Class<T> aClass) {
         this.aClass = aClass;
         this.getClient();
     }
