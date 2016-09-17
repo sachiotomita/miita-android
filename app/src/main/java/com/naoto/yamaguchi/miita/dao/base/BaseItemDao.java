@@ -9,21 +9,23 @@ import io.realm.RealmResults;
 /**
  * Created by naoto on 16/09/17.
  */
-public abstract class BaseItemDao<T extends RealmObject> implements BaseDao {
+public abstract class BaseItemDao<T extends RealmObject>
+        implements BaseDao<List<T>, RealmResults<T>> {
 
     protected Realm realm;
     protected Class<T> aClass;
 
     public BaseItemDao(Class<T> aClass) {
         this.aClass = aClass;
-        this.getClient();
+        this.setClient();
     }
 
     @Override
-    public void getClient() {
+    public void setClient() {
         this.realm = Realm.getDefaultInstance();
     }
 
+    @Override
     public List<T> insert(List<T> items) {
         this.realm.beginTransaction();
         List<T> realmItems = this.realm.copyToRealmOrUpdate(items);
@@ -31,10 +33,14 @@ public abstract class BaseItemDao<T extends RealmObject> implements BaseDao {
         return realmItems;
     }
 
+    @Override
     public RealmResults<T> findAll() {
-        return this.realm.where(this.aClass).findAll();
+        return this.realm
+                .where(this.aClass)
+                .findAll();
     }
 
+    @Override
     public void truncate() {
         RealmResults<T> items = this.findAll();
         this.realm.beginTransaction();
