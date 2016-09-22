@@ -20,7 +20,8 @@ public final class TagListObjectMapper {
     private static final String ITEM_COUNT_KEY = "items_count";
     private static final String FOLLOWERS_COUNT_KEY = "followers_count";
 
-    public static <T extends BaseTag> List<T> map(Class<T> aClass, String jsonString) throws APIException {
+    public static <T extends BaseTag> List<T> map(Class<T> aClass, String jsonString)
+            throws APIException {
         try {
             List<T> tagList = new ArrayList<>();
             JSONArray jsonArray = new JSONArray(jsonString);
@@ -43,6 +44,7 @@ public final class TagListObjectMapper {
             }
 
             return tagList;
+            
         } catch (JSONException e) {
             throw new APIException(e.toString());
         } catch (IllegalAccessException e) {

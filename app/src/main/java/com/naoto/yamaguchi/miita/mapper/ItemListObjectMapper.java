@@ -24,7 +24,8 @@ public final class ItemListObjectMapper {
 
     // usage: ItemListObjectMapper.map(jsonArray, AllItem.class);
     // TODO: 引数の順番入れ替える
-    public static <T extends BaseItem> List<T> map(String jsonString, Class<T> aClass) throws APIException {
+    public static <T extends BaseItem> List<T> map(String jsonString, Class<T> aClass)
+            throws APIException {
         try {
             List<T> itemList = new ArrayList<>();
             JSONArray jsonArray = new JSONArray(jsonString);
