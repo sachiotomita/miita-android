@@ -20,26 +20,7 @@ public final class UserObjectMapper {
     // TODO: map処理共通化
     public static User map(JSONObject json) throws JSONException {
         try {
-            User user = new User();
-
-            String id = json.getString(ID_KEY);
-            user.setId(id);
-
-            String name = json.getString(NAME_KEY);
-            user.setName(name);
-
-            String description = json.getString(DESCRIPTION_KEY);
-            user.setDescription(description);
-
-            String imageUrlString = json.getString(IMAGE_KEY);
-            user.setImageUrlString(imageUrlString);
-
-            int followeesCount = json.getInt(FOLLOWEES_COUNT_KEY);
-            user.setFolloweesCount(followeesCount);
-
-            int followersCount = json.getInt(FOLLOWERS_COUNT_KEY);
-            user.setFollowersCount(followersCount);
-
+            User user = parse(json);
             return user;
         } catch (JSONException e) {
             throw e;
@@ -48,8 +29,17 @@ public final class UserObjectMapper {
 
     public static User map(String jsonString) throws JSONException {
         try {
-            User user = new User();
             JSONObject json = new JSONObject(jsonString);
+            User user = parse(json);
+            return user;
+        } catch (JSONException e) {
+            throw e;
+        }
+    }
+
+    private static User parse(JSONObject json) throws JSONException {
+        try {
+            User user = new User();
 
             String id = json.getString(ID_KEY);
             user.setId(id);
