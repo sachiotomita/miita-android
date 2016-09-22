@@ -16,7 +16,7 @@ public final class UserObjectMapper {
     private static final String IMAGE_KEY = "profile_image_url";
     private static final String FOLLOWEES_COUNT_KEY = "followees_count";
     private static final String FOLLOWERS_COUNT_KEY = "followers_count";
-    
+
     public static User map(JSONObject json) throws JSONException {
         try {
             User user = parse(json);

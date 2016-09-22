@@ -1,5 +1,7 @@
 package com.naoto.yamaguchi.miita.entity;
 
+import com.naoto.yamaguchi.miita.entity.base.BaseItem;
+
 /**
  * Created by naoto on 16/07/17.
  */

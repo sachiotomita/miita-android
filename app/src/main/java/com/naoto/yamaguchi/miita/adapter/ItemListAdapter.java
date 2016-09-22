@@ -1,7 +1,6 @@
 package com.naoto.yamaguchi.miita.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.entity.BaseItem;
+import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
-import com.naoto.yamaguchi.miita.util.Logger;
 
 import java.util.List;
 

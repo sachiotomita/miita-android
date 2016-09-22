@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.entity;
+package com.naoto.yamaguchi.miita.entity.base;
 
 /**
  * Created by naoto on 16/07/10.

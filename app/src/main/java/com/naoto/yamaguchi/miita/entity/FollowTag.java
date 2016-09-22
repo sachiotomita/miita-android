@@ -1,5 +1,7 @@
 package com.naoto.yamaguchi.miita.entity;
 
+import com.naoto.yamaguchi.miita.entity.base.BaseTag;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

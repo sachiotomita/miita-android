@@ -1,4 +1,6 @@
-package com.naoto.yamaguchi.miita.entity;
+package com.naoto.yamaguchi.miita.entity.base;
+
+import com.naoto.yamaguchi.miita.entity.User;
 
 /**
  * Created by naoto on 16/06/25.

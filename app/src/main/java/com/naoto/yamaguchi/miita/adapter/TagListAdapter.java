@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.entity.BaseTag;
+import com.naoto.yamaguchi.miita.entity.base.BaseTag;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 
 import java.util.List;

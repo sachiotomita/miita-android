@@ -1,7 +1,7 @@
 package com.naoto.yamaguchi.miita.mapper;
 
 import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.entity.BaseItem;
+import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import com.naoto.yamaguchi.miita.entity.User;
 
 import org.json.JSONArray;
