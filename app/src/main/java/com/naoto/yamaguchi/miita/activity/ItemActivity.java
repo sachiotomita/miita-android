@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.model.ItemModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 
 public class ItemActivity extends AppCompatActivity implements View.OnClickListener {
@@ -115,9 +116,9 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        this.model.check(this.itemId, new ItemModel.OnRequestListener() {
+        this.model.check(this.itemId, new OnModelListener<Void>() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(Void results) {
                 stockButton.setBackgroundTintList(
                         ColorStateList.valueOf(getResources().getColor(R.color.red))
                 );
@@ -172,9 +173,9 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
         this.stockButton.setEnabled(false);
 
         if (this.model.getIsStock()) {
-            this.model.unstock(this.itemId, new ItemModel.OnRequestListener() {
+            this.model.unstock(this.itemId, new OnModelListener<Void>() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(Void results) {
                     stockButton.setBackgroundTintList(
                             ColorStateList.valueOf(getResources().getColor(R.color.green))
                     );
@@ -191,9 +192,9 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         } else {
-            this.model.stock(this.itemId, new ItemModel.OnRequestListener() {
+            this.model.stock(this.itemId, new OnModelListener<Void>() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(Void results) {
                     stockButton.setBackgroundTintList(
                             ColorStateList.valueOf(getResources().getColor(R.color.red))
                     );
