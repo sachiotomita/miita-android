@@ -21,5 +21,4 @@ public final class AccessTokenObjectMapper {
             throw new APIException(e.toString());
         }
     }
-
 }
