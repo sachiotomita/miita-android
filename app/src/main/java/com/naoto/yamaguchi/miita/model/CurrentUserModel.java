@@ -6,6 +6,8 @@ import android.net.Uri;
 
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.User;
+import com.naoto.yamaguchi.miita.model.base.BaseNoObjectModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.AuthUserService;
 import com.naoto.yamaguchi.miita.service.AuthorizeService;
@@ -15,21 +17,14 @@ import com.naoto.yamaguchi.miita.util.ThreadUtil;
 /**
  * Created by naoto on 16/06/30.
  */
-public class CurrentUserModel {
+public final class CurrentUserModel extends BaseNoObjectModel<Void> {
 
-    public interface OnRequestListener {
-        void onSuccess();
-        void onError(APIException e);
-    }
-
-    private Context context;
-    private OnRequestListener listener;
     private AuthorizeService authorizeService;
     private AuthUserService authUserService;
     private CurrentUser currentUser;
 
     public CurrentUserModel(Context context) {
-        this.context = context;
+        super(context);
         this.authorizeService = new AuthorizeService(this.context);
         this.authUserService = new AuthUserService(this.context);
         this.currentUser = CurrentUser.getInstance();
@@ -55,8 +50,8 @@ public class CurrentUserModel {
         return uri.getQueryParameter("code");
     }
 
-    public void request(String code, OnRequestListener listener) {
-        this.addRequestListener(listener);
+    public void request(String code, OnModelListener<Void> listener) {
+        super.addModelListener(listener);
         this.authorizeRequest(code);
     }
 
@@ -87,28 +82,6 @@ public class CurrentUserModel {
             @Override
             public void onError(APIException e) {
                 deliverError(e);
-            }
-        });
-    }
-
-    private void addRequestListener(OnRequestListener listener) {
-        this.listener = listener;
-    }
-
-    private void deliverSuccess() {
-        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
-            @Override
-            public void run() {
-                listener.onSuccess();
-            }
-        });
-    }
-
-    private void deliverError(final APIException e) {
-        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
-            @Override
-            public void run() {
-                listener.onError(e);
             }
         });
     }

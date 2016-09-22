@@ -27,6 +27,7 @@ import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 import com.naoto.yamaguchi.miita.model.CurrentUserModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
@@ -90,15 +91,20 @@ public class HomeActivity extends AppCompatActivity implements
             dialog.show();
 
             String code = this.currentUserModel.getCodeQuery(this.getIntent());
-            this.currentUserModel.request(code, new CurrentUserModel.OnRequestListener() {
+            this.currentUserModel.request(code, new OnModelListener<Void>() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(Void results) {
                     dialog.dismiss();
                 }
 
                 @Override
                 public void onError(APIException e) {
                     dialog.dismiss();
+                }
+
+                @Override
+                public void onComplete() {
+                    // NOOP
                 }
             });
         }

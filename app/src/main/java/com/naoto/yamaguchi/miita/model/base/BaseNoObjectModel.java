@@ -9,7 +9,7 @@ import com.naoto.yamaguchi.miita.util.ThreadUtil;
 /**
  * Created by naoto on 16/09/22.
  */
-public abstract class BaseNoObjectModel extends BaseModel<Void> {
+public abstract class BaseNoObjectModel<T> extends BaseModel<T> {
     public BaseNoObjectModel(Context context) {
         super(context);
     }
