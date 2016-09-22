@@ -19,6 +19,7 @@ public abstract class BaseNoObjectModel<T> extends BaseModel<T> {
             @Override
             public void run() {
                 listener.onSuccess(null);
+                listener.onComplete();
             }
         });
     }
@@ -28,6 +29,7 @@ public abstract class BaseNoObjectModel<T> extends BaseModel<T> {
             @Override
             public void run() {
                 listener.onError(e);
+                listener.onComplete();
             }
         });
     }
