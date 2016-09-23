@@ -10,12 +10,14 @@ import java.util.List;
 /**
  * Created by naoto on 16/09/22.
  */
-public abstract class BaseObjectListModel<T> extends BaseModel<T> {
+public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
 
     protected int page;
     protected boolean isPaging;
 
+    protected abstract List<T> load();
     protected abstract void serviceRequest(final  RequestType type);
+    protected abstract void close();
     protected abstract void deliverSuccess(final RequestType type, final List<T> list);
     protected abstract void deliverError(final APIException e);
 

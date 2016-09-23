@@ -5,6 +5,7 @@ import android.content.Context;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.dao.AllItemDao;
 import com.naoto.yamaguchi.miita.entity.AllItem;
+import com.naoto.yamaguchi.miita.model.base.BaseObjectListModel;
 import com.naoto.yamaguchi.miita.service.AllItemService;
 import com.naoto.yamaguchi.miita.util.RequestType;
 import com.naoto.yamaguchi.miita.util.ThreadType;
@@ -15,52 +16,19 @@ import java.util.List;
 /**
  * Created by naoto on 16/06/30.
  */
-public final class AllItemModel {
+public final class AllItemModel extends BaseObjectListModel<AllItem> {
 
-    public interface OnRequestListener {
-        void onSuccess(List<AllItem> results);
-        void onError(APIException e);
-        void onComplete();
-    }
-
-    private Context context;
-    private int page;
-    private boolean isPaging;
-    private OnRequestListener listener;
     private AllItemService service;
     private AllItemDao dao;
 
     public AllItemModel(Context context) {
-        this.context = context;
-        this.page = 1;
-        this.isPaging = false;
+        super(context);
         this.service = new AllItemService(this.context);
         this.dao = new AllItemDao();
     }
 
-    public int getPage() {
-        return this.page;
-    }
-
-    public boolean isPaging() {
-        return this.isPaging;
-    }
-
-    public void request(final RequestType type, OnRequestListener listener) {
-        this.addRequestListener(listener);
-
-        switch (type) {
-            case FIRST:
-            case REFRESH:
-                this.page = 1;
-                this.isPaging = false;
-                break;
-            case PAGING:
-                this.page++;
-                this.isPaging = true;
-                break;
-        }
-
+    @Override
+    protected void serviceRequest(final RequestType type) {
         this.service.request(this.page, new AllItemService.OnRequestListener() {
             @Override
             public void onSuccess(List<AllItem> result) {
@@ -74,19 +42,18 @@ public final class AllItemModel {
         });
     }
 
-    public List<AllItem> loadItem() {
+    @Override
+    protected List<AllItem> load() {
         return this.dao.findAll();
     }
 
-    public void close() {
+    @Override
+    protected void close() {
         this.dao.close();
     }
 
-    private void addRequestListener(OnRequestListener listener) {
-        this.listener = listener;
-    }
-
-    private void deliverSuccess(final RequestType type, final List<AllItem> results) {
+    @Override
+    protected void deliverSuccess(final RequestType type, final List<AllItem> list) {
         ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
             @Override
             public void run() {
@@ -97,10 +64,10 @@ public final class AllItemModel {
                     case FIRST:
                     case REFRESH:
                         dao.truncate();
-                        items = dao.insert(results);
+                        items = dao.insert(list);
                         break;
                     case PAGING:
-                        items = dao.insert(results);
+                        items = dao.insert(list);
                         break;
 
                 }
@@ -111,7 +78,8 @@ public final class AllItemModel {
         });
     }
 
-    private void deliverError(final APIException e) {
+    @Override
+    protected void deliverError(final APIException e) {
         ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
             @Override
             public void run() {
