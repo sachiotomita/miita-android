@@ -20,6 +20,7 @@ import com.naoto.yamaguchi.miita.adapter.TagListAdapter;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.model.FollowTagModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.util.RequestType;
 
 import java.util.List;
@@ -66,7 +67,7 @@ public class FollowTagFragment extends Fragment implements
         }
 
         this.model = new FollowTagModel(this.getContext());
-        this.tags = this.model.loadTag();
+        this.tags = this.model.load();
     }
 
     @Override
@@ -176,8 +177,8 @@ public class FollowTagFragment extends Fragment implements
         }
     }
 
-    private FollowTagModel.OnRequestListener getListener(final RequestType type) {
-        return new FollowTagModel.OnRequestListener() {
+    private OnModelListener<List<FollowTag>> getListener(final RequestType type) {
+        return new OnModelListener<List<FollowTag>>() {
             @Override
             public void onSuccess(List<FollowTag> results) {
                 notifyDataSetChanged(type, results);
@@ -185,7 +186,7 @@ public class FollowTagFragment extends Fragment implements
 
             @Override
             public void onError(APIException e) {
-
+                // TODO: alert
             }
 
             @Override
