@@ -48,6 +48,6 @@ public abstract class BaseObjectListModel<T> extends BaseModel<T> {
                 break;
         }
 
-        this.serviceRequest();
+        this.serviceRequest(type);
     }
 }
