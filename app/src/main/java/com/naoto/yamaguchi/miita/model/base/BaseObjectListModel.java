@@ -15,7 +15,7 @@ public abstract class BaseObjectListModel<T> extends BaseModel<T> {
     protected int page;
     protected boolean isPaging;
 
-    protected abstract void serviceRequest();
+    protected abstract void serviceRequest(final  RequestType type);
     protected abstract void deliverSuccess(final RequestType type, final List<T> list);
     protected abstract void deliverError(final APIException e);
 
