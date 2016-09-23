@@ -53,7 +53,7 @@ public final class AllItemModel extends BaseObjectListModel<AllItem> {
     }
 
     @Override
-    protected void deliverSuccess(final RequestType type, final List<AllItem> list) {
+    protected void deliverSuccess(final RequestType type, final List<AllItem> results) {
         ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
             @Override
             public void run() {
@@ -64,10 +64,10 @@ public final class AllItemModel extends BaseObjectListModel<AllItem> {
                     case FIRST:
                     case REFRESH:
                         dao.truncate();
-                        items = dao.insert(list);
+                        items = dao.insert(results);
                         break;
                     case PAGING:
-                        items = dao.insert(list);
+                        items = dao.insert(results);
                         break;
 
                 }

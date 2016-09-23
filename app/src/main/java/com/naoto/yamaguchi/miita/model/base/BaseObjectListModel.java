@@ -18,7 +18,7 @@ public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
     protected abstract List<T> load();
     protected abstract void serviceRequest(final  RequestType type);
     protected abstract void close();
-    protected abstract void deliverSuccess(final RequestType type, final List<T> list);
+    protected abstract void deliverSuccess(final RequestType type, final List<T> results);
     protected abstract void deliverError(final APIException e);
 
     public BaseObjectListModel(Context context) {
