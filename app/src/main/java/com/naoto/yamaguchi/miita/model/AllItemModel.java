@@ -5,12 +5,9 @@ import android.content.Context;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.dao.AllItemDao;
 import com.naoto.yamaguchi.miita.entity.AllItem;
-import com.naoto.yamaguchi.miita.model.base.BaseObjectListModel;
 import com.naoto.yamaguchi.miita.model.base.BaseRealmObjectListModel;
 import com.naoto.yamaguchi.miita.service.AllItemService;
 import com.naoto.yamaguchi.miita.util.RequestType;
-import com.naoto.yamaguchi.miita.util.ThreadType;
-import com.naoto.yamaguchi.miita.util.ThreadUtil;
 
 import java.util.List;
 
