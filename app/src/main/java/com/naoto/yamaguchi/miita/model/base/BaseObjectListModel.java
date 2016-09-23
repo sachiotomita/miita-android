@@ -33,7 +33,7 @@ public abstract class BaseObjectListModel<T> extends BaseModel<T> {
         return this.isPaging;
     }
 
-    protected void request(final RequestType type, OnModelListener<List<T>> listener) {
+    public void request(final RequestType type, OnModelListener<List<T>> listener) {
         super.addModelListener(listener);
 
         switch (type) {
