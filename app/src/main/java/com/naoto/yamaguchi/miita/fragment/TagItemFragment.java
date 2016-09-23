@@ -20,6 +20,7 @@ import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.model.TagItemModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.util.RequestType;
 
 import java.util.List;
@@ -157,8 +158,8 @@ public class TagItemFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
     }
 
-    private TagItemModel.OnRequestListener getListener(final RequestType type) {
-        return new TagItemModel.OnRequestListener() {
+    private OnModelListener<List<Item>> getListener(final RequestType type) {
+        return new OnModelListener<List<Item>>() {
             @Override
             public void onSuccess(List<Item> results) {
                 notifyDataSetChanged(type, results);
@@ -166,7 +167,7 @@ public class TagItemFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onError(APIException e) {
-
+                // TODO: alert
             }
 
             @Override
