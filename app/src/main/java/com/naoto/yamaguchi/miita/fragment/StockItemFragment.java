@@ -20,6 +20,7 @@ import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.model.StockItemModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.util.RequestType;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class StockItemFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         this.model = new StockItemModel(this.getContext());
-        this.items = this.model.loadItem();
+        this.items = this.model.load();
     }
 
     @Override
@@ -164,8 +165,8 @@ public class StockItemFragment extends Fragment implements
         }
     }
 
-    private StockItemModel.OnRequestListener getListener(final RequestType type) {
-        return new StockItemModel.OnRequestListener() {
+    private OnModelListener<List<StockItem>> getListener(final RequestType type) {
+        return new OnModelListener<List<StockItem>>() {
             @Override
             public void onSuccess(List<StockItem> results) {
                 notifyDataSetChanged(type, results);
@@ -173,7 +174,7 @@ public class StockItemFragment extends Fragment implements
 
             @Override
             public void onError(APIException e) {
-
+                // TODO: alert
             }
 
             @Override
