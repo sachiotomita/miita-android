@@ -31,6 +31,16 @@ public final class FollowTagModel extends BaseObjectListModel<FollowTag> {
     }
 
     @Override
+    public List<FollowTag> load() {
+        return this.dao.findAll();
+    }
+
+    @Override
+    public void close() {
+        this.dao.close();
+    }
+
+    @Override
     protected void serviceRequest(final RequestType type) {
         String userId = this.currentUser.getID(this.context);
 
@@ -45,16 +55,6 @@ public final class FollowTagModel extends BaseObjectListModel<FollowTag> {
                 deliverError(e);
             }
         });
-    }
-
-    @Override
-    protected List<FollowTag> load() {
-        return this.dao.findAll();
-    }
-
-    @Override
-    protected void close() {
-        this.dao.close();
     }
 
     @Override

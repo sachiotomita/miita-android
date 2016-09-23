@@ -31,6 +31,16 @@ public final class StockItemModel extends BaseObjectListModel<StockItem> {
     }
 
     @Override
+    public List<StockItem> load() {
+        return this.dao.findAll();
+    }
+
+    @Override
+    public void close() {
+        this.dao.close();
+    }
+
+    @Override
     protected void serviceRequest(final RequestType type) {
         String userId = this.currentUser.getID(this.context);
 
@@ -45,16 +55,6 @@ public final class StockItemModel extends BaseObjectListModel<StockItem> {
                 deliverError(e);
             }
         });
-    }
-
-    @Override
-    protected List<StockItem> load() {
-        return this.dao.findAll();
-    }
-
-    @Override
-    protected void close() {
-        this.dao.close();
     }
 
     @Override

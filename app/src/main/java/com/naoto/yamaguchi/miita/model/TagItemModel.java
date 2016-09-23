@@ -29,6 +29,16 @@ public final class TagItemModel extends BaseObjectListModel<Item> {
     }
 
     @Override
+    public List<Item> load() {
+        return null;
+    }
+
+    @Override
+    public void close() {
+        // NOOP
+    }
+
+    @Override
     protected void serviceRequest(final RequestType type) {
         this.service.request(this.page, this.tagId, new TagItemService.OnRequestListener() {
             @Override
@@ -41,16 +51,6 @@ public final class TagItemModel extends BaseObjectListModel<Item> {
                 deliverError(e);
             }
         });
-    }
-
-    @Override
-    protected List<Item> load() {
-        return null;
-    }
-
-    @Override
-    protected void close() {
-        // NOOP
     }
 
     @Override

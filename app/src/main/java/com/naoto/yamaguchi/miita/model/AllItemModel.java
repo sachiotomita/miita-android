@@ -28,6 +28,16 @@ public final class AllItemModel extends BaseObjectListModel<AllItem> {
     }
 
     @Override
+    public List<AllItem> load() {
+        return this.dao.findAll();
+    }
+
+    @Override
+    public void close() {
+        this.dao.close();
+    }
+
+    @Override
     protected void serviceRequest(final RequestType type) {
         this.service.request(this.page, new AllItemService.OnRequestListener() {
             @Override
@@ -40,16 +50,6 @@ public final class AllItemModel extends BaseObjectListModel<AllItem> {
                 deliverError(e);
             }
         });
-    }
-
-    @Override
-    protected List<AllItem> load() {
-        return this.dao.findAll();
-    }
-
-    @Override
-    protected void close() {
-        this.dao.close();
     }
 
     @Override
