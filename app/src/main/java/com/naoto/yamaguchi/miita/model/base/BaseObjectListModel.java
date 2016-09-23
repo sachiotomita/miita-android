@@ -15,9 +15,9 @@ public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
     protected int page;
     protected boolean isPaging;
 
-    protected abstract List<T> load();
+    public abstract List<T> load();
+    public abstract void close();
     protected abstract void serviceRequest(final  RequestType type);
-    protected abstract void close();
     protected abstract void deliverSuccess(final RequestType type, final List<T> results);
     protected abstract void deliverError(final APIException e);
 
@@ -27,11 +27,11 @@ public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
         this.isPaging = false;
     }
 
-    protected int getPage() {
+    public int getPage() {
         return this.page;
     }
 
-    protected boolean isPaging() {
+    public boolean isPaging() {
         return this.isPaging;
     }
 
