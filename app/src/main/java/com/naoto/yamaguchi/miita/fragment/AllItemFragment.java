@@ -19,6 +19,7 @@ import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.AllItemModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.util.RequestType;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class AllItemFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         this.model = new AllItemModel(this.getContext());
-        this.items = this.model.loadItem();
+        this.items = this.model.load();
     }
 
     @Override
@@ -163,8 +164,8 @@ public class AllItemFragment extends Fragment implements
         }
     }
 
-    private AllItemModel.OnRequestListener getListener(final RequestType type) {
-        return new AllItemModel.OnRequestListener() {
+    private OnModelListener<List<AllItem>> getListener(final RequestType type) {
+        return new OnModelListener<List<AllItem>>() {
             @Override
             public void onSuccess(List<AllItem> results) {
                 notifyDataSetChanged(type, results);
