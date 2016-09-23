@@ -5,6 +5,7 @@ import android.content.Context;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.dao.StockItemDao;
 import com.naoto.yamaguchi.miita.entity.StockItem;
+import com.naoto.yamaguchi.miita.model.base.BaseObjectListModel;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.StockItemService;
 import com.naoto.yamaguchi.miita.util.RequestType;
@@ -16,54 +17,21 @@ import java.util.List;
 /**
  * Created by naoto on 16/06/30.
  */
-public final class StockItemModel {
+public final class StockItemModel extends BaseObjectListModel<StockItem> {
 
-    public interface OnRequestListener {
-        void onSuccess(List<StockItem> results);
-        void onError(APIException e);
-        void onComplete();
-    }
-
-    private Context context;
-    private int page;
-    private boolean isPaging;
-    private OnRequestListener listener;
     private StockItemService service;
     private StockItemDao dao;
     private CurrentUser currentUser;
 
     public StockItemModel(Context context) {
-        this.context = context;
-        this.page = 1;
-        this.isPaging = false;
+        super(context);
         this.service = new StockItemService(this.context);
         this.dao = new StockItemDao();
         this.currentUser = CurrentUser.getInstance();
     }
 
-    public int getPage() {
-        return this.page;
-    }
-
-    public boolean isPaging() {
-        return this.isPaging;
-    }
-
-    public void request(final RequestType type, OnRequestListener listener) {
-        this.addRequestListener(listener);
-
-        switch (type) {
-            case FIRST:
-            case REFRESH:
-                this.page = 1;
-                this.isPaging = false;
-                break;
-            case PAGING:
-                this.page++;
-                this.isPaging = true;
-                break;
-        }
-
+    @Override
+    protected void serviceRequest(final RequestType type) {
         String userId = this.currentUser.getID(this.context);
 
         this.service.request(this.page, userId, new StockItemService.OnRequestListener() {
@@ -79,19 +47,18 @@ public final class StockItemModel {
         });
     }
 
-    public List<StockItem> loadItem() {
+    @Override
+    protected List<StockItem> load() {
         return this.dao.findAll();
     }
 
-    public void close() {
+    @Override
+    protected void close() {
         this.dao.close();
     }
 
-    private void addRequestListener(OnRequestListener listener) {
-        this.listener = listener;
-    }
-
-    private void deliverSuccess(final RequestType type, final List<StockItem> results) {
+    @Override
+    protected void deliverSuccess(final RequestType type, final List<StockItem> results) {
         ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
             @Override
             public void run() {
@@ -115,7 +82,8 @@ public final class StockItemModel {
         });
     }
 
-    private void deliverError(final APIException e) {
+    @Override
+    protected void deliverError(final APIException e) {
         ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
             @Override
             public void run() {
