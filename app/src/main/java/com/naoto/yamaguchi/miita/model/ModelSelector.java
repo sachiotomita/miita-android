@@ -1,6 +1,8 @@
 package com.naoto.yamaguchi.miita.model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
 
 /**
  * Created by naoto on 2016/09/24.
@@ -8,27 +10,33 @@ import android.content.Context;
 
 // FIXME: contextが必要かどうか
 public final class ModelSelector {
-    public static AllItemModel getAllItemModel(Context context) {
+    @UiThread
+    public static AllItemModel getAllItemModel(@NonNull Context context) {
         return new AllItemModel(context);
     }
 
-    public static CurrentUserModel getCurrentUserModel(Context context) {
+    @UiThread
+    public static CurrentUserModel getCurrentUserModel(@NonNull Context context) {
         return new CurrentUserModel(context);
     }
 
-    public static FollowTagModel getFollowTagModel(Context context) {
+    @UiThread
+    public static FollowTagModel getFollowTagModel(@NonNull Context context) {
         return new FollowTagModel(context);
     }
 
-    public static ItemModel getItemModel(Context context) {
+    @UiThread
+    public static ItemModel getItemModel(@NonNull Context context) {
         return new ItemModel(context);
     }
 
-    public static StockItemModel getStockItemModel(Context context) {
+    @UiThread
+    public static StockItemModel getStockItemModel(@NonNull Context context) {
         return new StockItemModel(context);
     }
 
-    public static TagItemModel getTagItemModel(Context context) {
+    @UiThread
+    public static TagItemModel getTagItemModel(@NonNull Context context) {
         return new TagItemModel(context);
     }
 }
