@@ -3,8 +3,8 @@ package com.naoto.yamaguchi.miita.model.base;
 import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.util.ThreadType;
-import com.naoto.yamaguchi.miita.util.ThreadUtil;
+import com.naoto.yamaguchi.miita.util.thread.ThreadType;
+import com.naoto.yamaguchi.miita.util.thread.ThreadUtil;
 
 /**
  * Created by naoto on 16/09/22.

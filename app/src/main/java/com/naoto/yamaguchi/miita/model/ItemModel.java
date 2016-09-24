@@ -6,8 +6,6 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.model.base.BaseNoObjectModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.service.ItemService;
-import com.naoto.yamaguchi.miita.util.ThreadType;
-import com.naoto.yamaguchi.miita.util.ThreadUtil;
 
 /**
  * Created by naoto on 16/08/15.

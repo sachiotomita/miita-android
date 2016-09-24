@@ -11,8 +11,6 @@ import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.AuthUserService;
 import com.naoto.yamaguchi.miita.service.AuthorizeService;
-import com.naoto.yamaguchi.miita.util.ThreadType;
-import com.naoto.yamaguchi.miita.util.ThreadUtil;
 
 /**
  * Created by naoto on 16/06/30.

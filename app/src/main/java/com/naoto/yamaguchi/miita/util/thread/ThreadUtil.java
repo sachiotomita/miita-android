@@ -1,7 +1,9 @@
-package com.naoto.yamaguchi.miita.util;
+package com.naoto.yamaguchi.miita.util.thread;
 
 import android.os.Handler;
 import android.os.Looper;
+
+import com.naoto.yamaguchi.miita.util.thread.ThreadType;
 
 /**
  * Created by naoto on 16/06/22.
