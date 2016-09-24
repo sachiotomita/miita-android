@@ -22,20 +22,11 @@ public final class TagItemModel extends BaseObjectListModel<Item> {
 
     public TagItemModel(Context context) {
         super(context);
+        this.service = new TagItemService(context);
     }
 
     public void setTagId(String tagId) {
         this.tagId = tagId;
-    }
-
-    @Override
-    public List<Item> load() {
-        return null;
-    }
-
-    @Override
-    public void close() {
-        // NOOP
     }
 
     @Override
@@ -49,30 +40,6 @@ public final class TagItemModel extends BaseObjectListModel<Item> {
             @Override
             public void onError(APIException e) {
                 deliverError(e);
-            }
-        });
-    }
-
-    @Override
-    protected void deliverSuccess(RequestType type, final List<Item> results) {
-        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
-            @Override
-            public void run() {
-                isPaging = false;
-                listener.onSuccess(results);
-                listener.onComplete();
-            }
-        });
-    }
-
-    @Override
-    protected void deliverError(final APIException e) {
-        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
-            @Override
-            public void run() {
-                isPaging = false;
-                listener.onError(e);
-                listener.onComplete();
             }
         });
     }

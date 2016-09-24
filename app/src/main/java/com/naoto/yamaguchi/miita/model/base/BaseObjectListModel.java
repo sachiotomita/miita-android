@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.util.RequestType;
+import com.naoto.yamaguchi.miita.util.ThreadType;
+import com.naoto.yamaguchi.miita.util.ThreadUtil;
 
 import java.util.List;
 
@@ -15,11 +17,7 @@ public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
     protected int page;
     protected boolean isPaging;
 
-    public abstract List<T> load();
-    public abstract void close();
-    protected abstract void serviceRequest(final  RequestType type);
-    protected abstract void deliverSuccess(final RequestType type, final List<T> results);
-    protected abstract void deliverError(final APIException e);
+    protected abstract void serviceRequest(RequestType type);
 
     public BaseObjectListModel(Context context) {
         super(context);
@@ -35,7 +33,7 @@ public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
         return this.isPaging;
     }
 
-    public void request(final RequestType type, OnModelListener<List<T>> listener) {
+    public void request(RequestType type, OnModelListener<List<T>> listener) {
         super.addModelListener(listener);
 
         switch (type) {
@@ -51,5 +49,27 @@ public abstract class BaseObjectListModel<T> extends BaseModel<List<T>> {
         }
 
         this.serviceRequest(type);
+    }
+
+    protected void deliverSuccess(RequestType type, final List<T> results) {
+        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
+            @Override
+            public void run() {
+                isPaging = false;
+                listener.onSuccess(results);
+                listener.onComplete();
+            }
+        });
+    }
+
+    protected void deliverError(final APIException e) {
+        ThreadUtil.execute(ThreadType.MAIN, new Runnable() {
+            @Override
+            public void run() {
+                isPaging = false;
+                listener.onError(e);
+                listener.onComplete();
+            }
+        });
     }
 }
