@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.util;
+package com.naoto.yamaguchi.miita.model.base;
 
 /**
  * Created by naoto on 16/06/30.

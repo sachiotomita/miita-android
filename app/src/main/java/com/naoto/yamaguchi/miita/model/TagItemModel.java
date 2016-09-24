@@ -6,9 +6,7 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.model.base.BaseObjectListModel;
 import com.naoto.yamaguchi.miita.service.TagItemService;
-import com.naoto.yamaguchi.miita.util.RequestType;
-import com.naoto.yamaguchi.miita.util.ThreadType;
-import com.naoto.yamaguchi.miita.util.ThreadUtil;
+import com.naoto.yamaguchi.miita.model.base.RequestType;
 
 import java.util.List;
 

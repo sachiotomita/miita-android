@@ -1,7 +1,6 @@
 package com.naoto.yamaguchi.miita.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,7 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.model.StockItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
-import com.naoto.yamaguchi.miita.util.RequestType;
+import com.naoto.yamaguchi.miita.model.base.RequestType;
 
 import java.util.List;
 

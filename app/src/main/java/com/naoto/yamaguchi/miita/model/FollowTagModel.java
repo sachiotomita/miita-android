@@ -8,7 +8,7 @@ import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.model.base.BaseRealmObjectListModel;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.FollowTagService;
-import com.naoto.yamaguchi.miita.util.RequestType;
+import com.naoto.yamaguchi.miita.model.base.RequestType;
 
 import java.util.List;
 

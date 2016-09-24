@@ -7,7 +7,7 @@ import com.naoto.yamaguchi.miita.dao.AllItemDao;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.base.BaseRealmObjectListModel;
 import com.naoto.yamaguchi.miita.service.AllItemService;
-import com.naoto.yamaguchi.miita.util.RequestType;
+import com.naoto.yamaguchi.miita.model.base.RequestType;
 
 import java.util.List;
 

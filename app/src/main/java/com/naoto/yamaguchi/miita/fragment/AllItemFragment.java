@@ -20,7 +20,7 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.AllItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
-import com.naoto.yamaguchi.miita.util.RequestType;
+import com.naoto.yamaguchi.miita.model.base.RequestType;
 
 import java.util.List;
 

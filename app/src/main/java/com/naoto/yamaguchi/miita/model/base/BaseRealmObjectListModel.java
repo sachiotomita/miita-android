@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.dao.base.BaseDao;
-import com.naoto.yamaguchi.miita.util.RequestType;
 import com.naoto.yamaguchi.miita.util.ThreadType;
 import com.naoto.yamaguchi.miita.util.ThreadUtil;
 
