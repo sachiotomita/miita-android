@@ -1,10 +1,9 @@
 package com.naoto.yamaguchi.miita.oauth;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.naoto.yamaguchi.miita.util.SharedPreferencesUtil;
+import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
 
 /**
  * Created by naoto on 16/06/24.

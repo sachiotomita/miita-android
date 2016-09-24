@@ -7,7 +7,7 @@ import android.preference.PreferenceFragment;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
-import com.naoto.yamaguchi.miita.util.SharedPreferencesUtil;
+import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
 
 /**
  * Created by naoto on 16/08/24.

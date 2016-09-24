@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.util;
+package com.naoto.yamaguchi.miita.util.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
