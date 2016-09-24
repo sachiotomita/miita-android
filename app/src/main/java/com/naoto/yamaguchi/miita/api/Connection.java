@@ -1,6 +1,6 @@
 package com.naoto.yamaguchi.miita.api;
 
-import com.naoto.yamaguchi.miita.util.Logger;
+import com.naoto.yamaguchi.miita.util.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

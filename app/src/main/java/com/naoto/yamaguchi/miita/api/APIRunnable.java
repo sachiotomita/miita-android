@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.api;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.util.Logger;
+import com.naoto.yamaguchi.miita.util.logger.Logger;
 
 /**
  * Created by naoto on 16/06/25.

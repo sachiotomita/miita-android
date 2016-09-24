@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.util;
+package com.naoto.yamaguchi.miita.util.logger;
 
 import android.util.Log;
 

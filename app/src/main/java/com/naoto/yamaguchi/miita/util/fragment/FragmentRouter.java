@@ -4,7 +4,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.naoto.yamaguchi.miita.util.Logger;
+import com.naoto.yamaguchi.miita.util.logger.Logger;
 
 /**
  * Created by naoto on 16/09/04.
