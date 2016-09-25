@@ -3,25 +3,16 @@ package com.naoto.yamaguchi.miita.service;
 import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.api.APIURLBuilder;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
+import com.naoto.yamaguchi.miita.service.base.BaseService;
 
 import java.util.List;
 
 /**
  * Created by naoto on 16/06/29.
  */
-public final class AllItemService extends DeliverResponseService<List<AllItem>> {
-
-    // TODO: result -> results
-    public interface OnRequestListener {
-        void onSuccess(List<AllItem> result);
-        void onError(APIException e);
-    }
-
-    private int page;
-    private OnRequestListener listener;
+public final class AllItemService extends BaseService<List<AllItem>> {
 
     public AllItemService(Context context) {
         super(context);
@@ -34,11 +25,6 @@ public final class AllItemService extends DeliverResponseService<List<AllItem>> 
     }
 
     @Override
-    protected String getUrlString() {
-        return APIURLBuilder.build(this.getPath(), this.page);
-    }
-
-    @Override
     protected byte[] getBody() {
         return null;
     }
@@ -48,36 +34,32 @@ public final class AllItemService extends DeliverResponseService<List<AllItem>> 
         return "/items";
     }
 
-    public void request(int page, OnRequestListener listener) {
-        this.page = page;
-        this.addRequestListener(listener);
-        super.request();
-    }
-
-    private void addRequestListener(OnRequestListener listener) {
-        this.listener = listener;
+    @Override
+    protected int getPage() {
+        return this.page;
     }
 
     @Override
-    protected List<AllItem> getResponse(String jsonString) throws APIException {
+    protected boolean isPerPage() {
+        return true;
+    }
+
+    @Override
+    protected boolean isResponse() {
+        return true;
+    }
+
+    @Override
+    protected List<AllItem> getResponse(String json) throws APIException {
         try {
-            return ItemListObjectMapper.map(jsonString, AllItem.class);
+            return ItemListObjectMapper.map(json, AllItem.class);
         } catch (APIException e) {
             throw e;
         }
     }
 
-    @Override
-    protected void deliverSuccess(List<AllItem> results) {
-        if (this.listener != null) {
-            this.listener.onSuccess(results);
-        }
-    }
-
-    @Override
-    protected void deliverError(APIException e) {
-        if (this.listener != null) {
-            this.listener.onError(e);
-        }
+    public void request(int page, OnRequestListener listener) {
+        this.page = page;
+        super.request(listener);
     }
 }
