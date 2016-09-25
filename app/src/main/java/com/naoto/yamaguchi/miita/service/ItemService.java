@@ -4,20 +4,15 @@ import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.api.APIURLBuilder;
+import com.naoto.yamaguchi.miita.service.base.BaseService;
 
 /**
  * Created by naoto on 16/08/15.
  */
-public final class ItemService extends NoResponseService {
-
-    public interface OnRequestListener {
-        void onSuccess();
-        void onError(APIException e);
-    }
+public final class ItemService extends BaseService<Void> {
 
     private String HTTPMethod;
     private String itemId;
-    private OnRequestListener listener;
 
     public ItemService(Context context) {
         super(context);
@@ -26,11 +21,6 @@ public final class ItemService extends NoResponseService {
     @Override
     protected String getMethod() {
         return this.HTTPMethod;
-    }
-
-    @Override
-    protected String getUrlString() {
-        return APIURLBuilder.build(this.getPath());
     }
 
     @Override
@@ -43,28 +33,29 @@ public final class ItemService extends NoResponseService {
         return "/items/" + this.itemId + "/stock";
     }
 
+    @Override
+    protected int getPage() {
+        return NO_PAGE_VALUE;
+    }
+
+    @Override
+    protected boolean isPerPage() {
+        return false;
+    }
+
+    @Override
+    protected boolean isResponse() {
+        return false;
+    }
+
+    @Override
+    protected Void getResponse(String json) throws APIException {
+        return null;
+    }
+
     public void request(String method, String itemId, OnRequestListener listener) {
         this.HTTPMethod = method;
         this.itemId = itemId;
-        this.addRequestListener(listener);
-        super.request();
-    }
-
-    private void addRequestListener(OnRequestListener listener) {
-        this.listener = listener;
-    }
-
-    @Override
-    protected void deliverSuccess() {
-        if (this.listener != null) {
-            this.listener.onSuccess();
-        }
-    }
-
-    @Override
-    protected void deliverError(APIException e) {
-        if (this.listener != null) {
-            this.listener.onError(e);
-        }
+        super.request(listener);
     }
 }
