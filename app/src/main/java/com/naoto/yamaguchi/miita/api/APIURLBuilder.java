@@ -1,6 +1,7 @@
 package com.naoto.yamaguchi.miita.api;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
@@ -18,15 +19,22 @@ public final class APIURLBuilder {
     private static final String PER_PAGE_KEY = "per_page";
 
     private final Context context;
+    private String urlString;
     private List<String> params;
 
     public APIURLBuilder(Context context) {
         this.context = context;
+        this.urlString = ENTRY_POINT;
         this.params = new ArrayList<>();
     }
 
     public String build() {
-        return ENTRY_POINT+ "?" + this.buildQuery();
+        return this.urlString + "?" + this.buildQuery();
+    }
+
+    public APIURLBuilder setPath(@NonNull String path) {
+        this.urlString += path;
+        return this;
     }
 
     public APIURLBuilder setPage(int page) {
@@ -46,7 +54,7 @@ public final class APIURLBuilder {
         return this;
     }
 
-    public APIURLBuilder setParams(String key, String value) {
+    public APIURLBuilder setParams(@NonNull String key, @NonNull String value) {
         if (TextUtils.isEmpty(key) || TextUtils.isEmpty(value)) {
             return this;
         }
