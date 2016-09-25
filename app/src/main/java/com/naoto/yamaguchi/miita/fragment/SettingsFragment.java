@@ -14,7 +14,7 @@ import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
  * Created by naoto on 16/08/24.
  */
 public final class SettingsFragment extends PreferenceFragment {
-    
+
     private ListPreference perPagePref;
     private Preference logoutPref;
     private CurrentUser currentUser;
