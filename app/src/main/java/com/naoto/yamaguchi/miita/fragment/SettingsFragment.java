@@ -7,8 +7,8 @@ import android.preference.PreferenceFragment;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
-import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
 
 /**
  * Created by naoto on 16/08/24.
@@ -64,8 +64,7 @@ public final class SettingsFragment extends PreferenceFragment {
             }
         });
 
-        String perPage =
-                SharedPreferencesUtil.getString(getActivity(), PreferencesConstants.PER_PAGE_KEY, PreferencesConstants.PER_PAGE_DEFAULT_VALUE);
+        String perPage = PerPage.get(getActivity());
         this.perPagePref.setSummary(perPage + "件");
 
         if (this.currentUser.isAuthorize(getActivity())) {
