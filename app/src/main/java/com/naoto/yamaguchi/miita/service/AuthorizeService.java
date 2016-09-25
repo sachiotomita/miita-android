@@ -3,8 +3,8 @@ package com.naoto.yamaguchi.miita.service;
 import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.api.APIURLBuilder;
 import com.naoto.yamaguchi.miita.mapper.AccessTokenObjectMapper;
+import com.naoto.yamaguchi.miita.service.base.BaseService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,15 +12,9 @@ import org.json.JSONObject;
 /**
  * Created by naoto on 16/06/30.
  */
-public final class AuthorizeService extends DeliverResponseService<String> {
-
-    public interface OnRequestListener {
-        void onSuccess(String token);
-        void onError(APIException e);
-    }
+public final class AuthorizeService extends BaseService<String> {
 
     private String code;
-    private OnRequestListener listener;
 
     public AuthorizeService(Context context) {
         super(context);
@@ -29,11 +23,6 @@ public final class AuthorizeService extends DeliverResponseService<String> {
     @Override
     protected String getMethod() {
         return "POST";
-    }
-
-    @Override
-    protected String getUrlString() {
-        return APIURLBuilder.build(this.getPath());
     }
 
     // TODO: parameterを定数化
@@ -55,36 +44,32 @@ public final class AuthorizeService extends DeliverResponseService<String> {
         return "/access_tokens";
     }
 
-    public void request(String code, OnRequestListener listener) {
-        this.code = code;
-        this.addRequestListener(listener);
-        super.request();
-    }
-
-    private void addRequestListener(OnRequestListener listener) {
-        this.listener = listener;
+    @Override
+    protected int getPage() {
+        return NO_PAGE_VALUE;
     }
 
     @Override
-    protected String getResponse(String jsonString) throws APIException {
+    protected boolean isPerPage() {
+        return false;
+    }
+
+    @Override
+    protected boolean isResponse() {
+        return true;
+    }
+
+    @Override
+    protected String getResponse(String json) throws APIException {
         try {
-            return AccessTokenObjectMapper.map(jsonString);
+            return AccessTokenObjectMapper.map(json);
         } catch (APIException e) {
             throw e;
         }
     }
 
-    @Override
-    protected void deliverSuccess(String results) {
-        if (this.listener != null) {
-            this.listener.onSuccess(results);
-        }
-    }
-
-    @Override
-    protected void deliverError(APIException e) {
-        if (this.listener != null) {
-            this.listener.onError(e);
-        }
+    public void request(String code, OnRequestListener listener) {
+        this.code = code;
+        super.request(listener);
     }
 }
