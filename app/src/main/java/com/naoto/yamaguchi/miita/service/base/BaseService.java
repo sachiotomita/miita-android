@@ -39,6 +39,7 @@ public abstract class BaseService<T> {
     public BaseService(Context context) {
         this.context = context;
         this.urlBuilder = new APIURLBuilder(context);
+        this.page = 1;
     }
 
     protected void request(OnRequestListener listener) {
