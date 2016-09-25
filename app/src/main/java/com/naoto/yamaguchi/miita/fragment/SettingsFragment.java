@@ -7,17 +7,14 @@ import android.preference.PreferenceFragment;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
 import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
 
 /**
  * Created by naoto on 16/08/24.
  */
 public final class SettingsFragment extends PreferenceFragment {
-
-    private static final String PER_PAGE_KEY = "pref_key_per_page";
-    private static final String LOGOUT_KEY = "pref_key_logout";
-    private static final String DEFAULT_VALUE_PER_PAGE = "30";
-
+    
     private ListPreference perPagePref;
     private Preference logoutPref;
     private CurrentUser currentUser;
@@ -55,7 +52,7 @@ public final class SettingsFragment extends PreferenceFragment {
     }
 
     private void init() {
-        this.perPagePref = (ListPreference)findPreference(PER_PAGE_KEY);
+        this.perPagePref = (ListPreference)findPreference(PreferencesConstants.PER_PAGE_KEY);
         this.perPagePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -68,11 +65,11 @@ public final class SettingsFragment extends PreferenceFragment {
         });
 
         String perPage =
-                SharedPreferencesUtil.getString(getActivity(), PER_PAGE_KEY, DEFAULT_VALUE_PER_PAGE);
+                SharedPreferencesUtil.getString(getActivity(), PreferencesConstants.PER_PAGE_KEY, PreferencesConstants.PER_PAGE_DEFAULT_VALUE);
         this.perPagePref.setSummary(perPage + "件");
 
         if (this.currentUser.isAuthorize(getActivity())) {
-            this.logoutPref = findPreference(LOGOUT_KEY);
+            this.logoutPref = findPreference(PreferencesConstants.LOGOUT_KEY);
             this.logoutPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
