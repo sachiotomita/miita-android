@@ -3,6 +3,7 @@ package com.naoto.yamaguchi.miita.service;
 import android.content.Context;
 
 import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.application.Constants;
 import com.naoto.yamaguchi.miita.mapper.AccessTokenObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
 
@@ -25,14 +26,15 @@ public final class AuthorizeService extends BaseService<String> {
         return "POST";
     }
 
-    // TODO: parameterを定数化
     @Override
     protected byte[] getBody() {
         try {
             JSONObject body = new JSONObject();
-            body.put("client_id", "1f9862b42618ce3f030a4988215fb20befba3cfa");
-            body.put("client_secret", "c298ca57963361cb4206dc1670e522d979a86b7b");
-            body.put("code", this.code);
+            body.put(Constants.CLIENT_ID_KEY,
+                    Constants.CLIENT_ID);
+            body.put(Constants.CLIENT_SECRET_KEY,
+                    Constants.CLIENT_SECRET);
+            body.put(Constants.CODE_KEY, this.code);
             return body.toString().getBytes();
         } catch (JSONException e) {
             return null;
