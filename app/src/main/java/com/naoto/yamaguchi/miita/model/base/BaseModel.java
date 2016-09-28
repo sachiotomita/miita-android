@@ -24,7 +24,7 @@ public abstract class BaseModel<T> {
     protected int page;
     protected boolean isPaging;
 
-    protected abstract void serviceRequest();
+    protected abstract void serviceRequest(RequestType type);
 
     // for list view
     // insert, update, truncate to Realm.
