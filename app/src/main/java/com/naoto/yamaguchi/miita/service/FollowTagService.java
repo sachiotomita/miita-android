@@ -7,6 +7,7 @@ import com.naoto.yamaguchi.miita.api.APIURLBuilder;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.mapper.TagListObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public final class FollowTagService extends BaseService<List<FollowTag>> {
         }
     }
 
-    public void request(int page, String userId, OnRequestListener listener) {
+    public void request(int page, String userId, OnRequestListener<List<FollowTag>> listener) {
         this.page = page;
         this.userId = userId;
         super.request(listener);

@@ -16,11 +16,6 @@ import com.naoto.yamaguchi.miita.util.thread.ThreadUtil;
  */
 
 public abstract class BaseService<T> {
-    public interface OnRequestListener<T> {
-        void onSuccess(T results);
-        void onError(APIException e);
-    }
-
     protected static final int NO_PAGE_VALUE = 0;
 
     protected final Context context;
@@ -42,7 +37,7 @@ public abstract class BaseService<T> {
         this.page = 1;
     }
 
-    protected void request(OnRequestListener listener) {
+    protected void request(OnRequestListener<T> listener) {
         this.addRequestListener(listener);
 
         API.request(this.context, this.buildConfig(), new APIListener() {
@@ -68,7 +63,7 @@ public abstract class BaseService<T> {
         });
     }
 
-    protected void addRequestListener(OnRequestListener listener) {
+    protected void addRequestListener(OnRequestListener<T> listener) {
         this.listener = listener;
     }
 

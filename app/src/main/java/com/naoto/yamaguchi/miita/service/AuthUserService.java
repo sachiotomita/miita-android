@@ -6,6 +6,7 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.mapper.UserObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import org.json.JSONException;
 
@@ -57,7 +58,7 @@ public class AuthUserService extends BaseService<User> {
         }
     }
 
-    public void request(OnRequestListener listener) {
+    public void request(OnRequestListener<User> listener) {
         super.request(listener);
     }
 }

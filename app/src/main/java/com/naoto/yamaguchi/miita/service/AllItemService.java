@@ -6,6 +6,7 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public final class AllItemService extends BaseService<List<AllItem>> {
         }
     }
 
-    public void request(int page, OnRequestListener listener) {
+    public void request(int page, OnRequestListener<List<AllItem>> listener) {
         this.page = page;
         super.request(listener);
     }

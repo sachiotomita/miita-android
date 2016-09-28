@@ -6,6 +6,7 @@ import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.application.Constants;
 import com.naoto.yamaguchi.miita.mapper.AccessTokenObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +71,7 @@ public final class AuthorizeService extends BaseService<String> {
         }
     }
 
-    public void request(String code, OnRequestListener listener) {
+    public void request(String code, OnRequestListener<String> listener) {
         this.code = code;
         super.request(listener);
     }

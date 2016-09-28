@@ -7,6 +7,7 @@ import com.naoto.yamaguchi.miita.api.APIURLBuilder;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public final class TagItemService extends BaseService<List<Item>> {
         }
     }
 
-    public void request(int page, String tagId, OnRequestListener listener) {
+    public void request(int page, String tagId, OnRequestListener<List<Item>> listener) {
         this.page = page;
         this.tagId = tagId;
         super.request(listener);

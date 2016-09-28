@@ -24,9 +24,10 @@ public abstract class BaseModel<T> {
     protected int page;
     protected boolean isPaging;
 
+    protected abstract boolean isListView();
     protected abstract void serviceRequest(RequestType type);
 
-    // for list view
+    // `deliverSuccessAndProcessResults` call this method.
     // insert, update, truncate to Realm.
     protected abstract T processResults(RequestType type, T results);
 
@@ -44,25 +45,24 @@ public abstract class BaseModel<T> {
         return this.isPaging;
     }
 
-    protected void request(OnModelListener<T> listener, RequestType type) {
-        switch (type) {
-            case FIRST:
-            case REFRESH:
-                this.page = 1;
-                this.isPaging = false;
-                break;
-            case PAGING:
-                this.page++;
-                this.isPaging = true;
-                break;
+    protected void request(RequestType type, OnModelListener<T> listener) {
+        this.addModelListener(listener);
+
+        if (this.isListView()) {
+            switch (type) {
+                case FIRST:
+                case REFRESH:
+                    this.page = 1;
+                    this.isPaging = false;
+                    break;
+                case PAGING:
+                    this.page++;
+                    this.isPaging = true;
+                    break;
+            }
         }
 
-        this.request(listener);
-    }
-
-    protected void request(OnModelListener<T> listener) {
-        this.addModelListener(listener);
-        this.serviceRequest();
+        this.serviceRequest(type);
     }
 
     protected void addModelListener(OnModelListener<T> listener) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.api.APIURLBuilder;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 /**
  * Created by naoto on 16/08/15.
@@ -53,7 +54,7 @@ public final class ItemService extends BaseService<Void> {
         return null;
     }
 
-    public void request(String method, String itemId, OnRequestListener listener) {
+    public void request(String method, String itemId, OnRequestListener<Void> listener) {
         this.HTTPMethod = method;
         this.itemId = itemId;
         super.request(listener);
