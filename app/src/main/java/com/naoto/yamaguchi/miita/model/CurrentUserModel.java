@@ -6,17 +6,21 @@ import android.net.Uri;
 
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.User;
+import com.naoto.yamaguchi.miita.model.base.BaseModel;
 import com.naoto.yamaguchi.miita.model.base.BaseNoObjectModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
+import com.naoto.yamaguchi.miita.model.base.RequestType;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.AuthUserService;
 import com.naoto.yamaguchi.miita.service.AuthorizeService;
+import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 /**
  * Created by naoto on 16/06/30.
  */
-public final class CurrentUserModel extends BaseNoObjectModel<Void> {
+public final class CurrentUserModel extends BaseModel<Void> {
 
+    private String code;
     private AuthorizeService authorizeService;
     private AuthUserService authUserService;
     private CurrentUser currentUser;
@@ -26,6 +30,11 @@ public final class CurrentUserModel extends BaseNoObjectModel<Void> {
         this.authorizeService = new AuthorizeService(this.context);
         this.authUserService = new AuthUserService(this.context);
         this.currentUser = CurrentUser.getInstance();
+    }
+
+    public CurrentUserModel setCode(String code) {
+        this.code = code;
+        return this;
     }
 
     public boolean isExistCodeQuery(Intent intent) {
@@ -48,16 +57,21 @@ public final class CurrentUserModel extends BaseNoObjectModel<Void> {
         return uri.getQueryParameter("code");
     }
 
-    public void request(String code, OnModelListener<Void> listener) {
-        super.addModelListener(listener);
-        this.authorizeRequest(code);
+    @Override
+    protected boolean isListView() {
+        return false;
     }
 
-    private void authorizeRequest(String code) {
-        this.authorizeService.request(code, new AuthorizeService.OnRequestListener() {
+    public void request(OnModelListener<Void> listener) {
+        this.request(null, listener);
+    }
+
+    @Override
+    protected void serviceRequest(RequestType type) {
+        this.authorizeService.request(this.code, new OnRequestListener<String>() {
             @Override
-            public void onSuccess(String token) {
-                currentUser.setToken(context, token);
+            public void onSuccess(String results) {
+                currentUser.setToken(context, results);
                 authUserRequest();
             }
 
@@ -69,12 +83,12 @@ public final class CurrentUserModel extends BaseNoObjectModel<Void> {
     }
 
     private void authUserRequest() {
-        this.authUserService.request(new AuthUserService.OnRequestListener() {
+        this.authUserService.request(new OnRequestListener<User>() {
             @Override
-            public void onSuccess(User user) {
-                currentUser.setID(context, user.getId());
-                currentUser.setImageUrl(context, user.getImageUrlString());
-                deliverSuccess();
+            public void onSuccess(User results) {
+                currentUser.setID(context, results.getId());
+                currentUser.setImageUrl(context, results.getImageUrlString());
+                deliverSuccess(null);
             }
 
             @Override
@@ -82,5 +96,10 @@ public final class CurrentUserModel extends BaseNoObjectModel<Void> {
                 deliverError(e);
             }
         });
+    }
+
+    @Override
+    protected Void processResults(RequestType type, Void results) {
+        return null;
     }
 }
