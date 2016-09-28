@@ -24,6 +24,7 @@ public abstract class BaseModel<T> {
     protected int page;
     protected boolean isPaging;
 
+    // if this method is true, handling page, isPaging by request type.
     protected abstract boolean isListView();
     protected abstract void serviceRequest(RequestType type);
 
