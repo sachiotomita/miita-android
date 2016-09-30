@@ -40,7 +40,7 @@ public abstract class BaseModel<T> {
         return this.isPaging;
     }
 
-    protected void request(RequestType type, OnModelListener<T> listener) {
+    public void request(RequestType type, OnModelListener<T> listener) {
         this.addModelListener(listener);
 
         if (this.isListView()) {
