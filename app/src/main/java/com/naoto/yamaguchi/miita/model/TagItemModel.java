@@ -5,7 +5,6 @@ import android.content.Context;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.model.base.BaseModel;
-import com.naoto.yamaguchi.miita.model.base.BaseObjectListModel;
 import com.naoto.yamaguchi.miita.service.TagItemService;
 import com.naoto.yamaguchi.miita.model.base.RequestType;
 import com.naoto.yamaguchi.miita.service.base.OnRequestListener;

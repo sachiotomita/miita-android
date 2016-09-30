@@ -7,7 +7,6 @@ import com.naoto.yamaguchi.miita.dao.DaoFactory;
 import com.naoto.yamaguchi.miita.dao.StockItemDao;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.model.base.BaseModel;
-import com.naoto.yamaguchi.miita.model.base.BaseRealmObjectListModel;
 import com.naoto.yamaguchi.miita.model.base.UsingDaoModelType;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.StockItemService;

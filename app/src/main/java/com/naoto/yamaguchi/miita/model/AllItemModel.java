@@ -7,11 +7,9 @@ import com.naoto.yamaguchi.miita.dao.AllItemDao;
 import com.naoto.yamaguchi.miita.dao.DaoFactory;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.base.BaseModel;
-import com.naoto.yamaguchi.miita.model.base.BaseRealmObjectListModel;
 import com.naoto.yamaguchi.miita.model.base.UsingDaoModelType;
 import com.naoto.yamaguchi.miita.service.AllItemService;
 import com.naoto.yamaguchi.miita.model.base.RequestType;
-import com.naoto.yamaguchi.miita.service.base.BaseService;
 import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import java.util.List;
@@ -19,7 +17,8 @@ import java.util.List;
 /**
  * Created by naoto on 16/06/30.
  */
-public final class AllItemModel extends BaseModel<List<AllItem>> implements UsingDaoModelType<AllItem, AllItemDao> {
+public final class AllItemModel extends BaseModel<List<AllItem>>
+        implements UsingDaoModelType<AllItem, AllItemDao> {
 
     private AllItemService service;
     private AllItemDao dao;
