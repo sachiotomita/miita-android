@@ -116,26 +116,28 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        this.model.check(this.itemId, new OnModelListener<Void>() {
-            @Override
-            public void onSuccess(Void results) {
-                stockButton.setBackgroundTintList(
-                        ColorStateList.valueOf(getResources().getColor(R.color.red))
-                );
-            }
+        this.model.setType(ItemModel.Type.CHECK)
+                .setItemId(this.itemId)
+                .request(new OnModelListener<Void>() {
+                    @Override
+                    public void onSuccess(Void results) {
+                        stockButton.setBackgroundTintList(
+                                ColorStateList.valueOf(getResources().getColor(R.color.red))
+                        );
+                    }
 
-            @Override
-            public void onError(APIException e) {
-                stockButton.setBackgroundTintList(
-                        ColorStateList.valueOf(getResources().getColor(R.color.green))
-                );
-            }
+                    @Override
+                    public void onError(APIException e) {
+                        stockButton.setBackgroundTintList(
+                                ColorStateList.valueOf(getResources().getColor(R.color.green))
+                        );
+                    }
 
-            @Override
-            public void onComplete() {
-                stockButton.setEnabled(true);
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                        stockButton.setEnabled(true);
+                    }
+                });
     }
 
     private void loadBody() {
@@ -173,43 +175,47 @@ public class ItemActivity extends AppCompatActivity implements View.OnClickListe
         this.stockButton.setEnabled(false);
 
         if (this.model.getIsStock()) {
-            this.model.unstock(this.itemId, new OnModelListener<Void>() {
-                @Override
-                public void onSuccess(Void results) {
-                    stockButton.setBackgroundTintList(
-                            ColorStateList.valueOf(getResources().getColor(R.color.green))
-                    );
-                }
+            this.model.setType(ItemModel.Type.UNSTOCK)
+                    .setItemId(this.itemId)
+                    .request(new OnModelListener<Void>() {
+                        @Override
+                        public void onSuccess(Void results) {
+                            stockButton.setBackgroundTintList(
+                                    ColorStateList.valueOf(getResources().getColor(R.color.green))
+                            );
+                        }
 
-                @Override
-                public void onError(APIException e) {
-                    // TODO: show alert
-                }
+                        @Override
+                        public void onError(APIException e) {
+                            // TODO: show alert
+                        }
 
-                @Override
-                public void onComplete() {
-                    stockButton.setEnabled(true);
-                }
-            });
+                        @Override
+                        public void onComplete() {
+                            stockButton.setEnabled(true);
+                        }
+                    });
         } else {
-            this.model.stock(this.itemId, new OnModelListener<Void>() {
-                @Override
-                public void onSuccess(Void results) {
-                    stockButton.setBackgroundTintList(
-                            ColorStateList.valueOf(getResources().getColor(R.color.red))
-                    );
-                }
+            this.model.setType(ItemModel.Type.STOCK)
+                    .setItemId(this.itemId)
+                    .request(new OnModelListener<Void>() {
+                        @Override
+                        public void onSuccess(Void results) {
+                            stockButton.setBackgroundTintList(
+                                    ColorStateList.valueOf(getResources().getColor(R.color.red))
+                            );
+                        }
 
-                @Override
-                public void onError(APIException e) {
-                    // TODO: show alert
-                }
+                        @Override
+                        public void onError(APIException e) {
+                            // TODO: show alert
+                        }
 
-                @Override
-                public void onComplete() {
-                    stockButton.setEnabled(true);
-                }
-            });
+                        @Override
+                        public void onComplete() {
+                            stockButton.setEnabled(true);
+                        }
+                    });
         }
     }
 
