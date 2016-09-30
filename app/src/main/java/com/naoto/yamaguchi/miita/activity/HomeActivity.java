@@ -91,22 +91,23 @@ public class HomeActivity extends AppCompatActivity implements
             dialog.show();
 
             String code = this.currentUserModel.getCodeQuery(this.getIntent());
-            this.currentUserModel.request(code, new OnModelListener<Void>() {
-                @Override
-                public void onSuccess(Void results) {
-                    dialog.dismiss();
-                }
+            this.currentUserModel.setCode(code)
+                    .request(new OnModelListener<Void>() {
+                        @Override
+                        public void onSuccess(Void results) {
+                            dialog.dismiss();
+                        }
 
-                @Override
-                public void onError(APIException e) {
-                    dialog.dismiss();
-                }
+                        @Override
+                        public void onError(APIException e) {
+                            dialog.dismiss();
+                        }
 
-                @Override
-                public void onComplete() {
-                    // NOOP
-                }
-            });
+                        @Override
+                        public void onComplete() {
+                            // NOOP
+                        }
+                    });
         }
     }
 
