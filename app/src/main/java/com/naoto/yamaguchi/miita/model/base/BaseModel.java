@@ -9,12 +9,6 @@ import com.naoto.yamaguchi.miita.api.APIException;
  * Created by naoto on 16/09/22.
  */
 public abstract class BaseModel<T> {
-    public interface OnModelListener<T> {
-        void onSuccess(T results);
-        void onError(APIException e);
-        void onComplete();
-    }
-
     // base
     protected final Context context;
     protected OnModelListener<T> listener;
