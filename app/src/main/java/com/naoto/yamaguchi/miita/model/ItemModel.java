@@ -14,7 +14,7 @@ import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
  * Created by naoto on 16/08/15.
  */
 public final class ItemModel extends BaseModel<Void> {
-    
+
     public enum Type {
         CHECK {
             @Override
@@ -90,6 +90,8 @@ public final class ItemModel extends BaseModel<Void> {
             case UNSTOCK:
                 return this.getUnStockListener();
         }
+
+        return null;
     }
 
     private OnRequestListener<Void> getCheckListener() {
