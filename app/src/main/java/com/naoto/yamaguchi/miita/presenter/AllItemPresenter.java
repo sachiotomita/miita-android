@@ -57,7 +57,11 @@ public final class AllItemPresenter extends Presenter<AllItemPresenter.View> {
         this.request(RequestType.REFRESH);
     }
 
-    public void nextLoaditems() {
+    public void nextLoadItems() {
+        if (this.model.isPaging()) {
+            return;
+        }
+
         this.view.addFooterView();
         this.request(RequestType.PAGING);
     }
