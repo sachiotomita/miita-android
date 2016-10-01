@@ -10,8 +10,8 @@ import android.support.annotation.NonNull;
  */
 
 public abstract class Presenter<V> {
-    private final Context context;
-    private V view;
+    protected final Context context;
+    protected V view;
 
     /**
      * Constructor.
