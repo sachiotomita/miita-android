@@ -46,6 +46,10 @@ public final class StockItemPresenter extends Presenter<StockItemPresenter.View>
         // NOOP
     }
 
+    public int getPage() {
+        return this.model.getPage();
+    }
+
     public void loadItems() {
         this.view.showLoading();
         this.view.hideListView();

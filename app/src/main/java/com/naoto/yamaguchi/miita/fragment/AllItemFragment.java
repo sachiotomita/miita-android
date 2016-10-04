@@ -18,7 +18,6 @@ import com.naoto.yamaguchi.miita.activity.HomeActivity;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
-import com.naoto.yamaguchi.miita.model.AllItemModel;
 import com.naoto.yamaguchi.miita.presenter.AllItemPresenter;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
@@ -35,7 +34,6 @@ public class AllItemFragment extends Fragment implements
     }
 
     private OnItemClickListener listener;
-    private AllItemModel model;
     private List<AllItem> items;
     private ListView listView;
     private SwipeRefreshLayout refreshLayout;
@@ -119,7 +117,7 @@ public class AllItemFragment extends Fragment implements
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         String perPage = PerPage.get(this.getContext());
-        if (totalItemCount < (Integer.parseInt(perPage) * this.model.getPage())) {
+        if (totalItemCount < (Integer.parseInt(perPage) * this.presenter.getPage())) {
             return;
         }
 

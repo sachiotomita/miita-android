@@ -46,6 +46,10 @@ public final class AllItemPresenter extends Presenter<AllItemPresenter.View> {
         // NOOP
     }
 
+    public int getPage() {
+        return this.model.getPage();
+    }
+
     public void loadItems() {
         this.view.showLoading();
         this.view.hideListView();
