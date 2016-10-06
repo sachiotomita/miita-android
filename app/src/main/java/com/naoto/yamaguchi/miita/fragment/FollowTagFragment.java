@@ -18,16 +18,17 @@ import com.naoto.yamaguchi.miita.activity.HomeActivity;
 import com.naoto.yamaguchi.miita.adapter.TagListAdapter;
 import com.naoto.yamaguchi.miita.api.APIException;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
-import com.naoto.yamaguchi.miita.model.FollowTagModel;
-import com.naoto.yamaguchi.miita.model.base.OnModelListener;
-import com.naoto.yamaguchi.miita.model.base.RequestType;
+import com.naoto.yamaguchi.miita.presenter.FollowTagPresenter;
+import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FollowTagFragment extends Fragment implements
         SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener,
+        FollowTagPresenter.View {
 
     public interface OnTagClickListener {
         void onTagClick(FollowTag tag);
@@ -37,7 +38,6 @@ public class FollowTagFragment extends Fragment implements
 
     private OnTagClickListener listener;
     private String forceUpdate;
-    private FollowTagModel model;
     private List<FollowTag> tags;
     private ListView listView;
     private SwipeRefreshLayout refreshLayout;
@@ -45,7 +45,12 @@ public class FollowTagFragment extends Fragment implements
     private ProgressBar spinner;
     private TagListAdapter<FollowTag> adapter;
 
-    public FollowTagFragment() {}
+    private final FollowTagPresenter presenter;
+
+    public FollowTagFragment() {
+        this.tags = new ArrayList<>();
+        this.presenter = new FollowTagPresenter(this.getContext());
+    }
 
     public static FollowTagFragment newInstance(String forceUpdate) {
         FollowTagFragment fragment = new FollowTagFragment();
@@ -61,12 +66,11 @@ public class FollowTagFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // FIXME: for example
         if (getArguments() != null) {
             this.forceUpdate = getArguments().getString(ARG_FORCE_UPDATE);
         }
-
-        this.model = new FollowTagModel(this.getContext());
-        this.tags = this.model.load();
     }
 
     @Override
@@ -96,11 +100,8 @@ public class FollowTagFragment extends Fragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (this.tags.size() > 0) {
-            this.adapter.notifyDataSetChanged();
-        } else {
-            this.request(RequestType.FIRST);
-        }
+        this.presenter.attachView(this);
+        this.presenter.loadTags();
     }
 
     @Override
@@ -122,7 +123,7 @@ public class FollowTagFragment extends Fragment implements
 
     @Override
     public void onRefresh() {
-        this.request(RequestType.REFRESH);
+        this.presenter.refreshTags();
     }
 
     @Override
@@ -130,17 +131,13 @@ public class FollowTagFragment extends Fragment implements
 
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        // TODO: per page
-        if (totalItemCount < (30 * this.model.getPage())) {
-            return;
-        }
-
-        if (this.model.isPaging()) {
+        String perPage = PerPage.get(this.getContext());
+        if (totalItemCount < (Integer.parseInt(perPage) * this.presenter.getPage())) {
             return;
         }
 
         if (firstVisibleItem + visibleItemCount == totalItemCount) {
-            this.request(RequestType.PAGING);
+            this.presenter.nextLoadTags();
         }
     }
 
@@ -157,72 +154,58 @@ public class FollowTagFragment extends Fragment implements
         }
     }
 
-    private void request(RequestType type) {
-        switch (type) {
-            case FIRST:
-                this.listView.setVisibility(View.GONE);
-                this.spinner.setVisibility(View.VISIBLE);
-                this.model.request(RequestType.FIRST, this.getListener(RequestType.FIRST));
-                break;
-            case REFRESH:
-                this.refreshLayout.setEnabled(false);
-                this.model.request(RequestType.REFRESH, this.getListener(RequestType.REFRESH));
-                break;
-            case PAGING:
-                this.footerView = getActivity().getLayoutInflater().inflate(R.layout.progress_footer, null);
-                this.listView.addFooterView(this.footerView);
-                this.model.request(RequestType.PAGING, this.getListener(RequestType.PAGING));
-                break;
-        }
+    @Override
+    public void showLoading() {
+        this.spinner.setVisibility(View.VISIBLE);
     }
 
-    private OnModelListener<List<FollowTag>> getListener(final RequestType type) {
-        return new OnModelListener<List<FollowTag>>() {
-            @Override
-            public void onSuccess(List<FollowTag> results) {
-                notifyDataSetChanged(type, results);
-            }
-
-            @Override
-            public void onError(APIException e) {
-                // TODO: alert
-            }
-
-            @Override
-            public void onComplete() {
-                invalidateView(type);
-            }
-        };
+    @Override
+    public void hideLoading() {
+        this.spinner.setVisibility(View.GONE);
     }
 
-    private void notifyDataSetChanged(RequestType type, List<FollowTag> tags) {
-        switch (type) {
-            case FIRST:
-            case REFRESH:
-                this.adapter.clear();
-                this.adapter.addAll(tags);
-                break;
-            case PAGING:
-                this.adapter.addAll(tags);
-                break;
-        }
+    @Override
+    public void showListView() {
+        this.listView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideListView() {
+        this.listView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void beginRefreshing() {
+        this.refreshLayout.setEnabled(false);
+    }
+
+    @Override
+    public void endRefreshing() {
+        this.refreshLayout.setEnabled(true);
+        this.refreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void addFooterView() {
+        this.footerView =
+                getActivity().getLayoutInflater().inflate(R.layout.progress_footer, null);
+        this.listView.addFooterView(this.footerView);
+    }
+
+    @Override
+    public void removeFooterView() {
+        this.listView.removeFooterView(this.footerView);
+    }
+
+    @Override
+    public void reloadData(List<FollowTag> tags) {
+        this.adapter.clear();
+        this.adapter.addAll(tags);
         this.adapter.notifyDataSetChanged();
     }
 
-    private void invalidateView(RequestType type) {
-        switch (type) {
-            case FIRST:
-                this.listView.setVisibility(View.VISIBLE);
-                this.spinner.setVisibility(View.GONE);
-                break;
-            case REFRESH:
-                this.refreshLayout.setEnabled(true);
-                this.refreshLayout.setRefreshing(false);
-                break;
-            case PAGING:
-                this.listView.removeFooterView(this.footerView);
-                break;
-        }
+    @Override
+    public void showError(APIException e) {
+        // TODO: show error
     }
-
 }
