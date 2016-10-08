@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.api;
+package com.naoto.yamaguchi.miita.ex_api;
 
 /**
  * Created by naoto on 16/06/25.

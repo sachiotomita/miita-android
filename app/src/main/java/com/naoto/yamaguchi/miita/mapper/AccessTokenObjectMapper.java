@@ -1,6 +1,6 @@
 package com.naoto.yamaguchi.miita.mapper;
 
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -2,8 +2,7 @@ package com.naoto.yamaguchi.miita.service;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.api.APIURLBuilder;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;

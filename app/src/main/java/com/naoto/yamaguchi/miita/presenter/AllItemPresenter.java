@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.presenter;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.AllItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;

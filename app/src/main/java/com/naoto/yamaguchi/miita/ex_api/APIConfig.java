@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.api;
+package com.naoto.yamaguchi.miita.ex_api;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

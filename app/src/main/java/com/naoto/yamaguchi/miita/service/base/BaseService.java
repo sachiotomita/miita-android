@@ -2,12 +2,12 @@ package com.naoto.yamaguchi.miita.service.base;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.api.API;
-import com.naoto.yamaguchi.miita.api.APIConfig;
-import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.api.APIListener;
-import com.naoto.yamaguchi.miita.api.APIURLBuilder;
-import com.naoto.yamaguchi.miita.api.Response;
+import com.naoto.yamaguchi.miita.ex_api.API;
+import com.naoto.yamaguchi.miita.ex_api.APIConfig;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIListener;
+import com.naoto.yamaguchi.miita.ex_api.APIURLBuilder;
+import com.naoto.yamaguchi.miita.ex_api.Response;
 import com.naoto.yamaguchi.miita.util.thread.ThreadType;
 import com.naoto.yamaguchi.miita.util.thread.ThreadUtil;
 

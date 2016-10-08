@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.service;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.mapper.UserObjectMapper;
 import com.naoto.yamaguchi.miita.service.base.BaseService;

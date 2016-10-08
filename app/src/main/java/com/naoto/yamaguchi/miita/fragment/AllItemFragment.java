@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.activity.HomeActivity;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.presenter.AllItemPresenter;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;

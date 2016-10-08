@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.model;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.dao.AllItemDao;
 import com.naoto.yamaguchi.miita.dao.DaoFactory;
 import com.naoto.yamaguchi.miita.entity.AllItem;

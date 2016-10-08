@@ -1,16 +1,13 @@
 package com.naoto.yamaguchi.miita.activity;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -20,8 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.api.APIException;
-import com.naoto.yamaguchi.miita.application.Constants;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;

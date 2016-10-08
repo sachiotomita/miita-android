@@ -1,6 +1,6 @@
 package com.naoto.yamaguchi.miita.model.base;
 
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 
 /**
  * Created by naoto on 16/09/22.

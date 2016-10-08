@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.naoto.yamaguchi.miita.api.APIException;
+import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.model.base.BaseModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
