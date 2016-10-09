@@ -1,8 +1,16 @@
 package com.naoto.yamaguchi.miita.api;
 
+import android.content.Context;
+
 /**
  * Created by naoto on 2016/10/09.
  */
 
-public final class Headers {
+public abstract class Headers {
+
+  private final Context context;
+
+  public Headers(Context context) {
+    this.context = context;
+  }
 }
