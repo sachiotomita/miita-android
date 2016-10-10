@@ -9,10 +9,5 @@ import android.content.Context;
  */
 
 public abstract class Headers {
-
-  private final Context context;
-
-  public Headers(Context context) {
-    this.context = context;
-  }
+  // Nothing.
 }

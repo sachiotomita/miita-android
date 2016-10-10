@@ -15,8 +15,7 @@ public final class ResponseHeaders extends Headers {
   private int statusCode;
   private boolean relNext;
 
-  public ResponseHeaders(Context context) {
-    super(context);
+  public ResponseHeaders() {
     this.statusCode = DEFAULT_CODE_VALUE;
     this.relNext = false;
   }
