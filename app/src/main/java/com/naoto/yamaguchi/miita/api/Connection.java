@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * HTTP Connection class.
+ *
  * Created by naoto on 2016/10/10.
  */
 
@@ -26,17 +28,32 @@ public final class Connection {
     this.connection = null;
   }
 
-  // TODO: throw e
   public void build(String urlString,
                     Method method,
                     RequestHeaders headers,
-                    byte[] body) {
+                    byte[] body) throws IOException {
     try {
       URL url = new URL(urlString);
       this.connection = (HttpURLConnection)url.openConnection();
-
+      this.setMethod(method);
+      this.setHeaders(headers);
+      this.setBody(method, body);
     } catch (IOException e) {
-      // TODO:
+      throw e;
+    }
+  }
+
+  public void connect() throws IOException {
+    try {
+      this.connection.connect();
+    } catch (IOException e) {
+      throw e;
+    }
+  }
+
+  public void disConnect() {
+    if (this.connection != null) {
+      this.connection.disconnect();
     }
   }
 
@@ -80,11 +97,11 @@ public final class Connection {
     }
   }
 
-  private void setMethod(Method method) {
+  private void setMethod(Method method) throws ProtocolException {
     try {
       this.connection.setRequestMethod(method.toString());
     } catch (ProtocolException e) {
-      // TODO:
+      throw e;
     }
   }
 
@@ -95,7 +112,7 @@ public final class Connection {
     }
   }
 
-  private void setBody(Method method, byte[] body) {
+  private void setBody(Method method, byte[] body) throws IOException {
     if (method == Method.POST || method == Method.PUT) {
       if (body == null) return;
 
@@ -106,10 +123,8 @@ public final class Connection {
         out.write(body);
         out.close();
       } catch (IOException e) {
-        // TODO:
+        throw e;
       }
     }
   }
-
-
 }
