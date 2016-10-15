@@ -2,60 +2,55 @@ package com.naoto.yamaguchi.miita.service;
 
 import android.content.Context;
 
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Method;
+import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.service.base.BaseService;
 import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
+import java.util.Map;
+
 /**
+ * Request CheckStock/Stock/UnStock.
+ * GET, POST, DELETE: v2/items/__item_id__/stock
+ *
  * Created by naoto on 16/08/15.
  */
-public final class ItemService extends BaseService<Void> {
+public final class ItemService implements RequestType<Void> {
 
-    private String HTTPMethod;
-    private String itemId;
+  private Method method;
+  private String itemId;
 
-    public ItemService(Context context) {
-        super(context);
-    }
+  public ItemService() {}
 
-    @Override
-    protected String getMethod() {
-        return this.HTTPMethod;
-    }
+  public ItemService setMethod(Method method) {
+    this.method = method;
+    return this;
+  }
 
-    @Override
-    protected byte[] getBody() {
-        return null;
-    }
+  public ItemService setItemId(String itemId) {
+    this.itemId = itemId;
+    return this;
+  }
 
-    @Override
-    protected String getPath() {
-        return "/items/" + this.itemId + "/stock";
-    }
+  @Override
+  public Method getMethod() {
+    return this.method;
+  }
 
-    @Override
-    protected int getPage() {
-        return NO_PAGE_VALUE;
-    }
+  @Override
+  public String getPath() {
+    return "/items/" + this.itemId + "/stock";
+  }
 
-    @Override
-    protected boolean isPerPage() {
-        return false;
-    }
+  @Override
+  public Map<String, String> getParameters() {
+    return null;
+  }
 
-    @Override
-    protected boolean isResponse() {
-        return false;
-    }
-
-    @Override
-    protected Void getResponse(String json) throws APIException {
-        return null;
-    }
-
-    public void request(String method, String itemId, OnRequestListener<Void> listener) {
-        this.HTTPMethod = method;
-        this.itemId = itemId;
-        super.request(listener);
-    }
+  @Override
+  public Void processResponse(String response) throws HttpException {
+    return null;
+  }
 }
