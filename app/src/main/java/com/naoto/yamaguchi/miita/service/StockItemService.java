@@ -2,67 +2,70 @@ package com.naoto.yamaguchi.miita.service;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Method;
+import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
-import com.naoto.yamaguchi.miita.service.base.BaseService;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * Request Stock Item.
+ * GET: v2/users/__user_id_/stocks
+ *
  * Created by naoto on 16/06/30.
  */
-public final class StockItemService extends BaseService<List<StockItem>> {
+public final class StockItemService implements RequestType<List<StockItem>> {
 
-    private String userId;
+  private final Context context;
+  private String userId;
+  private int page;
 
-    public StockItemService(Context context) {
-        super(context);
+  public StockItemService(Context context) {
+    this.context = context;
+    this.page = 1;
+  }
+
+  public StockItemService setUserId(String userId) {
+    this.userId = userId;
+    return this;
+  }
+
+  public StockItemService setPage(int page) {
+    this.page = page;
+    return this;
+  }
+
+  @Override
+  public Method getMethod() {
+    return Method.GET;
+  }
+
+  @Override
+  public String getPath() {
+    return "/users/" + this.userId + "/stocks";
+  }
+
+  @Override
+  public Map<String, String> getParameters() {
+    return new HashMap<String, String>() {
+      {
+        put("page", Integer.toString(page));
+        put("per_page", PerPage.get(context));
+      }
+    };
+  }
+
+  @Override
+  public List<StockItem> processResponse(String response) throws HttpException {
+    try {
+      return ItemListObjectMapper.map(response, StockItem.class);
+    } catch (HttpException e) {
+      return null;
     }
-
-    @Override
-    protected String getMethod() {
-        return "GET";
-    }
-
-    @Override
-    protected byte[] getBody() {
-        return null;
-    }
-
-    @Override
-    protected String getPath() {
-        return "/users/" + this.userId + "/stocks";
-    }
-
-    @Override
-    protected int getPage() {
-        return this.page;
-    }
-
-    @Override
-    protected boolean isPerPage() {
-        return true;
-    }
-
-    @Override
-    protected boolean isResponse() {
-        return true;
-    }
-
-    @Override
-    protected List<StockItem> getResponse(String json) throws APIException {
-        try {
-            return ItemListObjectMapper.map(json, StockItem.class);
-        } catch (APIException e) {
-            throw e;
-        }
-    }
-
-    public void request(int page, String userId, OnRequestListener<List<StockItem>> listener) {
-        this.page = page;
-        this.userId = userId;
-        super.request(listener);
-    }
+  }
 }
