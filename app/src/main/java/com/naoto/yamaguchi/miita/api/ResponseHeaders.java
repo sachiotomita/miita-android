@@ -2,6 +2,8 @@ package com.naoto.yamaguchi.miita.api;
 
 import android.content.Context;
 
+import java.util.Map;
+
 /**
  * Response http header class.
  *
@@ -14,6 +16,7 @@ public final class ResponseHeaders extends Headers {
 
   private int statusCode;
   private boolean relNext;
+  private Map<String, String> rawHeaders;
 
   public ResponseHeaders() {
     this.statusCode = DEFAULT_CODE_VALUE;
@@ -34,5 +37,13 @@ public final class ResponseHeaders extends Headers {
 
   public void setRelNext(boolean relNext) {
     this.relNext = relNext;
+  }
+
+  public Map<String, String> getRawHeaders() {
+    return this.rawHeaders;
+  }
+
+  public void setRawHeaders(Map<String, String> rawHeaders) {
+    this.rawHeaders = rawHeaders;
   }
 }

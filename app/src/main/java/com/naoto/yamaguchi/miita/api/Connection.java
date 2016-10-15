@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  * Created by naoto on 2016/10/10.
  */
 
-public final class Connection {
+final class Connection {
 
   private static final String CONTENT_TYPE_KEY = "Content-Type";
   private static final String APPLICATION_JSON_VALUE = "application/json";
@@ -31,7 +32,7 @@ public final class Connection {
   public void build(String urlString,
                     Method method,
                     RequestHeaders headers,
-                    byte[] body) throws IOException {
+                    byte[] body) throws HttpException {
     try {
       URL url = new URL(urlString);
       this.connection = (HttpURLConnection)url.openConnection();
@@ -39,15 +40,15 @@ public final class Connection {
       this.setHeaders(headers);
       this.setBody(method, body);
     } catch (IOException e) {
-      throw e;
+      throw new HttpException(e.toString());
     }
   }
 
-  public void connect() throws IOException {
+  public void connect() throws HttpException {
     try {
       this.connection.connect();
     } catch (IOException e) {
-      throw e;
+      throw new HttpException(e.toString());
     }
   }
 
@@ -57,19 +58,31 @@ public final class Connection {
     }
   }
 
-  public int getStatusCode() throws IOException {
+  public int getStatusCode() throws HttpException {
     try {
       return this.connection.getResponseCode();
     } catch (IOException e) {
-      throw e;
+      throw new HttpException(e.toString());
     }
   }
 
-  public Map<String, List<String>> getResponseHeaders() {
-    return this.connection.getHeaderFields();
+  public Map<String, String> getResponseHeaders() {
+    final Map<String, List<String>> headers = this.connection.getHeaderFields();
+    Map<String, String> returnHeaders = new HashMap<>();
+
+    for (String key: headers.keySet()) {
+      final List<String> valueList = headers.get(key);
+      final StringBuilder values = new StringBuilder();
+      for (String value: valueList) {
+        values.append(value + " ");
+      }
+      returnHeaders.put(key, values.toString());
+    }
+
+    return returnHeaders;
   }
 
-  public String getRawBody() throws IOException {
+  public String getRawBody() throws HttpException {
     StringBuffer body = new StringBuffer();
     BufferedReader reader = null;
 
@@ -85,23 +98,23 @@ public final class Connection {
 
       return body.toString();
     } catch (IOException e) {
-      throw e;
+      throw new HttpException(e.toString());
     } finally {
       try {
         if (reader != null) {
           reader.close();
         }
       } catch (IOException e) {
-        throw e;
+        throw new HttpException(e.toString());
       }
     }
   }
 
-  private void setMethod(Method method) throws ProtocolException {
+  private void setMethod(Method method) throws HttpException {
     try {
       this.connection.setRequestMethod(method.toString());
     } catch (ProtocolException e) {
-      throw e;
+      throw new HttpException(e.toString());
     }
   }
 
@@ -112,7 +125,7 @@ public final class Connection {
     }
   }
 
-  private void setBody(Method method, byte[] body) throws IOException {
+  private void setBody(Method method, byte[] body) throws HttpException {
     if (method == Method.POST || method == Method.PUT) {
       if (body == null) return;
 
@@ -123,7 +136,7 @@ public final class Connection {
         out.write(body);
         out.close();
       } catch (IOException e) {
-        throw e;
+        throw new HttpException(e.toString());
       }
     }
   }
