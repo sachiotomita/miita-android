@@ -18,18 +18,18 @@ public final class ConnectionRunnable<T> implements Runnable {
   private final Method method;
   private final RequestHeaders headers;
   private final byte[] body;
-  private final Callback<T> callback;
   private final RequestType<T> requestType;
+  private final Callback<T> callback;
 
   public ConnectionRunnable(String urlString, Method method, RequestHeaders headers, byte[] body,
-                            Callback<T> callback, RequestType<T> requestType) {
+                            RequestType<T> requestType, Callback<T> callback) {
     this.connection = new Connection();
     this.urlString = urlString;
     this.method = method;
     this.headers = headers;
     this.body = body;
-    this.callback = callback;
     this.requestType = requestType;
+    this.callback = callback;
   }
 
   @Override
