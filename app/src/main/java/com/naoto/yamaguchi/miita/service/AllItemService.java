@@ -2,65 +2,64 @@ package com.naoto.yamaguchi.miita.service;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Method;
+import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
-import com.naoto.yamaguchi.miita.service.base.BaseService;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * Get All Item.
+ * request: v2/items/
+ *
  * Created by naoto on 16/06/29.
  */
-public final class AllItemService extends BaseService<List<AllItem>> {
+public final class AllItemService implements RequestType<List<AllItem>> {
 
-    public AllItemService(Context context) {
-        super(context);
-        this.page = 1;
-    }
+  private final Context context;
+  private int page;
 
-    @Override
-    protected String getMethod() {
-        return "GET";
-    }
+  public AllItemService(Context context) {
+    this.context = context;
+    this.page = 1;
+  }
 
-    @Override
-    protected byte[] getBody() {
-        return null;
-    }
+  public AllItemService setPage(int page) {
+    this.page = page;
+    return this;
+  }
 
-    @Override
-    protected String getPath() {
-        return "/items";
-    }
+  @Override
+  public Method getMethod() {
+    return Method.GET;
+  }
 
-    @Override
-    protected int getPage() {
-        return this.page;
-    }
+  @Override
+  public String getPath() {
+    return "/items";
+  }
 
-    @Override
-    protected boolean isPerPage() {
-        return true;
-    }
+  @Override
+  public Map<String, String> getParameters() {
+    return new HashMap<String, String>() {
+      {
+        put("page", Integer.toString(page));
+        put("per_page", PerPage.get(context));
+      }
+    };
+  }
 
-    @Override
-    protected boolean isResponse() {
-        return true;
+  @Override
+  public List<AllItem> processResponse(String response) throws HttpException {
+    try {
+      return ItemListObjectMapper.map(response, AllItem.class);
+    } catch (HttpException e) {
+      return null;
     }
-
-    @Override
-    protected List<AllItem> getResponse(String json) throws APIException {
-        try {
-            return ItemListObjectMapper.map(json, AllItem.class);
-        } catch (APIException e) {
-            throw e;
-        }
-    }
-
-    public void request(int page, OnRequestListener<List<AllItem>> listener) {
-        this.page = page;
-        super.request(listener);
-    }
+  }
 }
