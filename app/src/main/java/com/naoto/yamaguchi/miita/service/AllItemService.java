@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Get All Item.
- * request: v2/items/
+ * Request All Item.
+ * GET: v2/items/
  *
  * Created by naoto on 16/06/29.
  */
