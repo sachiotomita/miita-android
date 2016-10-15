@@ -20,7 +20,7 @@ final class ConnectionExecutor<T> {
   }
 
   public void send(RequestType<T> type, Callback<T> callback) {
-    
+
   }
 
   private void buildUrlString() {
