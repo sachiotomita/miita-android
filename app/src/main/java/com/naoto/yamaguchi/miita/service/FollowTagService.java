@@ -2,67 +2,67 @@ package com.naoto.yamaguchi.miita.service;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Method;
+import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.mapper.TagListObjectMapper;
-import com.naoto.yamaguchi.miita.service.base.BaseService;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by naoto on 16/07/12.
  */
-public final class FollowTagService extends BaseService<List<FollowTag>> {
+public final class FollowTagService implements RequestType<List<FollowTag>> {
 
-    private String userId;
+  private final Context context;
+  private String userId;
+  private int page;
 
-    public FollowTagService(Context context) {
-        super(context);
+  public FollowTagService(Context context) {
+    this.context = context;
+    this.page = 1;
+  }
+
+  public FollowTagService setUserId(String userId) {
+    this.userId = userId;
+    return this;
+  }
+
+  public FollowTagService setPage(int page) {
+    this.page = page;
+    return this;
+  }
+
+  @Override
+  public Method getMethod() {
+    return Method.GET;
+  }
+
+  @Override
+  public String getPath() {
+    return "/users/" + this.userId + "/following_tags";
+  }
+
+  @Override
+  public Map<String, String> getParameters() {
+    return new HashMap<String, String>() {
+      {
+        put("page", Integer.toString(page));
+        put("per_page", PerPage.get(context));
+      }
+    };
+  }
+
+  @Override
+  public List<FollowTag> processResponse(String response) throws HttpException {
+    try {
+      return TagListObjectMapper.map(FollowTag.class, response);
+    } catch (HttpException e) {
+      return null;
     }
-
-    @Override
-    protected String getMethod() {
-        return "GET";
-    }
-
-    @Override
-    protected byte[] getBody() {
-        return null;
-    }
-
-    @Override
-    protected String getPath() {
-        return "/users/" + this.userId + "/following_tags";
-    }
-
-    @Override
-    protected int getPage() {
-        return this.page;
-    }
-
-    @Override
-    protected boolean isPerPage() {
-        return true;
-    }
-
-    @Override
-    protected boolean isResponse() {
-        return true;
-    }
-
-    @Override
-    protected List<FollowTag> getResponse(String json) throws APIException {
-        try {
-            return TagListObjectMapper.map(FollowTag.class, json);
-        } catch (APIException e) {
-            throw e;
-        }
-    }
-
-    public void request(int page, String userId, OnRequestListener<List<FollowTag>> listener) {
-        this.page = page;
-        this.userId = userId;
-        super.request(listener);
-    }
+  }
 }
