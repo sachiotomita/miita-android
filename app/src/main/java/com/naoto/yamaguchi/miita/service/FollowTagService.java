@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Request Follow Tag.
+ * GET: v2/users/__user_id__/following_tags
+ *
  * Created by naoto on 16/07/12.
  */
 public final class FollowTagService implements RequestType<List<FollowTag>> {
