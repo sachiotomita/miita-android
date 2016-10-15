@@ -1,64 +1,44 @@
 package com.naoto.yamaguchi.miita.service;
 
-import android.content.Context;
-
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Method;
+import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.mapper.UserObjectMapper;
-import com.naoto.yamaguchi.miita.service.base.BaseService;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
-import org.json.JSONException;
+import java.util.Map;
 
 /**
+ * Request Authorize User.
+ * GET: v2/authenticated_user
+ *
  * Created by naoto on 16/07/01.
  */
-public class AuthUserService extends BaseService<User> {
+public class AuthUserService implements RequestType<User> {
 
-    public AuthUserService(Context context) {
-        super(context);
-    }
+  public AuthUserService() {}
 
-    @Override
-    protected String getMethod() {
-        return "GET";
-    }
+  @Override
+  public Method getMethod() {
+    return Method.GET;
+  }
 
-    @Override
-    protected byte[] getBody() {
-        return null;
-    }
+  @Override
+  public String getPath() {
+    return "/authenticated_user";
+  }
 
-    @Override
-    protected String getPath() {
-        return "/authenticated_user";
-    }
+  @Override
+  public Map<String, String> getParameters() {
+    return null;
+  }
 
-    @Override
-    protected int getPage() {
-        return NO_PAGE_VALUE;
+  @Override
+  public User processResponse(String response) throws HttpException {
+    try {
+      return UserObjectMapper.map(response);
+    } catch (HttpException e) {
+      return null;
     }
-
-    @Override
-    protected boolean isPerPage() {
-        return false;
-    }
-
-    @Override
-    protected boolean isResponse() {
-        return true;
-    }
-
-    @Override
-    protected User getResponse(String json) throws APIException {
-        try {
-            return UserObjectMapper.map(json);
-        } catch (JSONException e) {
-            throw new APIException(e.toString());
-        }
-    }
-
-    public void request(OnRequestListener<User> listener) {
-        super.request(listener);
-    }
+  }
 }
