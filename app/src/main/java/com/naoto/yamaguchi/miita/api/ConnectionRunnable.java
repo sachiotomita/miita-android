@@ -21,11 +21,11 @@ public final class ConnectionRunnable<T> implements Runnable {
   private final RequestType<T> requestType;
   private final Callback<T> callback;
 
-  public ConnectionRunnable(String urlString, Method method, RequestHeaders headers, byte[] body,
+  public ConnectionRunnable(Method method, String urlString, RequestHeaders headers, byte[] body,
                             RequestType<T> requestType, Callback<T> callback) {
     this.connection = new Connection();
-    this.urlString = urlString;
     this.method = method;
+    this.urlString = urlString;
     this.headers = headers;
     this.body = body;
     this.requestType = requestType;

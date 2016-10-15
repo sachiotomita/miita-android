@@ -15,7 +15,7 @@ final class UrlBuilder {
 
   private static final String ENTRY_POINT = "https://qiita.com/api/v2";
 
-  private final StringBuilder builder;
+  private StringBuilder builder;
   private Map<String, String> params;
 
   public UrlBuilder() {
@@ -24,7 +24,14 @@ final class UrlBuilder {
   }
 
   public String build() {
-    return this.builder.toString() + this.buildQuery();
+    String urlString = this.builder.toString() + this.buildQuery();
+    this.clean();
+    return urlString;
+  }
+
+  public void clean() {
+    this.builder = new StringBuilder(ENTRY_POINT);
+    this.params.clear();
   }
 
   public UrlBuilder setPath(@NonNull String path) {
