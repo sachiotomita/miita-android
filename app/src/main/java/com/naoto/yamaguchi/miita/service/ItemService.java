@@ -1,13 +1,8 @@
 package com.naoto.yamaguchi.miita.service;
 
-import android.content.Context;
-
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
-import com.naoto.yamaguchi.miita.ex_api.APIException;
-import com.naoto.yamaguchi.miita.service.base.BaseService;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
 
 import java.util.Map;
 
