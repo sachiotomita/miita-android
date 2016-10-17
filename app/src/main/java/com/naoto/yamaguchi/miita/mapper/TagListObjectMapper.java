@@ -1,6 +1,5 @@
 package com.naoto.yamaguchi.miita.mapper;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.base.BaseTag;
 
 import org.json.JSONArray;
@@ -23,7 +22,7 @@ public final class TagListObjectMapper {
   private static final String FOLLOWERS_COUNT_KEY = "followers_count";
 
   public static <T extends BaseTag> List<T> map(Class<T> aClass, String jsonString)
-          throws APIException {
+          throws JSONException, IllegalAccessException, InstantiationException {
     try {
       List<T> tagList = new ArrayList<>();
       JSONArray jsonArray = new JSONArray(jsonString);
@@ -43,16 +42,18 @@ public final class TagListObjectMapper {
 
         int followersCount = tagJson.getInt(FOLLOWERS_COUNT_KEY);
         tag.setFollowersCount(followersCount);
+
+        tagList.add(tag);
       }
 
       return tagList;
 
     } catch (JSONException e) {
-      throw new APIException(e.toString());
+      throw e;
     } catch (IllegalAccessException e) {
-      throw new APIException(e.toString());
+      throw e;
     } catch (InstantiationException e) {
-      throw new APIException(e.toString());
+      throw e;
     }
   }
 }
