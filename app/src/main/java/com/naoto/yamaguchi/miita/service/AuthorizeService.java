@@ -6,6 +6,8 @@ import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.application.Constants;
 import com.naoto.yamaguchi.miita.mapper.AccessTokenObjectMapper;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +53,7 @@ public final class AuthorizeService implements RequestType<String> {
   public String processResponse(String response) throws HttpException {
     try {
       return AccessTokenObjectMapper.map(response);
-    } catch (HttpException e) {
+    } catch (JSONException e) {
       return null;
     }
   }
