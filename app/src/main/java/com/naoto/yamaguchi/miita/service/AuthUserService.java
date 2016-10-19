@@ -6,6 +6,8 @@ import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.mapper.UserObjectMapper;
 
+import org.json.JSONException;
+
 import java.util.Map;
 
 /**
@@ -37,7 +39,7 @@ public class AuthUserService implements RequestType<User> {
   public User processResponse(String response) throws HttpException {
     try {
       return UserObjectMapper.map(response);
-    } catch (HttpException e) {
+    } catch (JSONException e) {
       return null;
     }
   }
