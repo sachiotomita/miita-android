@@ -9,6 +9,8 @@ import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +60,7 @@ public final class AllItemService implements RequestType<List<AllItem>> {
   public List<AllItem> processResponse(String response) throws HttpException {
     try {
       return ItemListObjectMapper.map(response, AllItem.class);
-    } catch (HttpException e) {
+    } catch (JSONException | IllegalAccessException | InstantiationException e) {
       return null;
     }
   }
