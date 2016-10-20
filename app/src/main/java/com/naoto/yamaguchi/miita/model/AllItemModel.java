@@ -12,6 +12,7 @@ import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.service.AllItemService;
 import com.naoto.yamaguchi.miita.model.base.RequestType;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 import java.util.List;
 
@@ -78,7 +79,10 @@ public final class AllItemModel {
   }
 
   public void callError(HttpException e) {
-    // TODO: MiitaException
-
+    MiitaException exception = new MiitaException(e.getMessage());
+    if (this.listener != null) {
+      this.listener.onError(exception);
+      this.listener.onComplete();
+    }
   }
 }

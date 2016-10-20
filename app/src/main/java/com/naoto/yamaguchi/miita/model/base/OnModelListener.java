@@ -8,7 +8,7 @@ import com.naoto.yamaguchi.miita.util.exception.MiitaException;
  * Created by naoto on 16/09/22.
  */
 public interface OnModelListener<T> {
-  
+
   void onSuccess(T results);
 
   void onError(MiitaException e);
