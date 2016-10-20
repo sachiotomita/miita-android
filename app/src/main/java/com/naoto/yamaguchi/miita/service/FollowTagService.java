@@ -9,6 +9,8 @@ import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.mapper.TagListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +66,7 @@ public final class FollowTagService implements RequestType<List<FollowTag>> {
   public List<FollowTag> processResponse(String response) throws HttpException {
     try {
       return TagListObjectMapper.map(FollowTag.class, response);
-    } catch (HttpException e) {
+    } catch (JSONException | IllegalAccessException | InstantiationException e) {
       return null;
     }
   }
