@@ -4,101 +4,104 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.API;
+import com.naoto.yamaguchi.miita.api.Callback;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Response;
 import com.naoto.yamaguchi.miita.entity.User;
-import com.naoto.yamaguchi.miita.model.base.BaseModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
-import com.naoto.yamaguchi.miita.model.base.RequestType;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.AuthUserService;
 import com.naoto.yamaguchi.miita.service.AuthorizeService;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 /**
+ * Current User Model.
+ *
  * Created by naoto on 16/06/30.
  */
-public final class CurrentUserModel extends BaseModel<Void> {
+public final class CurrentUserModel {
 
-    private String code;
-    private AuthorizeService authorizeService;
-    private AuthUserService authUserService;
-    private CurrentUser currentUser;
+  private final Context context;
+  private final AuthorizeService authorizeService;
+  private final AuthUserService authUserService;
+  private final CurrentUser currentUser;
+  private OnModelListener<User> listener;
 
-    public CurrentUserModel(Context context) {
-        super(context);
-        this.authorizeService = new AuthorizeService(this.context);
-        this.authUserService = new AuthUserService(this.context);
-        this.currentUser = CurrentUser.getInstance();
+  public CurrentUserModel(Context context) {
+    this.context = context;
+    this.authorizeService = new AuthorizeService();
+    this.authUserService = new AuthUserService();
+    this.currentUser = CurrentUser.getInstance();
+  }
+
+  public boolean isExistCodeQuery(Intent intent) {
+    Uri uri = intent.getData();
+
+    if (uri == null) {
+      return false;
     }
 
-    public CurrentUserModel setCode(String code) {
-        this.code = code;
-        return this;
+    String code = uri.getQueryParameter("code");
+    if (code.isEmpty()) {
+      return false;
     }
 
-    public boolean isExistCodeQuery(Intent intent) {
-        Uri uri = intent.getData();
+    return true;
+  }
 
-        if (uri == null) {
-            return false;
-        }
+  public String getCodeQuery(Intent intent) {
+    Uri uri = intent.getData();
+    return uri.getQueryParameter("code");
+  }
 
-        String code = uri.getQueryParameter("code");
-        if (code.isEmpty()) {
-            return false;
-        }
+  public void request(String code, OnModelListener<User> listener) {
+    this.listener = listener;
+    this.authorizeService.setCode(code);
+    API.request(this.context, this.authorizeService, new Callback<String>() {
+      @Override
+      public void onResponse(Response<String> response) {
+        String token = response.result();
+        currentUser.setToken(context, token);
+        getAuthUserRequest();
+      }
 
-        return true;
+      @Override
+      public void onFailure(HttpException e) {
+        callError(e);
+      }
+    });
+  }
+
+  private void getAuthUserRequest() {
+    API.request(this.context, this.authUserService, new Callback<User>() {
+      @Override
+      public void onResponse(Response<User> response) {
+        User user = response.result();
+        currentUser.setID(context, user.getId());
+        currentUser.setImageUrl(context, user.getImageUrlString());
+        callSuccess(response);
+      }
+
+      @Override
+      public void onFailure(HttpException e) {
+        callError(e);
+      }
+    });
+  }
+
+  private void callSuccess(Response<User> response) {
+    if (this.listener != null) {
+      this.listener.onSuccess(response.result());
+      this.listener.onComplete();
     }
+  }
 
-    public String getCodeQuery(Intent intent) {
-        Uri uri = intent.getData();
-        return uri.getQueryParameter("code");
+  private void callError(HttpException e) {
+    MiitaException exception = new MiitaException(e.getMessage());
+    if (this.listener != null) {
+      this.listener.onError(exception);
+      this.listener.onComplete();
     }
-
-    @Override
-    protected boolean isListView() {
-        return false;
-    }
-
-    public void request(OnModelListener<Void> listener) {
-        this.request(null, listener);
-    }
-
-    @Override
-    protected void serviceRequest(RequestType type) {
-        this.authorizeService.request(this.code, new OnRequestListener<String>() {
-            @Override
-            public void onSuccess(String results) {
-                currentUser.setToken(context, results);
-                authUserRequest();
-            }
-
-            @Override
-            public void onError(APIException e) {
-                deliverError(e);
-            }
-        });
-    }
-
-    private void authUserRequest() {
-        this.authUserService.request(new OnRequestListener<User>() {
-            @Override
-            public void onSuccess(User results) {
-                currentUser.setID(context, results.getId());
-                currentUser.setImageUrl(context, results.getImageUrlString());
-                deliverSuccess(null);
-            }
-
-            @Override
-            public void onError(APIException e) {
-                deliverError(e);
-            }
-        });
-    }
-
-    @Override
-    protected Void processResults(RequestType type, Void results) {
-        return null;
-    }
+  }
 }
