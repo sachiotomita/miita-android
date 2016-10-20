@@ -9,6 +9,8 @@ import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +66,7 @@ public final class StockItemService implements RequestType<List<StockItem>> {
   public List<StockItem> processResponse(String response) throws HttpException {
     try {
       return ItemListObjectMapper.map(response, StockItem.class);
-    } catch (HttpException e) {
+    } catch (JSONException | IllegalAccessException | InstantiationException e) {
       return null;
     }
   }

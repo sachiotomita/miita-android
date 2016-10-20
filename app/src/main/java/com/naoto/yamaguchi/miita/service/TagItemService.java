@@ -9,6 +9,8 @@ import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +65,7 @@ public final class TagItemService implements RequestType<List<Item>> {
   public List<Item> processResponse(String response) throws HttpException {
     try {
       return ItemListObjectMapper.map(response, Item.class);
-    } catch (HttpException e) {
+    } catch (JSONException | IllegalAccessException | InstantiationException e) {
       return null;
     }
   }
