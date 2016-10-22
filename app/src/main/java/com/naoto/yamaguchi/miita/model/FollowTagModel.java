@@ -2,88 +2,94 @@ package com.naoto.yamaguchi.miita.model;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.API;
+import com.naoto.yamaguchi.miita.api.Callback;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Response;
 import com.naoto.yamaguchi.miita.dao.DaoFactory;
 import com.naoto.yamaguchi.miita.dao.FollowTagDao;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
-import com.naoto.yamaguchi.miita.model.base.BaseModel;
-import com.naoto.yamaguchi.miita.model.base.UsingDaoModelType;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.FollowTagService;
 import com.naoto.yamaguchi.miita.model.base.RequestType;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 import java.util.List;
 
 /**
+ * FollowTag Model.
+ *
  * Created by naoto on 16/07/12.
  */
-public final class FollowTagModel extends BaseModel<List<FollowTag>>
-        implements UsingDaoModelType<FollowTag, FollowTagDao> {
+public final class FollowTagModel {
 
-    private FollowTagService service;
-    private CurrentUser currentUser;
-    private FollowTagDao dao;
+  private final Context context;
+  private final FollowTagService service;
+  private final CurrentUser currentUser;
+  private final FollowTagDao dao;
+  private OnModelListener<List<FollowTag>> listener;
 
-    public FollowTagModel(Context context) {
-        super(context);
-        this.service = new FollowTagService(this.context);
-        this.currentUser = CurrentUser.getInstance();
-        this.dao = this.getDaoInstance();
+  public FollowTagModel(Context context) {
+    this.context = context;
+    this.service = new FollowTagService(this.context);
+    this.currentUser = CurrentUser.getInstance();
+    this.dao = DaoFactory.getFollowTagDao();
+  }
+
+  public void request(int page, final RequestType type, OnModelListener<List<FollowTag>> listener) {
+    String userId = this.currentUser.getID(this.context);
+    this.listener = listener;
+    this.service
+            .setUserId(userId)
+            .setPage(page);
+
+    API.request(this.context, this.service, new Callback<List<FollowTag>>() {
+      @Override
+      public void onResponse(Response<List<FollowTag>> response) {
+        callSuccessAndProcessResult(type, response);
+      }
+
+      @Override
+      public void onFailure(HttpException e) {
+        callError(e);
+      }
+    });
+  }
+
+  public List<FollowTag> loadTags() {
+    return this.dao.findAll();
+  }
+
+  public void close() {
+    this.dao.close();
+  }
+
+  private void callSuccessAndProcessResult(RequestType type, Response<List<FollowTag>> response) {
+    List<FollowTag> realmTags = null;
+
+    switch (type) {
+      case FIRST:
+      case REFRESH:
+        this.dao.truncate();
+        realmTags = this.dao.insert(response.result());
+        break;
+      case PAGING:
+        realmTags = this.dao.insert(response.result());
+        break;
     }
 
-    @Override
-    public FollowTagDao getDaoInstance() {
-        return DaoFactory.getFollowTagDao();
+    if (this.listener != null) {
+      this.listener.onSuccess(realmTags);
+      this.listener.onComplete();
     }
+  }
 
-    @Override
-    public List<FollowTag> load() {
-        return this.dao.findAll();
+  private void callError(HttpException e) {
+    MiitaException exception = new MiitaException(e.getMessage());
+    if (this.listener != null) {
+      this.listener.onError(exception);
+      this.listener.onComplete();
     }
-
-    @Override
-    public void close() {
-        this.dao.close();
-    }
-
-    @Override
-    protected boolean isListView() {
-        return true;
-    }
-
-    @Override
-    protected void serviceRequest(final RequestType type) {
-        String userId = this.currentUser.getID(this.context);
-
-        this.service.request(this.page, userId, new OnRequestListener<List<FollowTag>>() {
-            @Override
-            public void onSuccess(List<FollowTag> results) {
-                deliverSuccessAndProcessResults(type, results);
-            }
-
-            @Override
-            public void onError(APIException e) {
-                deliverError(e);
-            }
-        });
-    }
-
-    @Override
-    protected List<FollowTag> processResults(RequestType type, List<FollowTag> results) {
-        List<FollowTag> realmTags = null;
-
-        switch (type) {
-            case FIRST:
-            case REFRESH:
-                this.dao.truncate();
-                realmTags = this.dao.insert(results);
-                break;
-            case PAGING:
-                realmTags = this.dao.insert(results);
-                break;
-        }
-
-        return realmTags;
-    }
+  }
 }
