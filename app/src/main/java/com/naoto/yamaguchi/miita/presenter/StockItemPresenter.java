@@ -89,7 +89,7 @@ public final class StockItemPresenter extends Presenter<StockItemPresenter.View>
         this.isPaging = true;
         break;
     }
-    
+
     this.model.request(this.page, type, new OnModelListener<List<StockItem>>() {
       @Override
       public void onSuccess(List<StockItem> results) {
