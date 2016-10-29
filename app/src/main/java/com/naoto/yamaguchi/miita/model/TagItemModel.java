@@ -2,55 +2,64 @@ package com.naoto.yamaguchi.miita.model;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.API;
+import com.naoto.yamaguchi.miita.api.Callback;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Response;
 import com.naoto.yamaguchi.miita.entity.Item;
-import com.naoto.yamaguchi.miita.model.base.BaseModel;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.service.TagItemService;
-import com.naoto.yamaguchi.miita.model.base.RequestType;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 import java.util.List;
 
 /**
+ * Tag Item Model.
+ *
  * Created by naoto on 16/07/17.
  */
-public final class TagItemModel extends BaseModel<List<Item>> {
+public final class TagItemModel {
 
-    private String tagId;
-    private TagItemService service;
+  private final Context context;
+  private final TagItemService service;
+  private OnModelListener<List<Item>> listener;
 
-    public TagItemModel(Context context) {
-        super(context);
-        this.service = new TagItemService(context);
+  public TagItemModel(Context context) {
+    this.context = context;
+    this.service = new TagItemService(this.context);
+  }
+
+  public void request(final String tagId, final int page,
+                      OnModelListener<List<Item>> listener) {
+    this.listener = listener;
+    this.service
+            .setTagId(tagId)
+            .setPage(page);
+    API.request(this.context, this.service, new Callback<List<Item>>() {
+      @Override
+      public void onResponse(Response<List<Item>> response) {
+        callSuccess(response);
+      }
+
+      @Override
+      public void onFailure(HttpException e) {
+        callError(e);
+      }
+    });
+  }
+
+  private void callSuccess(Response<List<Item>> response) {
+    if (this.listener != null) {
+      this.listener.onSuccess(response.result());
+      this.listener.onComplete();
     }
+  }
 
-    public TagItemModel setTagId(String tagId) {
-        this.tagId = tagId;
-        return this;
+  private void callError(HttpException e) {
+    MiitaException exception = new MiitaException(e.getMessage());
+    if (this.listener != null) {
+      this.listener.onError(exception);
+      this.listener.onComplete();
     }
-
-    @Override
-    protected boolean isListView() {
-        return true;
-    }
-
-    @Override
-    protected void serviceRequest(RequestType type) {
-        this.service.request(this.page, this.tagId, new OnRequestListener<List<Item>>() {
-            @Override
-            public void onSuccess(List<Item> results) {
-                deliverSuccess(results);
-            }
-
-            @Override
-            public void onError(APIException e) {
-                deliverError(e);
-            }
-        });
-    }
-
-    @Override
-    protected List<Item> processResults(RequestType type, List<Item> results) {
-        return null;
-    }
+  }
 }
