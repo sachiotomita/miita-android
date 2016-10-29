@@ -58,7 +58,7 @@ public final class AllItemModel {
     this.dao.close();
   }
 
-  public void callSuccessAndProcessResult(RequestType type, Response<List<AllItem>> response) {
+  private void callSuccessAndProcessResult(RequestType type, Response<List<AllItem>> response) {
     List<AllItem> realmItems = null;
 
     switch (type) {
@@ -78,7 +78,7 @@ public final class AllItemModel {
     }
   }
 
-  public void callError(HttpException e) {
+  private void callError(HttpException e) {
     MiitaException exception = new MiitaException(e.getMessage());
     if (this.listener != null) {
       this.listener.onError(exception);
