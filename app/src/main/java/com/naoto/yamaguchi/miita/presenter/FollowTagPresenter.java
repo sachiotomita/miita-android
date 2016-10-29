@@ -2,12 +2,12 @@ package com.naoto.yamaguchi.miita.presenter;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.model.FollowTagModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.model.base.RequestType;
 import com.naoto.yamaguchi.miita.presenter.base.Presenter;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 import java.util.List;
 
@@ -28,14 +28,18 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
     void addFooterView();
     void removeFooterView();
     void reloadData(List<FollowTag> tags);
-    void showError(APIException e);
+    void showError(MiitaException e);
   }
 
   private final FollowTagModel model;
+  private int page;
+  private boolean isPaging;
 
   public FollowTagPresenter(Context context) {
     super(context);
     this.model = new FollowTagModel(context);
+    this.page = 1;
+    this.isPaging = false;
   }
 
   @Override
@@ -49,7 +53,11 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
   }
 
   public int getPage() {
-    return this.model.getPage();
+    return this.page;
+  }
+
+  public boolean isPaging() {
+    return this.isPaging;
   }
 
   public void loadTags() {
@@ -64,20 +72,34 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
   }
 
   public void nextLoadTags() {
-    if (this.model.isPaging()) return;
+    if (this.isPaging()) return;
     this.view.addFooterView();
     this.request(RequestType.PAGING);
   }
 
   private void request(RequestType type) {
-    this.model.request(type, new OnModelListener<List<FollowTag>>() {
+    switch (type) {
+      case FIRST:
+      case REFRESH:
+        this.page = 1;
+        this.isPaging = false;
+        break;
+      case PAGING:
+        this.page++;
+        this.isPaging = true;
+        break;
+    }
+
+    this.model.request(this.page, type, new OnModelListener<List<FollowTag>>() {
       @Override
       public void onSuccess(List<FollowTag> results) {
+        isPaging = false;
         view.reloadData(results);
       }
 
       @Override
-      public void onError(APIException e) {
+      public void onError(MiitaException e) {
+        isPaging = false;
         view.showError(e);
       }
 
