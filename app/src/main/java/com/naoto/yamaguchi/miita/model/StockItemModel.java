@@ -47,12 +47,12 @@ public final class StockItemModel {
     API.request(this.context, this.service, new Callback<List<StockItem>>() {
       @Override
       public void onResponse(Response<List<StockItem>> response) {
-
+        callSuccessAndProcessResult(type, response);
       }
 
       @Override
       public void onFailure(HttpException e) {
-
+        callError(e);
       }
     });
   }
