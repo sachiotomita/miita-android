@@ -2,87 +2,94 @@ package com.naoto.yamaguchi.miita.model;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.api.API;
+import com.naoto.yamaguchi.miita.api.Callback;
+import com.naoto.yamaguchi.miita.api.HttpException;
+import com.naoto.yamaguchi.miita.api.Response;
 import com.naoto.yamaguchi.miita.dao.DaoFactory;
 import com.naoto.yamaguchi.miita.dao.StockItemDao;
 import com.naoto.yamaguchi.miita.entity.StockItem;
-import com.naoto.yamaguchi.miita.model.base.BaseModel;
-import com.naoto.yamaguchi.miita.model.base.UsingDaoModelType;
+import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.StockItemService;
 import com.naoto.yamaguchi.miita.model.base.RequestType;
-import com.naoto.yamaguchi.miita.service.base.OnRequestListener;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 import java.util.List;
 
 /**
+ * Stock Item Model.
+ *
  * Created by naoto on 16/06/30.
  */
-public final class StockItemModel extends BaseModel<List<StockItem>>
-        implements UsingDaoModelType<StockItem, StockItemDao> {
+public final class StockItemModel {
 
-    private StockItemService service;
-    private CurrentUser currentUser;
-    private StockItemDao dao;
+  private final Context context;
+  private final StockItemService service;
+  private final StockItemDao dao;
+  private final CurrentUser currentUser;
+  private OnModelListener<List<StockItem>> listener;
 
-    public StockItemModel(Context context) {
-        super(context);
-        this.service = new StockItemService(this.context);
-        this.currentUser = CurrentUser.getInstance();
-        this.dao = this.getDaoInstance();
+  public StockItemModel(Context context) {
+    this.context = context;
+    this.service = new StockItemService(this.context);
+    this.dao = DaoFactory.getStockItemDao();
+    this.currentUser = CurrentUser.getInstance();
+  }
+
+  public void request(final int page, final RequestType type,
+                      OnModelListener<List<StockItem>> listener) {
+    final String userId = this.currentUser.getID(this.context);
+    this.listener = listener;
+    this.service
+            .setUserId(userId)
+            .setPage(page);
+    API.request(this.context, this.service, new Callback<List<StockItem>>() {
+      @Override
+      public void onResponse(Response<List<StockItem>> response) {
+
+      }
+
+      @Override
+      public void onFailure(HttpException e) {
+
+      }
+    });
+  }
+
+  public List<StockItem> loadItems() {
+    return this.dao.findAll();
+  }
+
+  public void close() {
+    this.dao.close();
+  }
+
+  private void callSuccessAndProcessResult(RequestType type, Response<List<StockItem>> response) {
+    List<StockItem> realmItems = null;
+
+    switch (type) {
+      case FIRST:
+      case REFRESH:
+        this.dao.truncate();
+        realmItems = this.dao.insert(response.result());
+        break;
+      case PAGING:
+        realmItems = this.dao.insert(response.result());
+        break;
     }
 
-    @Override
-    public StockItemDao getDaoInstance() {
-        return DaoFactory.getStockItemDao();
+    if (this.listener != null) {
+      this.listener.onSuccess(realmItems);
+      this.listener.onComplete();
     }
+  }
 
-    @Override
-    public List<StockItem> load() {
-        return this.dao.findAll();
+  private void callError(HttpException e) {
+    MiitaException exception = new MiitaException(e.getMessage());
+    if (this.listener != null) {
+      this.listener.onError(exception);
+      this.listener.onComplete();
     }
-
-    @Override
-    public void close() {
-        this.dao.close();
-    }
-
-    @Override
-    protected boolean isListView() {
-        return true;
-    }
-
-    @Override
-    protected void serviceRequest(final RequestType type) {
-        String userId = this.currentUser.getID(this.context);
-        this.service.request(this.page, userId, new OnRequestListener<List<StockItem>>() {
-            @Override
-            public void onSuccess(List<StockItem> results) {
-                deliverSuccessAndProcessResults(type, results);
-            }
-
-            @Override
-            public void onError(APIException e) {
-                deliverError(e);
-            }
-        });
-    }
-
-    @Override
-    protected List<StockItem> processResults(RequestType type, List<StockItem> results) {
-        List<StockItem> realmItems = null;
-
-        switch (type) {
-            case FIRST:
-            case REFRESH:
-                this.dao.truncate();
-                realmItems = this.dao.insert(results);
-                break;
-            case PAGING:
-                realmItems = this.dao.insert(results);
-                break;
-        }
-
-        return realmItems;
-    }
+  }
 }
