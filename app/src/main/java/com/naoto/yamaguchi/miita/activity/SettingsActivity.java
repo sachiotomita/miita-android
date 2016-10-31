@@ -1,7 +1,6 @@
 package com.naoto.yamaguchi.miita.activity;
 
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -24,55 +23,57 @@ import com.naoto.yamaguchi.miita.fragment.SettingsFragment;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    /**
-     * Helper method to determine if the device has an extra-large screen. For
-     * example, 10" tablets are extra-large.
-     */
-    private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-    }
+  /**
+   * Helper method to determine if the device has an extra-large screen. For
+   * example, 10" tablets are extra-large.
+   */
+  private static boolean isXLargeTablet(Context context) {
+    return (context.getResources().getConfiguration().screenLayout
+            & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-        this.setSettingsFragment();
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setupActionBar();
+    this.setSettingsFragment();
+  }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+  /**
+   * Set up the {@link android.app.ActionBar}, if the API is available.
+   */
+  private void setupActionBar() {
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      // Show the Up button in the action bar.
+      actionBar.setDisplayHomeAsUpEnabled(true);
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean onIsMultiPane() {
-        return isXLargeTablet(this);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean onIsMultiPane() {
+    return isXLargeTablet(this);
+  }
 
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
-    protected boolean isValidFragment(String fragmentName) {
-        return PreferenceFragment.class.getName().equals(fragmentName)
-                || SettingsFragment.class.getName().equals(fragmentName);
-    }
+  /**
+   * This method stops fragment injection in malicious applications.
+   * Make sure to deny any unknown fragments here.
+   */
+  protected boolean isValidFragment(String fragmentName) {
+    return PreferenceFragment.class.getName().equals(fragmentName)
+            || SettingsFragment.class.getName().equals(fragmentName);
+  }
 
-    private void setSettingsFragment() {
-        // FIXME: use Util class
-        SettingsFragment fragment = SettingsFragment.newInstance();
-        this.getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, fragment)
-                .commit();
-    }
+  private void setSettingsFragment() {
+    // FIXME:
+    // utilのfragment router内のFragmentManagerとは
+    // packageが違うため共通化できていない
+    SettingsFragment fragment = SettingsFragment.newInstance();
+    this.getFragmentManager().beginTransaction()
+            .replace(android.R.id.content, fragment)
+            .commit();
+  }
 }
