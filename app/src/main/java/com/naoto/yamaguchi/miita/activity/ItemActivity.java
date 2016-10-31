@@ -23,209 +23,211 @@ import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 
-public class ItemActivity extends AppCompatActivity implements View.OnClickListener {
+public class ItemActivity extends AppCompatActivity
+        implements View.OnClickListener {
 
-    private Toolbar toolbar;
-    private ActionBar actionBar;
-    private CollapsingToolbarLayout toolbarLayout;
-    private ProgressBar spinner;
-    private FloatingActionButton stockButton;
-    private WebView webView;
-    private CurrentUser currentUser;
+  private Toolbar toolbar;
+  private ActionBar actionBar;
+  private CollapsingToolbarLayout toolbarLayout;
+  private ProgressBar spinner;
+  private FloatingActionButton stockButton;
+  private WebView webView;
+  private CurrentUser currentUser;
 
-    private ItemModel model;
-    private String itemId;
-    private String itemTitle;
-    private String itemUrl;
-    private String itemBody;
+  // FIXME: model -> presenter or viewModel
+  private ItemModel model;
+  private String itemId;
+  private String itemTitle;
+  private String itemUrl;
+  private String itemBody;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_item);
 
-        this.init();
-        this.parseIntent();
-        this.setLayout();
-        this.checkStock();
-        this.loadBody();
+    this.init();
+    this.parseIntent();
+    this.setLayout();
+    this.checkStock();
+    this.loadBody();
+  }
+
+  private void init() {
+    this.model = new ItemModel(this);
+    this.currentUser = CurrentUser.getInstance();
+  }
+
+  private void parseIntent() {
+    Intent intent = this.getIntent();
+    this.itemId = intent.getStringExtra("item_id");
+    this.itemTitle = intent.getStringExtra("item_title");
+    this.itemUrl = intent.getStringExtra("item_url");
+    this.itemBody = intent.getStringExtra("item_body");
+  }
+
+  private void setLayout() {
+    this.toolbar = (Toolbar)findViewById(R.id.toolbar);
+    setSupportActionBar(this.toolbar);
+
+    this.actionBar = getSupportActionBar();
+    this.actionBar.setDisplayHomeAsUpEnabled(true);
+    this.actionBar.setHomeButtonEnabled(true);
+
+    this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
+    this.toolbarLayout.setTitle(this.itemTitle);
+
+    this.stockButton = (FloatingActionButton)findViewById(R.id.fab);
+    this.stockButton.setOnClickListener(this);
+
+    this.spinner = (ProgressBar)findViewById(R.id.progress_bar);
+    this.spinner.setVisibility(View.VISIBLE);
+
+    this.webView = (WebView)findViewById(R.id.item_webview);
+    this.webView.getSettings().setJavaScriptEnabled(true);
+    this.webView.setWebViewClient(new WebViewClient() {
+      @Override
+      public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+
+        webView.setVisibility(View.GONE);
+        spinner.setVisibility(View.VISIBLE);
+      }
+
+      @Override
+      public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+
+        webView.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.GONE);
+      }
+
+      @Override
+      public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+        super.onReceivedError(view, request, error);
+        // TODO: error handle
+      }
+    });
+  }
+
+  private void checkStock() {
+    this.stockButton.setEnabled(false);
+
+    if (!this.currentUser.isAuthorize(this)) {
+      return;
     }
 
-    private void init() {
-        this.model = new ItemModel(this);
-        this.currentUser = CurrentUser.getInstance();
+    this.model.setType(ItemModel.Type.CHECK)
+            .setItemId(this.itemId)
+            .request(new OnModelListener<Void>() {
+              @Override
+              public void onSuccess(Void results) {
+                stockButton.setBackgroundTintList(
+                        ColorStateList.valueOf(getResources().getColor(R.color.red))
+                );
+              }
+
+              @Override
+              public void onError(APIException e) {
+                stockButton.setBackgroundTintList(
+                        ColorStateList.valueOf(getResources().getColor(R.color.green))
+                );
+              }
+
+              @Override
+              public void onComplete() {
+                stockButton.setEnabled(true);
+              }
+            });
+  }
+
+  private void loadBody() {
+    String html = this.createHTML(this.itemBody);
+    this.webView.loadDataWithBaseURL(
+            "file:///android_asset/",
+            html,
+            "text/html",
+            "utf−8",
+            null
+    );
+  }
+
+  public String createHTML(String body) {
+    StringBuffer htmlBuilder = new StringBuffer();
+
+    htmlBuilder.append("<html>");
+    htmlBuilder.append("<head>");
+    htmlBuilder.append("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />");
+    htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
+    htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"github.css\">");
+    htmlBuilder.append("<script type=\"text/javascript\" src=\"highlight.js\"></script>");
+    htmlBuilder.append("</head>");
+    htmlBuilder.append("<body>");
+    htmlBuilder.append(body);
+    htmlBuilder.append("</body>");
+    htmlBuilder.append("<script>var preArray = document.getElementsByTagName(\"pre\");for (var i = 0; i < preArray.length; i++) {hljs.highlightBlock(preArray[i])}</script>");
+    htmlBuilder.append("</html>");
+
+    return htmlBuilder.toString();
+  }
+
+  @Override
+  public void onClick(View view) {
+    this.stockButton.setEnabled(false);
+
+    if (this.model.getIsStock()) {
+      this.model.setType(ItemModel.Type.UNSTOCK)
+              .setItemId(this.itemId)
+              .request(new OnModelListener<Void>() {
+                @Override
+                public void onSuccess(Void results) {
+                  stockButton.setBackgroundTintList(
+                          ColorStateList.valueOf(getResources().getColor(R.color.green))
+                  );
+                }
+
+                @Override
+                public void onError(APIException e) {
+                  // TODO: show alert
+                }
+
+                @Override
+                public void onComplete() {
+                  stockButton.setEnabled(true);
+                }
+              });
+    } else {
+      this.model.setType(ItemModel.Type.STOCK)
+              .setItemId(this.itemId)
+              .request(new OnModelListener<Void>() {
+                @Override
+                public void onSuccess(Void results) {
+                  stockButton.setBackgroundTintList(
+                          ColorStateList.valueOf(getResources().getColor(R.color.red))
+                  );
+                }
+
+                @Override
+                public void onError(APIException e) {
+                  // TODO: show alert
+                }
+
+                @Override
+                public void onComplete() {
+                  stockButton.setEnabled(true);
+                }
+              });
     }
+  }
 
-    private void parseIntent() {
-        Intent intent = this.getIntent();
-        this.itemId = intent.getStringExtra("item_id");
-        this.itemTitle = intent.getStringExtra("item_title");
-        this.itemUrl = intent.getStringExtra("item_url");
-        this.itemBody = intent.getStringExtra("item_body");
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
     }
-
-    private void setLayout() {
-        this.toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(this.toolbar);
-
-        this.actionBar = getSupportActionBar();
-        this.actionBar.setDisplayHomeAsUpEnabled(true);
-        this.actionBar.setHomeButtonEnabled(true);
-
-        this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-        this.toolbarLayout.setTitle(this.itemTitle);
-
-        this.stockButton = (FloatingActionButton)findViewById(R.id.fab);
-        this.stockButton.setOnClickListener(this);
-
-        this.spinner = (ProgressBar)findViewById(R.id.progress_bar);
-        this.spinner.setVisibility(View.VISIBLE);
-
-        this.webView = (WebView)findViewById(R.id.item_webview);
-        this.webView.getSettings().setJavaScriptEnabled(true);
-        this.webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-
-                webView.setVisibility(View.GONE);
-                spinner.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-                webView.setVisibility(View.VISIBLE);
-                spinner.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                // TODO: error handle
-            }
-        });
-    }
-
-    private void checkStock() {
-        this.stockButton.setEnabled(false);
-
-        if (!this.currentUser.isAuthorize(this)) {
-            return;
-        }
-
-        this.model.setType(ItemModel.Type.CHECK)
-                .setItemId(this.itemId)
-                .request(new OnModelListener<Void>() {
-                    @Override
-                    public void onSuccess(Void results) {
-                        stockButton.setBackgroundTintList(
-                                ColorStateList.valueOf(getResources().getColor(R.color.red))
-                        );
-                    }
-
-                    @Override
-                    public void onError(APIException e) {
-                        stockButton.setBackgroundTintList(
-                                ColorStateList.valueOf(getResources().getColor(R.color.green))
-                        );
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        stockButton.setEnabled(true);
-                    }
-                });
-    }
-
-    private void loadBody() {
-        String html = this.createHTML(this.itemBody);
-        this.webView.loadDataWithBaseURL(
-                "file:///android_asset/",
-                html,
-                "text/html",
-                "utf−8",
-                null
-        );
-    }
-
-    public String createHTML(String body) {
-        StringBuffer htmlBuilder = new StringBuffer();
-
-        htmlBuilder.append("<html>");
-        htmlBuilder.append("<head>");
-        htmlBuilder.append("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />");
-        htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
-        htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"github.css\">");
-        htmlBuilder.append("<script type=\"text/javascript\" src=\"highlight.js\"></script>");
-        htmlBuilder.append("</head>");
-        htmlBuilder.append("<body>");
-        htmlBuilder.append(body);
-        htmlBuilder.append("</body>");
-        htmlBuilder.append("<script>var preArray = document.getElementsByTagName(\"pre\");for (var i = 0; i < preArray.length; i++) {hljs.highlightBlock(preArray[i])}</script>");
-        htmlBuilder.append("</html>");
-
-        return htmlBuilder.toString();
-    }
-
-    @Override
-    public void onClick(View view) {
-        this.stockButton.setEnabled(false);
-
-        if (this.model.getIsStock()) {
-            this.model.setType(ItemModel.Type.UNSTOCK)
-                    .setItemId(this.itemId)
-                    .request(new OnModelListener<Void>() {
-                        @Override
-                        public void onSuccess(Void results) {
-                            stockButton.setBackgroundTintList(
-                                    ColorStateList.valueOf(getResources().getColor(R.color.green))
-                            );
-                        }
-
-                        @Override
-                        public void onError(APIException e) {
-                            // TODO: show alert
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            stockButton.setEnabled(true);
-                        }
-                    });
-        } else {
-            this.model.setType(ItemModel.Type.STOCK)
-                    .setItemId(this.itemId)
-                    .request(new OnModelListener<Void>() {
-                        @Override
-                        public void onSuccess(Void results) {
-                            stockButton.setBackgroundTintList(
-                                    ColorStateList.valueOf(getResources().getColor(R.color.red))
-                            );
-                        }
-
-                        @Override
-                        public void onError(APIException e) {
-                            // TODO: show alert
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            stockButton.setEnabled(true);
-                        }
-                    });
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+  }
 }
