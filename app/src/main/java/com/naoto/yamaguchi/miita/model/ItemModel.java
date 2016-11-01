@@ -43,11 +43,17 @@ public final class ItemModel {
 
   private final Context context;
   private final ItemService service;
+  private boolean isStock;
   private OnModelListener<Void> listener;
 
   public ItemModel(Context context) {
     this.context = context;
+    this.isStock = false;
     this.service = new ItemService();
+  }
+
+  public boolean isStock() {
+    return this.isStock;
   }
 
   public void request(final Type type, final String itemId, OnModelListener<Void> listener) {
@@ -58,14 +64,38 @@ public final class ItemModel {
     API.request(this.context, this.service, new Callback<Void>() {
       @Override
       public void onResponse(Response<Void> response) {
+        setStockState(type, true);
         callSuccess();
       }
 
       @Override
       public void onFailure(HttpException e) {
+        setStockState(type, false);
         callError(e);
       }
     });
+  }
+
+  private void setStockState(Type type, boolean isResponse) {
+    switch (type) {
+      case CHECK:
+        if (isResponse) {
+          this.isStock = true;
+        } else {
+          this.isStock = false;
+        }
+        break;
+      case STOCK:
+        if (isResponse) {
+          this.isStock = true;
+        }
+        break;
+      case UNSTOCK:
+        if (isResponse) {
+          this.isStock = false;
+        }
+        break;
+    }
   }
 
   private void callSuccess() {
