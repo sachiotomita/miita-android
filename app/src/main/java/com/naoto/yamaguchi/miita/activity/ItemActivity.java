@@ -23,6 +23,14 @@ import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
+/**
+ * TODO
+ * 1. presenter class
+ * 2. stock buttonの分離
+ * 3. webView Clientの分離
+ * 4. html生成の分離
+ *
+ */
 public class ItemActivity extends AppCompatActivity
         implements View.OnClickListener {
 
