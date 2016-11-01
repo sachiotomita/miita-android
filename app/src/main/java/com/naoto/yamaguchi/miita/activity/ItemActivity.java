@@ -18,10 +18,10 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.ex_api.APIException;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 public class ItemActivity extends AppCompatActivity
         implements View.OnClickListener {
@@ -117,28 +117,26 @@ public class ItemActivity extends AppCompatActivity
       return;
     }
 
-    this.model.setType(ItemModel.Type.CHECK)
-            .setItemId(this.itemId)
-            .request(new OnModelListener<Void>() {
-              @Override
-              public void onSuccess(Void results) {
-                stockButton.setBackgroundTintList(
-                        ColorStateList.valueOf(getResources().getColor(R.color.red))
-                );
-              }
+    this.model.request(ItemModel.Type.CHECK, this.itemId, new OnModelListener<Void>() {
+      @Override
+      public void onSuccess(Void results) {
+        stockButton.setBackgroundTintList(
+                ColorStateList.valueOf(getResources().getColor(R.color.red))
+        );
+      }
 
-              @Override
-              public void onError(APIException e) {
-                stockButton.setBackgroundTintList(
-                        ColorStateList.valueOf(getResources().getColor(R.color.green))
-                );
-              }
+      @Override
+      public void onError(MiitaException e) {
+        stockButton.setBackgroundTintList(
+                ColorStateList.valueOf(getResources().getColor(R.color.green))
+        );
+      }
 
-              @Override
-              public void onComplete() {
-                stockButton.setEnabled(true);
-              }
-            });
+      @Override
+      public void onComplete() {
+        stockButton.setEnabled(true);
+      }
+    });
   }
 
   private void loadBody() {
@@ -175,48 +173,44 @@ public class ItemActivity extends AppCompatActivity
   public void onClick(View view) {
     this.stockButton.setEnabled(false);
 
-    if (this.model.getIsStock()) {
-      this.model.setType(ItemModel.Type.UNSTOCK)
-              .setItemId(this.itemId)
-              .request(new OnModelListener<Void>() {
-                @Override
-                public void onSuccess(Void results) {
-                  stockButton.setBackgroundTintList(
-                          ColorStateList.valueOf(getResources().getColor(R.color.green))
-                  );
-                }
+    if (this.model.isStock()) {
+      this.model.request(ItemModel.Type.UNSTOCK, this.itemId, new OnModelListener<Void>() {
+        @Override
+        public void onSuccess(Void results) {
+          stockButton.setBackgroundTintList(
+                  ColorStateList.valueOf(getResources().getColor(R.color.green))
+          );
+        }
 
-                @Override
-                public void onError(APIException e) {
-                  // TODO: show alert
-                }
+        @Override
+        public void onError(MiitaException e) {
+          // TODO: show alert
+        }
 
-                @Override
-                public void onComplete() {
-                  stockButton.setEnabled(true);
-                }
-              });
+        @Override
+        public void onComplete() {
+          stockButton.setEnabled(true);
+        }
+      });
     } else {
-      this.model.setType(ItemModel.Type.STOCK)
-              .setItemId(this.itemId)
-              .request(new OnModelListener<Void>() {
-                @Override
-                public void onSuccess(Void results) {
-                  stockButton.setBackgroundTintList(
-                          ColorStateList.valueOf(getResources().getColor(R.color.red))
-                  );
-                }
+      this.model.request(ItemModel.Type.STOCK, this.itemId, new OnModelListener<Void>() {
+        @Override
+        public void onSuccess(Void results) {
+          stockButton.setBackgroundTintList(
+                  ColorStateList.valueOf(getResources().getColor(R.color.red))
+          );
+        }
 
-                @Override
-                public void onError(APIException e) {
-                  // TODO: show alert
-                }
+        @Override
+        public void onError(MiitaException e) {
+          // TODO: show alert
+        }
 
-                @Override
-                public void onComplete() {
-                  stockButton.setEnabled(true);
-                }
-              });
+        @Override
+        public void onComplete() {
+          stockButton.setEnabled(true);
+        }
+      });
     }
   }
 
