@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.ex_api.APIException;
+import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
@@ -26,12 +26,13 @@ import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
+import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 import com.naoto.yamaguchi.miita.view.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.MiitaAlertDialogType;
 
-public class HomeActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener,
+public class HomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
         AllItemFragment.OnItemClickListener,
         StockItemFragment.OnItemClickListener {
 
@@ -88,23 +89,22 @@ public class HomeActivity extends AppCompatActivity implements
       dialog.show();
 
       String code = this.currentUserModel.getCodeQuery(this.getIntent());
-      this.currentUserModel.setCode(code)
-              .request(new OnModelListener<Void>() {
-                @Override
-                public void onSuccess(Void results) {
-                  dialog.dismiss();
-                }
+      this.currentUserModel.request(code, new OnModelListener<User>() {
+        @Override
+        public void onSuccess(User results) {
+          // NOOP
+        }
 
-                @Override
-                public void onError(APIException e) {
-                  dialog.dismiss();
-                }
+        @Override
+        public void onError(MiitaException e) {
+          // NOOP
+        }
 
-                @Override
-                public void onComplete() {
-                  // NOOP
-                }
-              });
+        @Override
+        public void onComplete() {
+          dialog.dismiss();
+        }
+      });
     }
   }
 

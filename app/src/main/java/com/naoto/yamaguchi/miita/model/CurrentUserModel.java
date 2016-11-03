@@ -28,6 +28,10 @@ public final class CurrentUserModel {
   private final CurrentUser currentUser;
   private OnModelListener<User> listener;
 
+  // TODO: 2通り用意する
+  // 1. token -> user
+  // 2. user
+
   public CurrentUserModel(Context context) {
     this.context = context;
     this.authorizeService = new AuthorizeService();
