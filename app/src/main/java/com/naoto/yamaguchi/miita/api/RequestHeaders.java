@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.api;
 
 import android.content.Context;
 
+import com.naoto.yamaguchi.miita.application.MiitaContext;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 
 import java.util.HashMap;
@@ -22,12 +23,10 @@ final class RequestHeaders {
   private final Map<String, String> headers;
   private final CurrentUser currentUser;
 
-  public RequestHeaders(Context context) {
-    this.context = context;
+  public RequestHeaders() {
+    this.context = MiitaContext.getInstance().getContext();
     this.headers = new HashMap<>();
     this.currentUser = CurrentUser.getInstance();
-
-    this.setAuthorization();
   }
 
   public void setHeaderParameter(String key, String value) {
@@ -35,6 +34,7 @@ final class RequestHeaders {
   }
 
   public Map<String, String> toMap() {
+    this.setAuthorization();
     return this.headers;
   }
 

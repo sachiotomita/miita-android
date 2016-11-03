@@ -1,7 +1,5 @@
 package com.naoto.yamaguchi.miita.api;
 
-import android.content.Context;
-
 /**
  * API Client.
  *
@@ -9,8 +7,25 @@ import android.content.Context;
  */
 
 public class API {
-  public static <T> void request(Context context, RequestType<T> type, Callback<T> callback) {
-    final ConnectionExecutor<T> executor = new ConnectionExecutor<>(context);
-    executor.execute(type, callback);
+  private static API instance = null;
+  private final ConnectionExecutor executor;
+
+  private API() {
+    this.executor = new ConnectionExecutor();
+  }
+
+  public static synchronized API getInstance() {
+    if (instance == null) {
+      instance = new API();
+    }
+    return instance;
+  }
+
+  public static synchronized <T> void request(RequestType<T> type, Callback<T> callback) {
+    getInstance().p_request(type, callback);
+  }
+
+  private <T> void p_request(RequestType<T> type, Callback<T> callback) {
+    this.executor.execute(type, callback);
   }
 }

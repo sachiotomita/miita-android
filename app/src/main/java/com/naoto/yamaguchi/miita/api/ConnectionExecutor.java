@@ -1,7 +1,5 @@
 package com.naoto.yamaguchi.miita.api;
 
-import android.content.Context;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,19 +12,16 @@ import java.util.Map;
  * Created by naoto on 2016/10/15.
  */
 
-final class ConnectionExecutor<T> {
+// TODO: rename ConnectionAdapter.
+final class ConnectionExecutor {
 
-  private final Context context;
   private final RequestHeaders requestHeaders;
-  private final UrlBuilder urlBuilder;
 
-  public ConnectionExecutor(Context context) {
-    this.context = context;
-    this.requestHeaders = new RequestHeaders(context);
-    this.urlBuilder = new UrlBuilder();
+  public ConnectionExecutor() {
+    this.requestHeaders = new RequestHeaders();
   }
 
-  public void execute(RequestType<T> type, Callback<T> callback) {
+  public <T> void execute(RequestType<T> type, Callback<T> callback) {
     Method method = type.getMethod();
     String urlString = this.buildUrlString(type);
     byte[] body = this.buildBody(type);
@@ -37,24 +32,26 @@ final class ConnectionExecutor<T> {
     ThreadUtil.executeOnWorkerThread(runnable);
   }
 
-  private String buildUrlString(RequestType<T> type) {
+  private <T> String buildUrlString(RequestType<T> type) {
+    final UrlBuilder urlBuilder = new UrlBuilder();
+
     Method method = type.getMethod();
     String path = type.getPath();
     Map<String, String> params = type.getParameters();
 
     if (method == Method.POST || method == Method.PUT) {
-      return this.urlBuilder
+      return urlBuilder
               .setPath(path)
               .build();
     } else {
-      return this.urlBuilder
+      return urlBuilder
               .setPath(path)
               .setParams(params)
               .build();
     }
   }
 
-  private byte[] buildBody(RequestType<T> type) {
+  private <T> byte[] buildBody(RequestType<T> type) {
     Method method = type.getMethod();
     Map<String, String> params = type.getParameters();
 
