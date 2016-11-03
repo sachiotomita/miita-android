@@ -1,71 +1,58 @@
 package com.naoto.yamaguchi.miita.oauth;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
 
 /**
+ * Current Authorize User.
+ * usage Singleton.
+ *
  * Created by naoto on 16/06/23.
  */
 public final class CurrentUser {
+  private static final String ID_KEY = "Qiita.User.id";
+  private static final String IMAGE_URL_KEY = "Qiita.User.imageUrl";
+  private static final String DEFAULT_VALUE = "";
 
-    private static final String SERVICE_NAME = "Miita";
-    private static final String ID_KEY = "Qiita.User.id";
-    private static final String IMAGE_URL_KEY = "Qiita.User.imageUrl";
-    private static final String DEFAULT_VALUE = "";
+  private static CurrentUser instance = null;
 
-    private static CurrentUser instance = null;
-
-    public static synchronized CurrentUser getInstance() {
-        if (instance == null) {
-            instance = new CurrentUser();
-        }
-
-        return instance;
+  public static synchronized CurrentUser getInstance() {
+    if (instance == null) {
+      instance = new CurrentUser();
     }
+    return instance;
+  }
 
-    private CurrentUser() {}
+  private CurrentUser() {}
 
-    public boolean isAuthorize(Context context) {
-        return AccessToken.isExist(context);
-    }
+  public boolean isAuthorize() {
+    return AccessToken.isExist();
+  }
 
-    public void logout(Context context) {
-        AccessToken.deleteToken(context);
-    }
+  public void logout() {
+    AccessToken.delete();
+  }
 
-    public String getToken(Context context) {
-        return AccessToken.getToken(context);
-    }
+  public String getToken() {
+    return AccessToken.get();
+  }
 
-    public void setToken(Context context, String token) {
-        AccessToken.setToken(context, token);
-    }
+  public void setToken(String token) {
+    AccessToken.set(token);
+  }
 
-    // TODO: sharedPreferencesのutil
-    public String getID(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        String id = sharedPreferences.getString(ID_KEY, DEFAULT_VALUE);
-        return id;
-    }
+  public String getID() {
+    return SharedPreferencesUtil.getString(ID_KEY, DEFAULT_VALUE);
+  }
 
-    public void setID(Context context, String id) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(ID_KEY, id);
-        editor.apply();
-    }
+  public void setID(String id) {
+    SharedPreferencesUtil.setString(ID_KEY, id);
+  }
 
-    public String getImageUrl(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        String imageUrl = sharedPreferences.getString(IMAGE_URL_KEY, DEFAULT_VALUE);
-        return imageUrl;
-    }
+  public String getImageUrl() {
+    return SharedPreferencesUtil.getString(IMAGE_URL_KEY, DEFAULT_VALUE);
+  }
 
-    public void setImageUrl(Context context, String imageUrl) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SERVICE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(IMAGE_URL_KEY, imageUrl);
-        editor.apply();
-    }
-
+  public void setImageUrl(String imageUrl) {
+    SharedPreferencesUtil.setString(IMAGE_URL_KEY, imageUrl);
+  }
 }
