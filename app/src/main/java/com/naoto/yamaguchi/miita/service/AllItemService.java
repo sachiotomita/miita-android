@@ -1,7 +1,5 @@
 package com.naoto.yamaguchi.miita.service;
 
-import android.content.Context;
-
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
@@ -23,11 +21,9 @@ import java.util.Map;
  */
 public final class AllItemService implements RequestType<List<AllItem>> {
 
-  private final Context context;
   private int page;
 
-  public AllItemService(Context context) {
-    this.context = context;
+  public AllItemService() {
     this.page = 1;
   }
 
@@ -51,7 +47,7 @@ public final class AllItemService implements RequestType<List<AllItem>> {
     return new HashMap<String, String>() {
       {
         put("page", Integer.toString(page));
-        put("per_page", PerPage.get(context));
+        put("per_page", PerPage.get());
       }
     };
   }

@@ -1,7 +1,5 @@
 package com.naoto.yamaguchi.miita.service;
 
-import android.content.Context;
-
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
@@ -23,12 +21,11 @@ import java.util.Map;
  */
 public final class TagItemService implements RequestType<List<Item>> {
 
-  private final Context context;
   private String tagId;
   private int page;
 
-  public TagItemService(Context context) {
-    this.context = context;
+  public TagItemService() {
+    this.page = 1;
   }
 
   public TagItemService setTagId(String tagId) {
@@ -56,7 +53,7 @@ public final class TagItemService implements RequestType<List<Item>> {
     return new HashMap<String, String>() {
       {
         put("page", Integer.toString(page));
-        put("per_page", PerPage.get(context));
+        put("per_page", PerPage.get());
       }
     };
   }

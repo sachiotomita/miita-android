@@ -1,7 +1,5 @@
 package com.naoto.yamaguchi.miita.service;
 
-import android.content.Context;
-
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
@@ -23,12 +21,10 @@ import java.util.Map;
  */
 public final class StockItemService implements RequestType<List<StockItem>> {
 
-  private final Context context;
   private String userId;
   private int page;
 
-  public StockItemService(Context context) {
-    this.context = context;
+  public StockItemService() {
     this.page = 1;
   }
 
@@ -57,7 +53,7 @@ public final class StockItemService implements RequestType<List<StockItem>> {
     return new HashMap<String, String>() {
       {
         put("page", Integer.toString(page));
-        put("per_page", PerPage.get(context));
+        put("per_page", PerPage.get());
       }
     };
   }
