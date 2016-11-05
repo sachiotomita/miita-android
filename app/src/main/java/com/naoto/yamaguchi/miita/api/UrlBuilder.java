@@ -47,6 +47,10 @@ final class UrlBuilder {
   private String buildQuery() {
     final StringBuilder queryBuilder = new StringBuilder();
 
+    if (this.params == null) {
+      return null;
+    }
+
     for (Map.Entry<String, String> entry: this.params.entrySet()) {
       if (entry.getKey() != null && entry.getValue() != null) {
         String key = entry.getKey();
