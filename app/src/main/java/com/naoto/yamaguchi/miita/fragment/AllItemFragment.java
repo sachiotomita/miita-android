@@ -119,7 +119,9 @@ public class AllItemFragment extends Fragment implements
   public void onScrollStateChanged(AbsListView absListView, int i) {}
 
   @Override
-  public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+  public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount,
+                       int totalItemCount) {
+    // TODO: 判定ロジック移す
     String perPage = PerPage.get();
     if (totalItemCount < (Integer.parseInt(perPage) * this.presenter.getPage())) {
       return;
