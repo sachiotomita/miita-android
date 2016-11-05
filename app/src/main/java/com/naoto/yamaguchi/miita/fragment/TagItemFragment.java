@@ -49,14 +49,24 @@ public class TagItemFragment extends Fragment
     this.presenter = new TagItemPresenter(this.getContext());
   }
 
-  public static TagItemFragment newInstance() {
+  public static TagItemFragment newInstance(String tagId) {
     TagItemFragment fragment = new TagItemFragment();
+
+    Bundle args = new Bundle();
+    args.putString("tag_id", tagId);
+    fragment.setArguments(args);
+
     return fragment;
   }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    if (getArguments() != null) {
+      String tagId = getArguments().getString("tag_id");
+      this.presenter.setTagId(tagId);
+    }
   }
 
   @Override

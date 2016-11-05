@@ -17,12 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.entity.FollowTag;
+import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
 import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
+import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
 import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
@@ -35,7 +38,9 @@ import com.naoto.yamaguchi.miita.view.MiitaAlertDialogType;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AllItemFragment.OnItemClickListener,
-        StockItemFragment.OnItemClickListener {
+        StockItemFragment.OnItemClickListener,
+        FollowTagFragment.OnTagClickListener,
+        TagItemFragment.OnItemClickListener {
 
   // FIXME: NavMenuType, FragmentTypeをenumにする
   // FIXME: typo -> STOCK
@@ -93,12 +98,12 @@ public class HomeActivity extends AppCompatActivity
       this.currentUserModel.request(code, new OnModelListener<User>() {
         @Override
         public void onSuccess(User results) {
-          // NOOP
+          // TODO: snack bar
         }
 
         @Override
         public void onError(MiitaException e) {
-          // NOOP
+          // TODO: show alert
         }
 
         @Override
@@ -285,11 +290,41 @@ public class HomeActivity extends AppCompatActivity
 
   @Override
   public void onItemClick(AllItem item) {
-
+    Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
+    intent.putExtra("item_id", item.getId());
+    intent.putExtra("item_title", item.getTitle());
+    intent.putExtra("item_url", item.getUrlString());
+    intent.putExtra("item_body", item.getBody());
+    startActivity(intent);
   }
 
   @Override
   public void onItemClick(StockItem item) {
+    Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
+    intent.putExtra("item_id", item.getId());
+    intent.putExtra("item_title", item.getTitle());
+    intent.putExtra("item_url", item.getUrlString());
+    intent.putExtra("item_body", item.getBody());
+    startActivity(intent);
+  }
 
+  @Override
+  public void onTagClick(FollowTag tag) {
+    String tagId = tag.getId();
+    FragmentRouter.newInstance()
+            .begin(getSupportFragmentManager(), TagItemFragment.newInstance(tagId))
+            .replace(R.id.home_container_view)
+            .addStack(true)
+            .commit();
+  }
+
+  @Override
+  public void onItemClick(Item item) {
+    Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
+    intent.putExtra("item_id", item.getId());
+    intent.putExtra("item_title", item.getTitle());
+    intent.putExtra("item_url", item.getUrlString());
+    intent.putExtra("item_body", item.getBody());
+    startActivity(intent);
   }
 }
