@@ -69,7 +69,7 @@ public class FollowTagFragment extends Fragment
 
     // FIXME: for example
     if (getArguments() != null) {
-      this.forceUpdate = getArguments().getString(ARG_FORCE_UPDATE);
+      // this.forceUpdate = getArguments().getString(ARG_FORCE_UPDATE);
     }
   }
 

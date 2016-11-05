@@ -43,8 +43,6 @@ public class TagItemFragment extends Fragment
 
   private final TagItemPresenter presenter;
 
-  // TODO: get tag id.
-
   public TagItemFragment() {
     this.presenter = new TagItemPresenter(this.getContext());
   }
@@ -94,6 +92,7 @@ public class TagItemFragment extends Fragment
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+    this.presenter.attachView(this);
     this.presenter.loadItems();
   }
 
