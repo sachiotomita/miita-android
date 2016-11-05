@@ -62,11 +62,11 @@ public final class CurrentUserModel {
   public void request(String code, OnModelListener<User> listener) {
     this.listener = listener;
     this.authorizeService.setCode(code);
-    API.request(this.context, this.authorizeService, new Callback<String>() {
+    API.request(this.authorizeService, new Callback<String>() {
       @Override
       public void onResponse(Response<String> response) {
         String token = response.result();
-        currentUser.setToken(context, token);
+        currentUser.setToken(token);
         getAuthUserRequest();
       }
 
@@ -78,12 +78,12 @@ public final class CurrentUserModel {
   }
 
   private void getAuthUserRequest() {
-    API.request(this.context, this.authUserService, new Callback<User>() {
+    API.request(this.authUserService, new Callback<User>() {
       @Override
       public void onResponse(Response<User> response) {
         User user = response.result();
-        currentUser.setID(context, user.getId());
-        currentUser.setImageUrl(context, user.getImageUrlString());
+        currentUser.setID(user.getId());
+        currentUser.setImageUrl(user.getImageUrlString());
         callSuccess(response);
       }
 

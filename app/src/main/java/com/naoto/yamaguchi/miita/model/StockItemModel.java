@@ -32,19 +32,19 @@ public final class StockItemModel {
 
   public StockItemModel(Context context) {
     this.context = context;
-    this.service = new StockItemService(this.context);
+    this.service = new StockItemService();
     this.dao = DaoFactory.getStockItemDao();
     this.currentUser = CurrentUser.getInstance();
   }
 
   public void request(final int page, final RequestType type,
                       OnModelListener<List<StockItem>> listener) {
-    final String userId = this.currentUser.getID(this.context);
+    final String userId = this.currentUser.getID();
     this.listener = listener;
     this.service
             .setUserId(userId)
             .setPage(page);
-    API.request(this.context, this.service, new Callback<List<StockItem>>() {
+    API.request(this.service, new Callback<List<StockItem>>() {
       @Override
       public void onResponse(Response<List<StockItem>> response) {
         callSuccessAndProcessResult(type, response);

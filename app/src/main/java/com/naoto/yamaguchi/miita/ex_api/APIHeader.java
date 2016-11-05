@@ -31,8 +31,8 @@ public final class APIHeader {
     }
 
     private void setAuthorizationToken() {
-        if (this.currentUser.isAuthorize(this.context)) {
-            String token = this.currentUser.getToken(this.context);
+        if (this.currentUser.isAuthorize()) {
+            String token = this.currentUser.getToken();
             this.header.put(
                     AUTHORIZATION_KEY,
                     AUTHORIZATION_VALUE + token

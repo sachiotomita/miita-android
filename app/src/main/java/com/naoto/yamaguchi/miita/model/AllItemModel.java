@@ -30,14 +30,14 @@ public final class AllItemModel {
 
   public AllItemModel(Context context) {
     this.context = context;
-    this.service = new AllItemService(this.context);
+    this.service = new AllItemService();
     this.dao = DaoFactory.getAllItemDao();
   }
 
   public void request(int page, final RequestType type, OnModelListener<List<AllItem>> listener) {
     this.listener = listener;
     this.service.setPage(page);
-    API.request(this.context, this.service, new Callback<List<AllItem>>() {
+    API.request(this.service, new Callback<List<AllItem>>() {
       @Override
       public void onResponse(Response<List<AllItem>> response) {
         callSuccessAndProcessResult(type, response);

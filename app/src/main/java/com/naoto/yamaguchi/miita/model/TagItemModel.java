@@ -26,7 +26,7 @@ public final class TagItemModel {
 
   public TagItemModel(Context context) {
     this.context = context;
-    this.service = new TagItemService(this.context);
+    this.service = new TagItemService();
   }
 
   public void request(final String tagId, final int page,
@@ -35,7 +35,7 @@ public final class TagItemModel {
     this.service
             .setTagId(tagId)
             .setPage(page);
-    API.request(this.context, this.service, new Callback<List<Item>>() {
+    API.request(this.service, new Callback<List<Item>>() {
       @Override
       public void onResponse(Response<List<Item>> response) {
         callSuccess(response);

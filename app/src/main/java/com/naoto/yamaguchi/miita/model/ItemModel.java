@@ -61,7 +61,7 @@ public final class ItemModel {
     this.service
             .setMethod(type.toMethod())
             .setItemId(itemId);
-    API.request(this.context, this.service, new Callback<Void>() {
+    API.request(this.service, new Callback<Void>() {
       @Override
       public void onResponse(Response<Void> response) {
         setStockState(type, true);

@@ -48,7 +48,7 @@ public final class APIURLBuilder {
     }
 
     public APIURLBuilder setPerPage() {
-        String perPage = PerPage.get(this.context);
+        String perPage = PerPage.get();
         String query = PER_PAGE_KEY + "=" + perPage;
         this.params.add(query);
         return this;

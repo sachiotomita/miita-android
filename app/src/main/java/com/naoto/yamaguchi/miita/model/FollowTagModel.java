@@ -32,19 +32,19 @@ public final class FollowTagModel {
 
   public FollowTagModel(Context context) {
     this.context = context;
-    this.service = new FollowTagService(this.context);
+    this.service = new FollowTagService();
     this.currentUser = CurrentUser.getInstance();
     this.dao = DaoFactory.getFollowTagDao();
   }
 
   public void request(int page, final RequestType type, OnModelListener<List<FollowTag>> listener) {
-    String userId = this.currentUser.getID(this.context);
+    String userId = this.currentUser.getID();
     this.listener = listener;
     this.service
             .setUserId(userId)
             .setPage(page);
 
-    API.request(this.context, this.service, new Callback<List<FollowTag>>() {
+    API.request(this.service, new Callback<List<FollowTag>>() {
       @Override
       public void onResponse(Response<List<FollowTag>> response) {
         callSuccessAndProcessResult(type, response);
