@@ -121,7 +121,7 @@ public class ItemActivity extends AppCompatActivity
   private void checkStock() {
     this.stockButton.setEnabled(false);
 
-    if (!this.currentUser.isAuthorize(this)) {
+    if (!this.currentUser.isAuthorize()) {
       return;
     }
 

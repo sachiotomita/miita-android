@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity
   protected void onResume() {
     super.onResume();
 
-    if (!this.currentUser.isAuthorize(this)
+    if (!this.currentUser.isAuthorize()
             && this.currentUserModel.isExistCodeQuery(this.getIntent())) {
 
       final ProgressDialog dialog = new ProgressDialog(this);
@@ -199,7 +199,7 @@ public class HomeActivity extends AppCompatActivity
                 .commit();
         break;
       case R.id.nav_stock_item:
-        if (this.currentUser.isAuthorize(this)) {
+        if (this.currentUser.isAuthorize()) {
           FragmentRouter.newInstance()
                   .begin(manager, StockItemFragment.newInstance())
                   .replace(R.id.home_container_view)
@@ -211,7 +211,7 @@ public class HomeActivity extends AppCompatActivity
         break;
       case R.id.nav_follow_tag:
         // TODO: follow tag fragment
-        if (this.currentUser.isAuthorize(this)) {
+        if (this.currentUser.isAuthorize()) {
 
         } else {
           this.showLoginAlert();
@@ -263,8 +263,8 @@ public class HomeActivity extends AppCompatActivity
     TextView userIdView = (TextView)header.findViewById(R.id.user_id_text);
 
     // TODO: get user name
-    String imageUrlString = this.currentUser.getImageUrl(this);
-    String userId = this.currentUser.getID(this);
+    String imageUrlString = this.currentUser.getImageUrl();
+    String userId = this.currentUser.getID();
 
     userNameView.setText("TODO");
     userIdView.setText(userId);
