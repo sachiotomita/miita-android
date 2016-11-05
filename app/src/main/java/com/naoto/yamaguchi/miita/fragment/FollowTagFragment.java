@@ -131,7 +131,7 @@ public class FollowTagFragment extends Fragment implements
 
   @Override
   public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-    String perPage = PerPage.get(this.getContext());
+    String perPage = PerPage.get();
     if (totalItemCount < (Integer.parseInt(perPage) * this.presenter.getPage())) {
       return;
     }

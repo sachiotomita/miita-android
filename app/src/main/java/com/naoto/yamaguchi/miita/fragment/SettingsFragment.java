@@ -11,73 +11,74 @@ import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
 
 /**
+ * Setting Fragment.
+ *
  * Created by naoto on 16/08/24.
  */
 public final class SettingsFragment extends PreferenceFragment {
 
-    private ListPreference perPagePref;
-    private Preference logoutPref;
-    private CurrentUser currentUser;
+  private ListPreference perPagePref;
+  private Preference logoutPref;
+  private CurrentUser currentUser;
 
-    // NOTE:
-    // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
-    // 2. 取得件数
-    // 3. LICENSE Intent
-    // 4. Logout (ログインしてたら。)
-    // 5. Version (No Action)
+  // NOTE:
+  // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
+  // 2. 取得件数
+  // 3. LICENSE Intent
+  // 4. Logout (ログインしてたら。)
+  // 5. Version (No Action)
 
-    public static SettingsFragment newInstance() {
-        SettingsFragment fragment =  new SettingsFragment();
-        return fragment;
+  public static SettingsFragment newInstance() {
+    return new SettingsFragment();
+  }
+
+  public SettingsFragment() {
+    this.currentUser = CurrentUser.getInstance();
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setHasOptionsMenu(true); // TODO: 調べる
+    this.loadPref();
+    this.init();
+  }
+
+  private void loadPref() {
+    if (this.currentUser.isAuthorize()) {
+      addPreferencesFromResource(R.xml.pref_all_auth);
+    } else {
+      addPreferencesFromResource(R.xml.pref_all_not_auth);
     }
+  }
 
-    public SettingsFragment() {
-        this.currentUser = CurrentUser.getInstance();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true); // TODO: 調べる
-        this.loadPref();
-        this.init();
-    }
-
-    private void loadPref() {
-        if (this.currentUser.isAuthorize(getActivity())) {
-            addPreferencesFromResource(R.xml.pref_all_auth);
-        } else {
-            addPreferencesFromResource(R.xml.pref_all_not_auth);
+  private void init() {
+    this.perPagePref = (ListPreference)findPreference(PreferencesConstants.PER_PAGE_KEY);
+    this.perPagePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+      @Override
+      public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (newValue != null) {
+          preference.setSummary((CharSequence)newValue);
+          return true;
         }
-    }
+        return false;
+      }
+    });
 
-    private void init() {
-        this.perPagePref = (ListPreference)findPreference(PreferencesConstants.PER_PAGE_KEY);
-        this.perPagePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (newValue != null) {
-                    preference.setSummary((CharSequence)newValue);
-                    return true;
-                }
-                return false;
-            }
-        });
+    String perPage = PerPage.get();
+    this.perPagePref.setSummary(perPage + "件");
 
-        String perPage = PerPage.get(getActivity());
-        this.perPagePref.setSummary(perPage + "件");
-
-        if (this.currentUser.isAuthorize(getActivity())) {
-            this.logoutPref = findPreference(PreferencesConstants.LOGOUT_KEY);
-            this.logoutPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    currentUser.logout(getActivity());
-                    // TODO: HomeActivityに値を渡したい
-                    getActivity().finish();
-                    return true;
-                }
-            });
+    if (this.currentUser.isAuthorize()) {
+      this.logoutPref = findPreference(PreferencesConstants.LOGOUT_KEY);
+      this.logoutPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+          currentUser.logout();
+          // TODO: HomeActivityに値を渡したい
+          getActivity().finish();
+          return true;
         }
+      });
     }
+  }
 }
