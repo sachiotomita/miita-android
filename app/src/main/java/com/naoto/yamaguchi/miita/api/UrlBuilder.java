@@ -29,9 +29,11 @@ final class UrlBuilder {
     return urlString;
   }
 
-  public void clean() {
+  private void clean() {
     this.builder = new StringBuilder(ENTRY_POINT);
-    this.params.clear();
+    if (this.params != null) {
+      this.params.clear();
+    }
   }
 
   public UrlBuilder setPath(@NonNull String path) {
