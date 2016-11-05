@@ -80,9 +80,8 @@ public final class ConnectionRunnable<T> implements Runnable {
     // response processing
     T result = null;
     try {
-      String body = this.connection.getRawBody();
-      if (body != null) {
-        result = this.requestType.processResponse(body);
+      if (rawBody != null) {
+        result = this.requestType.processResponse(rawBody);
       }
     } catch (HttpException e) {
       this.callFailure(e);
