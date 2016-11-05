@@ -55,7 +55,7 @@ final class ConnectionExecutor {
     Method method = type.getMethod();
     Map<String, String> params = type.getParameters();
 
-    if (params.isEmpty()) {
+    if (params == null || params.isEmpty()) {
       return null;
     }
 
