@@ -50,7 +50,7 @@ final class UrlBuilder {
     final StringBuilder queryBuilder = new StringBuilder();
 
     if (this.params == null) {
-      return null;
+      return "";
     }
 
     for (Map.Entry<String, String> entry: this.params.entrySet()) {
