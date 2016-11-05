@@ -24,8 +24,8 @@ import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockItemFragment extends Fragment implements
-        SwipeRefreshLayout.OnRefreshListener,
+public class StockItemFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
         StockItemPresenter.View {

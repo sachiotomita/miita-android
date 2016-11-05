@@ -24,8 +24,8 @@ import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllItemFragment extends Fragment implements
-        SwipeRefreshLayout.OnRefreshListener,
+public class AllItemFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
         AllItemPresenter.View {
