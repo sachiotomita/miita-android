@@ -52,12 +52,12 @@ public class FollowTagFragment extends Fragment
     this.presenter = new FollowTagPresenter(this.getContext());
   }
 
-  public static FollowTagFragment newInstance(String forceUpdate) {
+  public static FollowTagFragment newInstance(/**String forceUpdate**/) {
     FollowTagFragment fragment = new FollowTagFragment();
 
     // FIXME: for example
     Bundle args = new Bundle();
-    args.putString(ARG_FORCE_UPDATE, forceUpdate);
+    // args.putString(ARG_FORCE_UPDATE, forceUpdate);
     fragment.setArguments(args);
 
     return fragment;

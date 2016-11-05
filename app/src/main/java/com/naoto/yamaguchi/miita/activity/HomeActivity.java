@@ -21,6 +21,7 @@ import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
+import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
@@ -210,9 +211,12 @@ public class HomeActivity extends AppCompatActivity
         }
         break;
       case R.id.nav_follow_tag:
-        // TODO: follow tag fragment
         if (this.currentUser.isAuthorize()) {
-
+          FragmentRouter.newInstance()
+                  .begin(manager, FollowTagFragment.newInstance())
+                  .replace(R.id.home_container_view)
+                  .addStack(isSameItem)
+                  .commit();
         } else {
           this.showLoginAlert();
         }
