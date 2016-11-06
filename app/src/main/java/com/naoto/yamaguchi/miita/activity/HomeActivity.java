@@ -32,8 +32,8 @@ import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
-import com.naoto.yamaguchi.miita.view.MiitaAlertDialogBuilder;
-import com.naoto.yamaguchi.miita.view.MiitaAlertDialogType;
+import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
+import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -284,7 +284,8 @@ public class HomeActivity extends AppCompatActivity
 
   private void showLoginAlert() {
     new MiitaAlertDialogBuilder(this)
-            .build(MiitaAlertDialogType.LOGIN)
+            .setType(MiitaAlertDialogType.LOGIN)
+            .build()
             .show();
   }
 
