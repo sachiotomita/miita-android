@@ -17,6 +17,9 @@ public class TagItemActivity extends AppCompatActivity {
   private ActionBar actionBar;
   private CollapsingToolbarLayout toolbarLayout;
 
+  // TODO:
+  // tagのintent取得
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -43,6 +46,11 @@ public class TagItemActivity extends AppCompatActivity {
             .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance("TODO"))
             .replace(R.id.tag_item_container_view)
             .commit();
+  }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
   }
 
   @Override
