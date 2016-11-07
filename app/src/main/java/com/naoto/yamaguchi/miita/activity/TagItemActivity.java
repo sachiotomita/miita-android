@@ -1,15 +1,58 @@
 package com.naoto.yamaguchi.miita.activity;
 
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
+import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 
 public class TagItemActivity extends AppCompatActivity {
+
+  private Toolbar toolbar;
+  private ActionBar actionBar;
+  private CollapsingToolbarLayout toolbarLayout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tag_item);
+
+    this.initView();
+    this.setFragment();
+  }
+
+  private void initView() {
+    this.toolbar = (Toolbar)findViewById(R.id.toolbar);
+    setSupportActionBar(this.toolbar);
+
+    this.actionBar = getSupportActionBar();
+    this.actionBar.setDisplayHomeAsUpEnabled(true);
+    this.actionBar.setHomeButtonEnabled(true);
+
+    this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
+    this.toolbarLayout.setTitle("TODO");
+  }
+
+  private void setFragment() {
+    FragmentRouter.newInstance()
+            .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance("TODO"))
+            .replace(R.id.tag_item_container_view)
+            .commit();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 }

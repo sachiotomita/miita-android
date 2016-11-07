@@ -78,7 +78,7 @@ public class FollowTagFragment extends Fragment
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_follow_tag, container, false);
 
-    ((HomeActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_follow_tag);
+    // ((HomeActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_follow_tag);
 
     this.refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_widget);
     this.refreshLayout.setOnRefreshListener(this);
