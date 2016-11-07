@@ -42,6 +42,8 @@ public class TagItemActivity extends AppCompatActivity {
   }
 
   private void setFragment() {
+    // TODO: tag取得
+
     FragmentRouter.newInstance()
             .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance("TODO"))
             .replace(R.id.tag_item_container_view)
