@@ -3,6 +3,7 @@ package com.naoto.yamaguchi.miita.util.intent;
 import android.content.Intent;
 
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import com.naoto.yamaguchi.miita.entity.base.BaseTag;
 
@@ -28,6 +29,8 @@ public final class IntentHandler {
   private static final String TAG_ICON_URL_KEY = "tag_icon_url";
   private static final String TAG_ITEM_COUNT_KEY = "tag_item_count";
   private static final String TAG_FOLLOWERS_COUNT_KEY = "tag_followers_count";
+
+  private static final int DEFAULT_INT_VALUE = 0;
 
   // TODO: すべてのparameterをcopyする
   public static <T extends BaseItem> Intent putItem(Intent intent, T item) {
@@ -63,6 +66,19 @@ public final class IntentHandler {
     return item;
   }
 
-  // TODO: create Tag class and create {public static getTag()} in this class.
+  public static Tag getTag(Intent intent) {
+    Tag tag = new Tag();
 
+    String id = intent.getStringExtra(TAG_ID_KEY);
+    String iconUrlString = intent.getStringExtra(TAG_ICON_URL_KEY);
+    int itemCount = intent.getIntExtra(TAG_ITEM_COUNT_KEY, DEFAULT_INT_VALUE);
+    int followersCount = intent.getIntExtra(TAG_FOLLOWERS_COUNT_KEY, DEFAULT_INT_VALUE);
+
+    tag.setId(id);
+    tag.setIconUrlString(iconUrlString);
+    tag.setItemsCount(itemCount);
+    tag.setFollowersCount(followersCount);
+
+    return tag;
+  }
 }
