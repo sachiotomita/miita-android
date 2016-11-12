@@ -198,7 +198,7 @@ public class HomeActivity extends AppCompatActivity
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     int id = item.getItemId();
-    boolean isSameItem = !item.isChecked();
+    boolean isStack = !item.isChecked();
     FragmentManager manager = this.getSupportFragmentManager();
 
     // TODO: use util class
@@ -207,7 +207,7 @@ public class HomeActivity extends AppCompatActivity
         FragmentRouter.newInstance()
                 .begin(manager, AllItemFragment.newInstance())
                 .replace(R.id.home_container_view)
-                .addStack(isSameItem)
+                .addStack(isStack)
                 .commit();
         break;
       case R.id.nav_stock_item:
@@ -215,7 +215,7 @@ public class HomeActivity extends AppCompatActivity
           FragmentRouter.newInstance()
                   .begin(manager, StockItemFragment.newInstance())
                   .replace(R.id.home_container_view)
-                  .addStack(isSameItem)
+                  .addStack(isStack)
                   .commit();
         } else {
           this.showLoginAlert();
@@ -226,7 +226,7 @@ public class HomeActivity extends AppCompatActivity
           FragmentRouter.newInstance()
                   .begin(manager, FollowTagFragment.newInstance())
                   .replace(R.id.home_container_view)
-                  .addStack(isSameItem)
+                  .addStack(isStack)
                   .commit();
         } else {
           this.showLoginAlert();
