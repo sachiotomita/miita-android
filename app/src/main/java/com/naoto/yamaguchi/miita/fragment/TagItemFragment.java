@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.activity.HomeActivity;
-import com.naoto.yamaguchi.miita.activity.TagItemActivity;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.presenter.TagItemPresenter;
@@ -81,6 +80,7 @@ public class TagItemFragment extends Fragment
     this.listView = (ListView)rootView.findViewById(R.id.listView);
     this.listView.setOnScrollListener(this);
     this.listView.setOnItemClickListener(this);
+    ViewCompat.setNestedScrollingEnabled(this.listView, true);
 
     this.adapter = new ItemListAdapter<>(this.getContext(), new ArrayList<Item>());
     this.listView.setAdapter(this.adapter);
