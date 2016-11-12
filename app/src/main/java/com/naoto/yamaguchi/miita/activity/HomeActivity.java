@@ -75,6 +75,10 @@ public class HomeActivity extends AppCompatActivity
     this.init();
     this.setLayout();
 
+    this.navigationView.getMenu()
+            .getItem(NavMenuType.ALL_ITEM)
+            .setChecked(true);
+
     FragmentRouter.newInstance()
             .begin(this.getSupportFragmentManager(), AllItemFragment.newInstance())
             .replace(R.id.home_container_view)
@@ -107,6 +111,10 @@ public class HomeActivity extends AppCompatActivity
         @Override
         public void onComplete() {
           dialog.dismiss();
+
+          navigationView.getMenu()
+                  .getItem(NavMenuType.ALL_ITEM)
+                  .setChecked(true);
         }
       });
     }
