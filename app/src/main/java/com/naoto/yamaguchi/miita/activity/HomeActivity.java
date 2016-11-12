@@ -32,6 +32,7 @@ import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
+import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
 
@@ -39,8 +40,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AllItemFragment.OnItemClickListener,
         StockItemFragment.OnItemClickListener,
-        FollowTagFragment.OnTagClickListener,
-        TagItemFragment.OnItemClickListener {
+        FollowTagFragment.OnTagClickListener {
 
   // FIXME: NavMenuType, FragmentTypeをenumにする
   // FIXME: typo -> STOCK
@@ -292,40 +292,21 @@ public class HomeActivity extends AppCompatActivity
   @Override
   public void onItemClick(AllItem item) {
     Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
-    intent.putExtra("item_id", item.getId());
-    intent.putExtra("item_title", item.getTitle());
-    intent.putExtra("item_url", item.getUrlString());
-    intent.putExtra("item_body", item.getBody());
+    intent = IntentHandler.putItem(intent, item);
     startActivity(intent);
   }
 
   @Override
   public void onItemClick(StockItem item) {
     Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
-    intent.putExtra("item_id", item.getId());
-    intent.putExtra("item_title", item.getTitle());
-    intent.putExtra("item_url", item.getUrlString());
-    intent.putExtra("item_body", item.getBody());
+    intent = IntentHandler.putItem(intent, item);
     startActivity(intent);
   }
 
   @Override
   public void onTagClick(FollowTag tag) {
-    String tagId = tag.getId();
-    FragmentRouter.newInstance()
-            .begin(getSupportFragmentManager(), TagItemFragment.newInstance(tagId))
-            .replace(R.id.home_container_view)
-            .addStack(true)
-            .commit();
-  }
-
-  @Override
-  public void onItemClick(Item item) {
-    Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
-    intent.putExtra("item_id", item.getId());
-    intent.putExtra("item_title", item.getTitle());
-    intent.putExtra("item_url", item.getUrlString());
-    intent.putExtra("item_body", item.getBody());
+    Intent intent = new Intent(HomeActivity.this, TagItemActivity.class);
+    intent = IntentHandler.putTag(intent, tag);
     startActivity(intent);
   }
 }
