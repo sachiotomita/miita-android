@@ -1,5 +1,6 @@
 package com.naoto.yamaguchi.miita.activity;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 
-public class TagItemActivity extends AppCompatActivity {
+public class TagItemActivity extends AppCompatActivity
+        implements TagItemFragment.OnItemClickListener {
 
   private Toolbar toolbar;
   private ActionBar actionBar;
@@ -26,8 +29,8 @@ public class TagItemActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tag_item);
 
-    this.initView();
     this.parseIntent();
+    this.initView();
     this.setFragment();
   }
 
@@ -40,7 +43,7 @@ public class TagItemActivity extends AppCompatActivity {
     this.actionBar.setHomeButtonEnabled(true);
 
     this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-    this.toolbarLayout.setTitle("TODO");
+    this.toolbarLayout.setTitle(this.tag.getId());
   }
 
   private void parseIntent() {
@@ -68,5 +71,12 @@ public class TagItemActivity extends AppCompatActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override
+  public void onItemClick(Item item) {
+    Intent intent = new Intent(TagItemActivity.this, ItemActivity.class);
+    intent = IntentHandler.putItem(intent, item);
+    startActivity(intent);
   }
 }

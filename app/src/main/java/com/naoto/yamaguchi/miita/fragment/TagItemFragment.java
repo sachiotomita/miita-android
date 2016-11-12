@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.activity.HomeActivity;
+import com.naoto.yamaguchi.miita.activity.TagItemActivity;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.presenter.TagItemPresenter;
@@ -72,7 +73,7 @@ public class TagItemFragment extends Fragment
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_tag_item, container, false);
 
-    ((HomeActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_follow_tag);
+    // ((TagItemActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_follow_tag);
 
     this.refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_widget);
     this.refreshLayout.setOnRefreshListener(this);

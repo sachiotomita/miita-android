@@ -47,7 +47,9 @@
             android:name=".activity.LicenseActivity"
             android:label="">
         </activity>
-        <activity android:name=".activity.TagItemActivity">
+        <activity
+            android:name=".activity.TagItemActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
