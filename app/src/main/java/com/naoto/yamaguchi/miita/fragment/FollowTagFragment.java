@@ -198,9 +198,14 @@ public class FollowTagFragment extends Fragment
   }
 
   @Override
-  public void reloadData(List<FollowTag> tags) {
-    this.adapter.clear();
-    this.adapter.addAll(tags);
+  public void reloadData(boolean forceUpdate, List<FollowTag> tags) {
+    if (forceUpdate) {
+      this.adapter.clear();
+      this.adapter.addAll(tags);
+    } else {
+      this.adapter.addAll(tags);
+    }
+
     this.adapter.notifyDataSetChanged();
   }
 

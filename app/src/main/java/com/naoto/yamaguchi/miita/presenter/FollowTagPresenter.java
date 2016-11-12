@@ -27,7 +27,7 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
     void endRefreshing();
     void addFooterView();
     void removeFooterView();
-    void reloadData(List<FollowTag> tags);
+    void reloadData(boolean forceUpdate, List<FollowTag> tags);
     void showError(MiitaException e);
   }
 
@@ -77,7 +77,7 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
     this.request(RequestType.PAGING);
   }
 
-  private void request(RequestType type) {
+  private void request(final RequestType type) {
     switch (type) {
       case FIRST:
       case REFRESH:
@@ -94,7 +94,7 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
       @Override
       public void onSuccess(List<FollowTag> results) {
         isPaging = false;
-        view.reloadData(results);
+        reloadData(type, results);
       }
 
       @Override
@@ -108,6 +108,18 @@ public final class FollowTagPresenter extends Presenter<FollowTagPresenter.View>
         invalidateView();
       }
     });
+  }
+
+  private void reloadData(RequestType type, List<FollowTag> results) {
+    switch (type) {
+      case FIRST:
+      case REFRESH:
+        this.view.reloadData(true, results);
+        break;
+      case PAGING:
+        this.view.reloadData(false, results);
+        break;
+    }
   }
 
   private void invalidateView() {
