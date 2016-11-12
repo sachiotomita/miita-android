@@ -28,7 +28,7 @@ public final class TagItemPresenter extends Presenter<TagItemPresenter.View> {
     void endRefreshing();
     void addFooterView();
     void removeFooterView();
-    void reloadData(List<Item> items);
+    void reloadData(boolean forceUpdate, List<Item> items);
     void showError(MiitaException e);
   }
 
@@ -84,7 +84,7 @@ public final class TagItemPresenter extends Presenter<TagItemPresenter.View> {
     this.request(RequestType.PAGING);
   }
 
-  private void request(RequestType type) {
+  private void request(final RequestType type) {
     switch (type) {
       case FIRST:
       case REFRESH:
@@ -101,7 +101,7 @@ public final class TagItemPresenter extends Presenter<TagItemPresenter.View> {
       @Override
       public void onSuccess(List<Item> results) {
         isPaging = false;
-        view.reloadData(results);
+        reloadData(type, results);
       }
 
       @Override
@@ -115,6 +115,18 @@ public final class TagItemPresenter extends Presenter<TagItemPresenter.View> {
         invalidateView();
       }
     });
+  }
+
+  private void reloadData(RequestType type, List<Item> results) {
+    switch (type) {
+      case FIRST:
+      case REFRESH:
+        this.view.reloadData(true, results);
+        break;
+      case PAGING:
+        this.view.reloadData(false, results);
+        break;
+    }
   }
 
   private void invalidateView() {

@@ -190,8 +190,11 @@ public class TagItemFragment extends Fragment
   }
 
   @Override
-  public void reloadData(List<Item> items) {
-    this.adapter.clear();
+  public void reloadData(boolean forceUpdate, List<Item> items) {
+    if (forceUpdate) {
+      this.adapter.clear();
+    }
+
     this.adapter.addAll(items);
     this.adapter.notifyDataSetChanged();
   }
