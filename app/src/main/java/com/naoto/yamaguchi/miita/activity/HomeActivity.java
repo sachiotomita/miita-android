@@ -18,14 +18,12 @@ import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
-import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
 import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
-import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
 import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;

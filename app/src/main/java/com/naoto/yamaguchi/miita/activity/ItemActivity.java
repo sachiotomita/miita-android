@@ -18,10 +18,12 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
+import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 
 /**
  * TODO
@@ -44,6 +46,8 @@ public class ItemActivity extends AppCompatActivity
 
   // FIXME: model -> presenter or viewModel
   private ItemModel model;
+  private Tag tag;
+
   private String itemId;
   private String itemTitle;
   private String itemUrl;
@@ -67,6 +71,8 @@ public class ItemActivity extends AppCompatActivity
   }
 
   private void parseIntent() {
+    this.tag = IntentHandler.getTag(this.getIntent());
+
     Intent intent = this.getIntent();
     this.itemId = intent.getStringExtra("item_id");
     this.itemTitle = intent.getStringExtra("item_title");

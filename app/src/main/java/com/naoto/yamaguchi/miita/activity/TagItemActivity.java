@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
+import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 
 public class TagItemActivity extends AppCompatActivity {
 
@@ -17,8 +19,7 @@ public class TagItemActivity extends AppCompatActivity {
   private ActionBar actionBar;
   private CollapsingToolbarLayout toolbarLayout;
 
-  // TODO:
-  // tagのintent取得
+  private Tag tag;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class TagItemActivity extends AppCompatActivity {
     setContentView(R.layout.activity_tag_item);
 
     this.initView();
+    this.parseIntent();
     this.setFragment();
   }
 
@@ -41,11 +43,13 @@ public class TagItemActivity extends AppCompatActivity {
     this.toolbarLayout.setTitle("TODO");
   }
 
-  private void setFragment() {
-    // TODO: tag取得
+  private void parseIntent() {
+    this.tag = IntentHandler.getTag(this.getIntent());
+  }
 
+  private void setFragment() {
     FragmentRouter.newInstance()
-            .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance("TODO"))
+            .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance(this.tag.getId()))
             .replace(R.id.tag_item_container_view)
             .commit();
   }
