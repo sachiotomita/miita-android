@@ -198,7 +198,7 @@ public class HomeActivity extends AppCompatActivity
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     int id = item.getItemId();
-    boolean isSameItem = item.isChecked();
+    boolean isSameItem = !item.isChecked();
     FragmentManager manager = this.getSupportFragmentManager();
 
     // TODO: use util class
