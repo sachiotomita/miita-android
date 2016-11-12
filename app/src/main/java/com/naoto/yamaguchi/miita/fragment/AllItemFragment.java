@@ -189,9 +189,14 @@ public class AllItemFragment extends Fragment
   }
 
   @Override
-  public void reloadData(List<AllItem> items) {
-    this.adapter.clear();
-    this.adapter.addAll(items);
+  public void reloadData(boolean forceUpdate, List<AllItem> items) {
+    if (forceUpdate) {
+      this.adapter.clear();
+      this.adapter.addAll(items);
+    } else {
+      this.adapter.addAll(items);
+    }
+
     this.adapter.notifyDataSetChanged();
   }
 
