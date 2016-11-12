@@ -184,9 +184,14 @@ public class StockItemFragment extends Fragment
   }
 
   @Override
-  public void reloadData(List<StockItem> items) {
-    this.adapter.clear();
-    this.adapter.addAll(items);
+  public void reloadData(boolean forceUpdate, List<StockItem> items) {
+    if (forceUpdate) {
+      this.adapter.clear();
+      this.adapter.addAll(items);
+    } else {
+      this.adapter.addAll(items);
+    }
+
     this.adapter.notifyDataSetChanged();
   }
 
