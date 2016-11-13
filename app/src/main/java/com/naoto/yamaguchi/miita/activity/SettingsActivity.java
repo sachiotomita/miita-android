@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
+import android.view.MenuItem;
 
 import com.naoto.yamaguchi.miita.fragment.SettingsFragment;
 
@@ -35,7 +36,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setupActionBar();
+
+    this.setupActionBar();
     this.setSettingsFragment();
   }
 
@@ -47,6 +49,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     if (actionBar != null) {
       // Show the Up button in the action bar.
       actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setHomeButtonEnabled(true);
     }
   }
 
@@ -75,5 +78,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     this.getFragmentManager().beginTransaction()
             .replace(android.R.id.content, fragment)
             .commit();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 }
