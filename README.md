@@ -2,6 +2,7 @@
 
 # TODO
 - [ ] navigation selected when backpress. (must)
+- [ ] adapter ViewHolder. (must)
 - [ ] list layout. (must)
 - [ ] item header multi line. (must)
 - [ ] license. (must)
