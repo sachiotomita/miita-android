@@ -8,4 +8,5 @@
 - [ ] license. (must)
 - [ ] setting, license activity back button. (must)
 - [ ] app icon. (must)
+- [ ] share item. (low priority)
 - [ ] search item ,tag. (low priority)

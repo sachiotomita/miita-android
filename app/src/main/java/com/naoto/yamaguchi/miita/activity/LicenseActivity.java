@@ -32,8 +32,8 @@ public class LicenseActivity extends AppCompatActivity {
 
   private void setLayout() {
     this.toolbar = (Toolbar)findViewById(R.id.toolbar);
+    this.toolbar.setTitle(R.string.title_license);
     setSupportActionBar(this.toolbar);
-    this.toolbar.setTitle("License");
 
     this.actionBar = getSupportActionBar();
     this.actionBar.setDisplayHomeAsUpEnabled(true);

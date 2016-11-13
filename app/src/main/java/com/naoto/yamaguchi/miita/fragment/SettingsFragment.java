@@ -6,6 +6,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.activity.SettingsActivity;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
@@ -40,8 +41,14 @@ public final class SettingsFragment extends PreferenceFragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true); // TODO: 調べる
+
+    this.initView();
     this.loadPref();
     this.init();
+  }
+
+  private void initView() {
+    ((SettingsActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_settings);
   }
 
   private void loadPref() {

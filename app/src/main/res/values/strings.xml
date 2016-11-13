@@ -17,6 +17,7 @@
     <string name="title_stock_item">ストックした投稿</string>
     <string name="title_follow_tag"></string>
     <string name="title_settings">設定</string>
+    <string name="title_license">License</string>
 
     <!-- Drawer Layout -->
     <string name="drawer_open">Open Drawer</string>
