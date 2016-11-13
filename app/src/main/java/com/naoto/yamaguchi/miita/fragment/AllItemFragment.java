@@ -71,6 +71,7 @@ public class AllItemFragment extends Fragment
 
     this.refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_widget);
     this.refreshLayout.setOnRefreshListener(this);
+    this.refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
     this.listView = (ListView)rootView.findViewById(R.id.listView);
     this.listView.setOnScrollListener(this);
