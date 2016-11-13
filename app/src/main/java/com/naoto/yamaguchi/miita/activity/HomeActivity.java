@@ -201,6 +201,11 @@ public class HomeActivity extends AppCompatActivity
     boolean isStack = !item.isChecked();
     FragmentManager manager = this.getSupportFragmentManager();
 
+    if (item.isChecked()) {
+      this.drawerLayout.closeDrawers();
+      return true;
+    }
+
     // TODO: use util class
     switch (id) {
       case R.id.nav_all_item:
@@ -238,8 +243,7 @@ public class HomeActivity extends AppCompatActivity
         break;
     }
 
-    DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-    drawer.closeDrawers();
+    this.drawerLayout.closeDrawers();
     return true;
   }
 
