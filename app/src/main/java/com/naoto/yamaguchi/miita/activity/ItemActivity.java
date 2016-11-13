@@ -46,6 +46,8 @@ public class ItemActivity extends AppCompatActivity
 
   // FIXME: model -> presenter or viewModel
   private ItemModel model;
+
+  // TODO: delete
   private Tag tag;
 
   private String itemId;
@@ -135,14 +137,14 @@ public class ItemActivity extends AppCompatActivity
       @Override
       public void onSuccess(Void results) {
         stockButton.setBackgroundTintList(
-                ColorStateList.valueOf(getResources().getColor(R.color.red))
+                ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
         );
       }
 
       @Override
       public void onError(MiitaException e) {
         stockButton.setBackgroundTintList(
-                ColorStateList.valueOf(getResources().getColor(R.color.green))
+                ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
         );
       }
 
@@ -192,7 +194,7 @@ public class ItemActivity extends AppCompatActivity
         @Override
         public void onSuccess(Void results) {
           stockButton.setBackgroundTintList(
-                  ColorStateList.valueOf(getResources().getColor(R.color.green))
+                  ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
           );
         }
 
@@ -211,7 +213,7 @@ public class ItemActivity extends AppCompatActivity
         @Override
         public void onSuccess(Void results) {
           stockButton.setBackgroundTintList(
-                  ColorStateList.valueOf(getResources().getColor(R.color.red))
+                  ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
           );
         }
 
