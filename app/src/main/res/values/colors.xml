@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- Primary -->
+    <color name="colorPrimary">#59bb0c</color>
+    <color name="colorPrimaryDark">#3e8208</color>
+    <color name="colorAccent">#337ab7</color>
     <color name="red">#ff0000</color>
     <color name="blue">#0000ff</color>
     <color name="green">#00ff00</color>
     <color name="yellow">#ffff00</color>
     <color name="gray">#a9a9a9</color>
+
+    <!-- Stock Button -->
+    <color name="stockButton">#fff</color>
+    <color name="stockIcon">#59bb0c</color>
+    <color name="unStockButton">#ec4301</color>
+    <color name="unStockIcon">#fff</color>
+    <color name="defaultButton">#fff</color>
+    <color name="defaulrIcon">#a9a9a9</color>
 </resources>
