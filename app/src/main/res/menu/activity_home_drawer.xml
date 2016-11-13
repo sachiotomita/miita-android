@@ -15,7 +15,7 @@
             android:title="@string/nav_follow_tag" />
         <item
             android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_menu_settings_48px"
             android:title="@string/nav_setting" />
     </group>
 </menu>
