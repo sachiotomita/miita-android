@@ -95,6 +95,10 @@ public class ItemActivity extends AppCompatActivity
 
     this.stockButton = (FloatingActionButton)findViewById(R.id.fab);
     this.stockButton.setOnClickListener(this);
+    this.stockButton.setImageResource(R.drawable.ic_default_stock_button_48px);
+    this.stockButton.setBackgroundTintList(
+            ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
+    );
 
     this.spinner = (ProgressBar)findViewById(R.id.progress_bar);
     this.spinner.setVisibility(View.VISIBLE);
@@ -136,6 +140,7 @@ public class ItemActivity extends AppCompatActivity
     this.model.request(ItemModel.Type.CHECK, this.itemId, new OnModelListener<Void>() {
       @Override
       public void onSuccess(Void results) {
+        stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
         stockButton.setBackgroundTintList(
                 ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
         );
@@ -143,6 +148,7 @@ public class ItemActivity extends AppCompatActivity
 
       @Override
       public void onError(MiitaException e) {
+        stockButton.setImageResource(R.drawable.ic_stock_button_48px);
         stockButton.setBackgroundTintList(
                 ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
         );
@@ -193,6 +199,7 @@ public class ItemActivity extends AppCompatActivity
       this.model.request(ItemModel.Type.UNSTOCK, this.itemId, new OnModelListener<Void>() {
         @Override
         public void onSuccess(Void results) {
+          stockButton.setImageResource(R.drawable.ic_stock_button_48px);
           stockButton.setBackgroundTintList(
                   ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
           );
@@ -212,6 +219,7 @@ public class ItemActivity extends AppCompatActivity
       this.model.request(ItemModel.Type.STOCK, this.itemId, new OnModelListener<Void>() {
         @Override
         public void onSuccess(Void results) {
+          stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
           stockButton.setBackgroundTintList(
                   ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
           );
