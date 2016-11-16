@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary -->
+    <!-- Primary Color -->
     <color name="colorPrimary">#59bb0c</color>
     <color name="colorPrimaryDark">#3e8208</color>
     <color name="colorAccent">#337ab7</color>
 
     <!-- Base Color -->
     <color name="black">#000000</color>
+    <color name="white">#fff</color>
 
     <!-- Stock Button -->
     <color name="stockButton">#fff</color>

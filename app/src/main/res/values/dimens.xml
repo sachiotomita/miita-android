@@ -6,7 +6,12 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <!-- Progress Bar Size. -->
+    <dimen name="progress_bar_width">40dp</dimen>
+    <dimen name="progress_bar_height">40dp</dimen>
+
     <!-- Item Activity Layout -->
     <!-- fab default size 56dp + 16dp margin -->
     <dimen name="item_activity_bottom_margin">72dp</dimen>
+    <dimen name="item_progress_top_margin">70dp</dimen>
 </resources>
