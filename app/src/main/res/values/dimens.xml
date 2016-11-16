@@ -5,4 +5,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!-- Item Activity Layout -->
+    <!-- fab default size 56dp + 16dp margin -->
+    <dimen name="item_activity_bottom_margin">72dp</dimen>
 </resources>
