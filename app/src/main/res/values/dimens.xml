@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_height">240dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
     <!-- Progress Bar Size. -->
@@ -14,4 +14,12 @@
     <!-- fab default size 56dp + 16dp margin -->
     <dimen name="item_activity_bottom_margin">72dp</dimen>
     <dimen name="item_progress_top_margin">70dp</dimen>
+    <!-- header text view margin -->
+    <dimen name="header_title_top_margin">56dp</dimen>
+    <dimen name="header_title_bottom_margin">20dp</dimen>
+    <dimen name="header_title_start_margin">48dp</dimen>
+    <dimen name="header_title_end_margin">32dp</dimen>
+    <dimen name="header_desc_bottom_margin">32dp</dimen>
+    <dimen name="header_desc_start_margin">48dp</dimen>
+    <dimen name="header_desc_end_margin">32dp</dimen>
 </resources>
