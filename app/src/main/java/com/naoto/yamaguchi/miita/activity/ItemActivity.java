@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -16,6 +17,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.Tag;
@@ -34,8 +36,12 @@ import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
  *
  */
 public class ItemActivity extends AppCompatActivity
-        implements View.OnClickListener {
+        implements View.OnClickListener,
+        AppBarLayout.OnOffsetChangedListener {
 
+  private static final int COLLAPSED_OFFSET = -300;
+
+  private AppBarLayout appBarLayout;
   private Toolbar toolbar;
   private ActionBar actionBar;
   private CollapsingToolbarLayout toolbarLayout;
@@ -44,11 +50,11 @@ public class ItemActivity extends AppCompatActivity
   private WebView webView;
   private CurrentUser currentUser;
 
+  private TextView titleTextView;
+  private TextView descTextView;
+
   // FIXME: model -> presenter or viewModel
   private ItemModel model;
-
-  // TODO: delete
-  private Tag tag;
 
   private String itemId;
   private String itemTitle;
@@ -73,8 +79,6 @@ public class ItemActivity extends AppCompatActivity
   }
 
   private void parseIntent() {
-    this.tag = IntentHandler.getTag(this.getIntent());
-
     Intent intent = this.getIntent();
     this.itemId = intent.getStringExtra("item_id");
     this.itemTitle = intent.getStringExtra("item_title");
@@ -83,6 +87,9 @@ public class ItemActivity extends AppCompatActivity
   }
 
   private void setLayout() {
+    this.appBarLayout = (AppBarLayout)findViewById(R.id.app_bar);
+    this.appBarLayout.addOnOffsetChangedListener(this);
+
     this.toolbar = (Toolbar)findViewById(R.id.toolbar);
     setSupportActionBar(this.toolbar);
 
@@ -99,6 +106,11 @@ public class ItemActivity extends AppCompatActivity
     this.stockButton.setBackgroundTintList(
             ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
     );
+
+    this.titleTextView = (TextView)findViewById(R.id.item_header_title);
+    this.titleTextView.setText(this.itemTitle);
+
+    this.descTextView = (TextView)findViewById(R.id.item_header_desc);
 
     this.spinner = (ProgressBar)findViewById(R.id.progress_bar);
     this.spinner.setVisibility(View.VISIBLE);
@@ -246,6 +258,15 @@ public class ItemActivity extends AppCompatActivity
         return true;
       default:
         return super.onOptionsItemSelected(item);
+    }
+  }
+
+  @Override
+  public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+    if (verticalOffset >= COLLAPSED_OFFSET) {
+      this.toolbarLayout.setTitle("");
+    } else {
+      this.toolbarLayout.setTitle(this.itemTitle);
     }
   }
 }
