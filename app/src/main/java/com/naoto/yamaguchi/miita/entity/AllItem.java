@@ -2,61 +2,105 @@ package com.naoto.yamaguchi.miita.entity;
 
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
+import java.util.List;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
+ * All Item Entity.
+ * Realm Table
+ * - id
+ * - title
+ * - body
+ * - url string
+ * - createdAt
+ * - tags
+ * - User
+ *
  * Created by naoto on 16/06/25.
  */
 public class AllItem extends RealmObject implements BaseItem {
 
-    @PrimaryKey
-    private String id;
-    private String title;
-    private String body;
-    private String urlString;
-    private User user;
+  @PrimaryKey
+  private String id;
+  private String title;
+  private String body;
+  private String urlString;
+  private String createdAt;
+  private List<Tag> tags;
+  private User user;
 
-    public AllItem() {}
+  public AllItem() {}
 
-    public String getId() {
-        return this.id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  @Override
+  public String getId() {
+    return this.id;
+  }
 
-    public String getTitle() {
-        return this.title;
-    }
+  @Override
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  @Override
+  public String getTitle() {
+    return this.title;
+  }
 
-    public String getBody() {
-        return this.body;
-    }
+  @Override
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+  @Override
+  public String getBody() {
+    return this.body;
+  }
 
-    public String getUrlString() {
-        return this.urlString;
-    }
+  @Override
+  public void setBody(String body) {
+    this.body = body;
+  }
 
-    public void setUrlString(String urlString) {
-        this.urlString = urlString;
-    }
+  @Override
+  public String getUrlString() {
+    return this.urlString;
+  }
 
-    public User getUser() {
-        return this.user;
-    }
+  @Override
+  public void setUrlString(String urlString) {
+    this.urlString = urlString;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  @Override
+  public String getCreatedAt() {
+    return this.createdAt;
+  }
 
+  @Override
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  @Override
+  public List<Tag> getTags() {
+    return this.tags;
+  }
+
+  @Override
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
+  }
+
+  @Override
+  public User getUser() {
+    return this.user;
+  }
+
+  @Override
+  public void setUser(User user) {
+    this.user = user;
+  }
 }
