@@ -31,7 +31,9 @@ public class StockItem extends RealmObject implements BaseItem {
   private List<Tag> tags;
   private User user;
 
-  public StockItem() {}
+  public StockItem() {
+    // for Realm
+  }
 
   @Override
   public String getId() {

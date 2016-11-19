@@ -31,8 +31,9 @@ public class AllItem extends RealmObject implements BaseItem {
   private List<Tag> tags;
   private User user;
 
-  public AllItem() {}
-
+  public AllItem() {
+    // for Realm
+  }
 
   @Override
   public String getId() {
