@@ -2,14 +2,18 @@ package com.naoto.yamaguchi.miita.entity;
 
 import com.naoto.yamaguchi.miita.entity.base.BaseTag;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * generic Tag entity.
  *
  * Created by naoto on 2016/11/08.
  */
 
-public final class Tag implements BaseTag {
+public final class Tag extends RealmObject implements BaseTag {
 
+  @PrimaryKey
   private String id;
   private String iconUrlString;
   private int itemsCount;
