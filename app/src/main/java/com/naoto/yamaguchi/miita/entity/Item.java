@@ -5,7 +5,7 @@ import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import java.util.List;
 
 /**
- * General Item Object
+ * General Item Entity.
  * Not Realm Object.
  *
  * Created by naoto on 16/07/17.
