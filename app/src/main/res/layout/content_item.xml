@@ -21,14 +21,12 @@
             android:layout_height="@dimen/progress_bar_height"
             android:layout_marginTop="@dimen/item_progress_top_margin"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="visible" />
+            android:layout_centerVertical="true"/>
 
         <WebView
             android:id="@+id/item_webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 
