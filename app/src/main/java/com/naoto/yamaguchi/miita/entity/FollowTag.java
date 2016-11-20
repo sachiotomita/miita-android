@@ -23,9 +23,7 @@ public class FollowTag extends RealmObject implements BaseTag {
   private int itemsCount;
   private int followersCount;
 
-  public FollowTag() {
-    // for Realm
-  }
+  public FollowTag() {}
 
   @Override
   public String getId() {

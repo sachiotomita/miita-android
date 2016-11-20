@@ -20,9 +20,7 @@ public class Item implements BaseItem {
   private List<Tag> tags;
   private User user;
 
-  public Item() {
-    // empty
-  }
+  public Item() {}
 
   @Override
   public String getId() {

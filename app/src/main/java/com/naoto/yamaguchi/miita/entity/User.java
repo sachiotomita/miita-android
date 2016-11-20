@@ -27,9 +27,7 @@ public class User extends RealmObject implements BaseUser {
   private int followeesCount;
   private int followersCount;
 
-  public User() {
-    // for Realm
-  }
+  public User() {}
 
   @Override
   public String getId() {

@@ -12,9 +12,7 @@ public class ItemTag implements BaseItemTag {
 
   private String name;
 
-  public ItemTag() {
-    // empty
-  }
+  public ItemTag() {}
 
   @Override
   public String getName() {
