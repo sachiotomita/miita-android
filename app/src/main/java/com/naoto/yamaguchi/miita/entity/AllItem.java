@@ -136,7 +136,7 @@ public class AllItem extends RealmObject implements BaseItem, Parcelable {
     parcel.writeString(this.urlString);
     parcel.writeValue(this.createdAt);
     parcel.writeString(this.tagsString);
-    // TODO: User
+    parcel.writeParcelable(this.user, i);
   }
 
   public static final Parcelable.Creator<AllItem> CREATOR = new Creator<AllItem>() {
@@ -157,5 +157,7 @@ public class AllItem extends RealmObject implements BaseItem, Parcelable {
     this.body = in.readString();
     this.urlString = in.readString();
     this.createdAt = (Date) in.readValue(Date.class.getClassLoader());
+    this.tagsString = in.readString();
+    this.user = (User) in.readParcelable(User.class.getClassLoader());
   }
 }
