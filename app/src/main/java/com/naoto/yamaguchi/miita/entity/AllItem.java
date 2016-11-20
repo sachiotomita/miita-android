@@ -1,7 +1,11 @@
 package com.naoto.yamaguchi.miita.entity;
 
+import android.text.TextUtils;
+
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -15,7 +19,7 @@ import io.realm.annotations.PrimaryKey;
  * - body
  * - url string
  * - createdAt
- * - tags
+ * - tagsString
  * - User
  *
  * Created by naoto on 16/06/25.
@@ -28,7 +32,7 @@ public class AllItem extends RealmObject implements BaseItem {
   private String body;
   private String urlString;
   private String createdAt;
-  private List<Tag> tags;
+  private String tagsString;
   private User user;
 
   public AllItem() {
@@ -86,13 +90,26 @@ public class AllItem extends RealmObject implements BaseItem {
   }
 
   @Override
-  public List<Tag> getTags() {
-    return this.tags;
+  public List<ItemTag> getTags() {
+    List<ItemTag> tags = new ArrayList<>();
+    List<String> tagNameList = Arrays.asList(this.tagsString.split(","));
+    for (String name: tagNameList) {
+      ItemTag tag = new ItemTag();
+      tag.setName(name);
+      tags.add(tag);
+    }
+
+    return tags;
   }
 
   @Override
-  public void setTags(List<Tag> tags) {
-    this.tags = tags;
+  public void setTags(List<ItemTag> tags) {
+    List<String> tagList = new ArrayList<>();
+    for (ItemTag tag: tags) {
+      tagList.add(tag.getName());
+    }
+
+    this.tagsString = TextUtils.join(",", tagList);
   }
 
   @Override
