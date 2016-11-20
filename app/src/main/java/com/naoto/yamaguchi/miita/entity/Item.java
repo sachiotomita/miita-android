@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.entity;
 
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class Item implements BaseItem {
   private String title;
   private String body;
   private String urlString;
-  private String createdAt;
+  private Date createdAt;
   private List<ItemTag> tags;
   private User user;
 
@@ -63,12 +64,12 @@ public class Item implements BaseItem {
   }
 
   @Override
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return this.createdAt;
   }
 
   @Override
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
   }
 

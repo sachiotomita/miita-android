@@ -3,6 +3,7 @@ package com.naoto.yamaguchi.miita.entity.base;
 import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,8 +25,8 @@ public interface BaseItem {
   String getUrlString();
   void setUrlString(String urlString);
 
-  String getCreatedAt();
-  void setCreatedAt(String createdAt);
+  Date getCreatedAt();
+  void setCreatedAt(Date createdAt);
 
   List<ItemTag> getTags();
   void setTags(List<ItemTag> tags);

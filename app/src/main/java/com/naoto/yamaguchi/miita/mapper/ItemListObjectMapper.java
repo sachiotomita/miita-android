@@ -66,9 +66,8 @@ public final class ItemListObjectMapper {
 
         String createdAtString = itemJson.getString(CREATED_AT_KEY);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ", Locale.JAPAN);
-        Date date = df.parse(createdAtString);
-        // TODO: String -> Date
-        item.setCreatedAt(date.toString());
+        Date createdAt = df.parse(createdAtString);
+        item.setCreatedAt(createdAt);
 
         JSONArray tagsArray = itemJson.getJSONArray(TAG_KEY);
         List<ItemTag> tags = ItemTagListObjectMapper.map(ItemTag.class, tagsArray);

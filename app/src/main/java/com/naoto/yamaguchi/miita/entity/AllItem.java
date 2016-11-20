@@ -6,6 +6,7 @@ import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -31,7 +32,7 @@ public class AllItem extends RealmObject implements BaseItem {
   private String title;
   private String body;
   private String urlString;
-  private String createdAt;
+  private Date createdAt;
   private String tagsString;
   private User user;
 
@@ -78,12 +79,12 @@ public class AllItem extends RealmObject implements BaseItem {
   }
 
   @Override
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return this.createdAt;
   }
 
   @Override
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
   }
 
