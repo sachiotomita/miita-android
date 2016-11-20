@@ -17,7 +17,7 @@ public class Item implements BaseItem {
   private String body;
   private String urlString;
   private String createdAt;
-  private List<Tag> tags;
+  private List<ItemTag> tags;
   private User user;
 
   public Item() {}
@@ -73,12 +73,12 @@ public class Item implements BaseItem {
   }
 
   @Override
-  public List<Tag> getTags() {
+  public List<ItemTag> getTags() {
     return this.tags;
   }
 
   @Override
-  public void setTags(List<Tag> tags) {
+  public void setTags(List<ItemTag> tags) {
     this.tags = tags;
   }
 
