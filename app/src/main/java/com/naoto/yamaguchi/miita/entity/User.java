@@ -1,5 +1,8 @@
 package com.naoto.yamaguchi.miita.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.naoto.yamaguchi.miita.entity.base.BaseUser;
 
 import io.realm.RealmObject;
@@ -17,7 +20,7 @@ import io.realm.annotations.PrimaryKey;
  *
  * Created by naoto on 16/06/25.
  */
-public class User extends RealmObject implements BaseUser {
+public class User extends RealmObject implements BaseUser, Parcelable {
 
   @PrimaryKey
   private String id;
@@ -87,5 +90,41 @@ public class User extends RealmObject implements BaseUser {
   @Override
   public void setFollowersCount(int followersCount) {
     this.followersCount = followersCount;
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeString(this.id);
+    parcel.writeString(this.name);
+    parcel.writeString(this.description);
+    parcel.writeString(this.imageUrlString);
+    parcel.writeInt(this.followeesCount);
+    parcel.writeInt(this.followersCount);
+  }
+
+  public static final Parcelable.Creator<User> CREATOR = new Creator<User>() {
+    @Override
+    public User createFromParcel(Parcel parcel) {
+      return new User(parcel);
+    }
+
+    @Override
+    public User[] newArray(int i) {
+      return new User[i];
+    }
+  };
+
+  private User(Parcel in) {
+    this.id = in.readString();
+    this.name = in.readString();
+    this.description = in.readString();
+    this.imageUrlString = in.readString();
+    this.followeesCount = in.readInt();
+    this.followersCount = in.readInt();
   }
 }
