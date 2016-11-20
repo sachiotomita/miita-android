@@ -9,6 +9,7 @@ import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public final class StockItemService implements RequestType<List<StockItem>> {
   public List<StockItem> processResponse(String response) throws HttpException {
     try {
       return ItemListObjectMapper.map(response, StockItem.class);
-    } catch (JSONException | IllegalAccessException | InstantiationException e) {
+    } catch (JSONException | IllegalAccessException | InstantiationException | ParseException e) {
       return null;
     }
   }

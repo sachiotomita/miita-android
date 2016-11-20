@@ -1,5 +1,8 @@
 package com.naoto.yamaguchi.miita.mapper;
 
+import android.util.Log;
+
+import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import com.naoto.yamaguchi.miita.entity.User;
 
@@ -7,8 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * JSON to List<BaseItem>.
@@ -21,6 +28,8 @@ public final class ItemListObjectMapper {
   private static final String TITLE_KEY = "title";
   private static final String BODY_KEY = "rendered_body";
   private static final String URL_KEY = "url";
+  private static final String CREATED_AT_KEY = "created_at";
+  private static final String TAG_KEY = "tags";
   private static final String USER_KEY = "user";
 
   /**
@@ -34,7 +43,7 @@ public final class ItemListObjectMapper {
    */
   // TODO: 引数の順番入れ替える
   public static <T extends BaseItem> List<T> map(String jsonString, Class<T> aClass)
-          throws JSONException, IllegalAccessException, InstantiationException {
+          throws JSONException, IllegalAccessException, InstantiationException, ParseException {
     try {
       List<T> itemList = new ArrayList<>();
       JSONArray jsonArray = new JSONArray(jsonString);
@@ -55,6 +64,16 @@ public final class ItemListObjectMapper {
         String urlString = itemJson.getString(URL_KEY);
         item.setUrlString(urlString);
 
+        String createdAtString = itemJson.getString(CREATED_AT_KEY);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ", Locale.JAPAN);
+        Date date = df.parse(createdAtString);
+        // TODO: String -> Date
+        item.setCreatedAt(date.toString());
+
+        JSONArray tagsArray = itemJson.getJSONArray(TAG_KEY);
+        List<ItemTag> tags = ItemTagListObjectMapper.map(ItemTag.class, tagsArray);
+        item.setTags(tags);
+
         JSONObject userJson = itemJson.getJSONObject(USER_KEY);
         User user = UserObjectMapper.map(userJson);
         item.setUser(user);
@@ -69,6 +88,8 @@ public final class ItemListObjectMapper {
     } catch (IllegalAccessException e) {
       throw e;
     } catch (InstantiationException e) {
+      throw e;
+    } catch (ParseException e) {
       throw e;
     }
   }

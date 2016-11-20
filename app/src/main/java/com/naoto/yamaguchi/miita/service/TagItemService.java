@@ -9,6 +9,7 @@ import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public final class TagItemService implements RequestType<List<Item>> {
   public List<Item> processResponse(String response) throws HttpException {
     try {
       return ItemListObjectMapper.map(response, Item.class);
-    } catch (JSONException | IllegalAccessException | InstantiationException e) {
+    } catch (JSONException | IllegalAccessException | InstantiationException | ParseException e) {
       return null;
     }
   }
