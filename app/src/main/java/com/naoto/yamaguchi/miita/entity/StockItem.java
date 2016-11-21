@@ -1,5 +1,7 @@
 package com.naoto.yamaguchi.miita.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
@@ -25,7 +27,7 @@ import io.realm.annotations.PrimaryKey;
  *
  * Created by naoto on 16/06/25.
  */
-public class StockItem extends RealmObject implements BaseItem {
+public class StockItem extends RealmObject implements BaseItem, Parcelable {
 
   @PrimaryKey
   private String id;
@@ -119,5 +121,43 @@ public class StockItem extends RealmObject implements BaseItem {
   @Override
   public void setUser(User user) {
     this.user = user;
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeString(this.id);
+    parcel.writeString(this.title);
+    parcel.writeString(this.body);
+    parcel.writeString(this.urlString);
+    parcel.writeValue(this.createdAt);
+    parcel.writeString(this.tagsString);
+    parcel.writeParcelable(this.user, i);
+  }
+
+  public static final Parcelable.Creator<StockItem> CREATOR = new Creator<StockItem>() {
+    @Override
+    public StockItem createFromParcel(Parcel parcel) {
+      return new StockItem(parcel);
+    }
+
+    @Override
+    public StockItem[] newArray(int i) {
+      return new StockItem[i];
+    }
+  };
+  
+  private StockItem(Parcel in) {
+    this.id = in.readString();
+    this.title = in.readString();
+    this.body = in.readString();
+    this.urlString = in.readString();
+    this.createdAt = (Date)in.readValue(Date.class.getClassLoader());
+    this.tagsString = in.readString();
+    this.user = (User)in.readParcelable(User.class.getClassLoader());
   }
 }
