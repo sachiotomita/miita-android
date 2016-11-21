@@ -1,24 +1,29 @@
 package com.naoto.yamaguchi.miita.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 /**
  * General Item Entity.
- * Not Realm Object.
  *
  * Created by naoto on 16/07/17.
  */
-public class Item implements BaseItem {
+public class Item implements BaseItem, Parcelable {
 
   private String id;
   private String title;
   private String body;
   private String urlString;
   private Date createdAt;
-  private List<ItemTag> tags;
+  private String tagsString;
   private User user;
 
   public Item() {}
@@ -75,12 +80,25 @@ public class Item implements BaseItem {
 
   @Override
   public List<ItemTag> getTags() {
-    return this.tags;
+    List<ItemTag> tags = new ArrayList<>();
+    List<String> tagNameList = Arrays.asList(this.tagsString.split(","));
+    for (String name: tagNameList) {
+      ItemTag tag = new ItemTag();
+      tag.setName(name);
+      tags.add(tag);
+    }
+
+    return tags;
   }
 
   @Override
   public void setTags(List<ItemTag> tags) {
-    this.tags = tags;
+    List<String> tagList = new ArrayList<>();
+    for (ItemTag tag: tags) {
+      tagList.add(tag.getName());
+    }
+
+    this.tagsString = TextUtils.join(",", tagList);
   }
 
   @Override
@@ -91,5 +109,43 @@ public class Item implements BaseItem {
   @Override
   public void setUser(User user) {
     this.user = user;
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeString(this.id);
+    parcel.writeString(this.title);
+    parcel.writeString(this.body);
+    parcel.writeString(this.urlString);
+    parcel.writeValue(this.createdAt);
+    parcel.writeString(this.tagsString);
+    parcel.writeParcelable(this.user, i);
+  }
+
+  public static final Parcelable.Creator<Item> CREATOR = new Creator<Item>() {
+    @Override
+    public Item createFromParcel(Parcel parcel) {
+      return null;
+    }
+
+    @Override
+    public Item[] newArray(int i) {
+      return new Item[0];
+    }
+  };
+
+  private Item(Parcel in) {
+    this.id = in.readString();
+    this.title = in.readString();
+    this.body = in.readString();
+    this.urlString = in.readString();
+    this.createdAt = (Date)in.readValue(Date.class.getClassLoader());
+    this.tagsString = in.readString();
+    this.user = (User)in.readParcelable(User.class.getClassLoader());
   }
 }
