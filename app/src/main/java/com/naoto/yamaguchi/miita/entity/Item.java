@@ -130,12 +130,12 @@ public class Item implements BaseItem, Parcelable {
   public static final Parcelable.Creator<Item> CREATOR = new Creator<Item>() {
     @Override
     public Item createFromParcel(Parcel parcel) {
-      return null;
+      return new Item(parcel);
     }
 
     @Override
     public Item[] newArray(int i) {
-      return new Item[0];
+      return new Item[i];
     }
   };
 
