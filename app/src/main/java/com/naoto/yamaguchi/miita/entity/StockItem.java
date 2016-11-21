@@ -150,7 +150,7 @@ public class StockItem extends RealmObject implements BaseItem, Parcelable {
       return new StockItem[i];
     }
   };
-  
+
   private StockItem(Parcel in) {
     this.id = in.readString();
     this.title = in.readString();
