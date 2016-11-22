@@ -20,12 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.entity.Tag;
+import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
-import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 
 /**
  * TODO
@@ -33,7 +32,6 @@ import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
  * 2. stock buttonの分離
  * 3. webView Clientの分離
  * 4. html生成の分離
- *
  */
 public class ItemActivity extends AppCompatActivity
         implements View.OnClickListener,
@@ -56,10 +54,7 @@ public class ItemActivity extends AppCompatActivity
   // FIXME: model -> presenter or viewModel
   private ItemModel model;
 
-  private String itemId;
-  private String itemTitle;
-  private String itemUrl;
-  private String itemBody;
+  private Item item;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +75,7 @@ public class ItemActivity extends AppCompatActivity
 
   private void parseIntent() {
     Intent intent = this.getIntent();
-    this.itemId = intent.getStringExtra("item_id");
-    this.itemTitle = intent.getStringExtra("item_title");
-    this.itemUrl = intent.getStringExtra("item_url");
-    this.itemBody = intent.getStringExtra("item_body");
+    this.item = intent.getParcelableExtra("item");
   }
 
   private void setLayout() {
@@ -98,7 +90,7 @@ public class ItemActivity extends AppCompatActivity
     this.actionBar.setHomeButtonEnabled(true);
 
     this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-    this.toolbarLayout.setTitle(this.itemTitle);
+    this.toolbarLayout.setTitle(this.item.getTitle());
 
     this.stockButton = (FloatingActionButton)findViewById(R.id.fab);
     this.stockButton.setOnClickListener(this);
@@ -108,7 +100,7 @@ public class ItemActivity extends AppCompatActivity
     );
 
     this.titleTextView = (TextView)findViewById(R.id.item_header_title);
-    this.titleTextView.setText(this.itemTitle);
+    this.titleTextView.setText(this.item.getTitle());
 
     this.descTextView = (TextView)findViewById(R.id.item_header_desc);
 
@@ -149,7 +141,7 @@ public class ItemActivity extends AppCompatActivity
       return;
     }
 
-    this.model.request(ItemModel.Type.CHECK, this.itemId, new OnModelListener<Void>() {
+    this.model.request(ItemModel.Type.CHECK, this.item.getId(), new OnModelListener<Void>() {
       @Override
       public void onSuccess(Void results) {
         stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
@@ -174,7 +166,7 @@ public class ItemActivity extends AppCompatActivity
   }
 
   private void loadBody() {
-    String html = this.createHTML(this.itemBody);
+    String html = this.createHTML(this.item.getBody());
     this.webView.loadDataWithBaseURL(
             "file:///android_asset/",
             html,
@@ -208,7 +200,7 @@ public class ItemActivity extends AppCompatActivity
     this.stockButton.setEnabled(false);
 
     if (this.model.isStock()) {
-      this.model.request(ItemModel.Type.UNSTOCK, this.itemId, new OnModelListener<Void>() {
+      this.model.request(ItemModel.Type.UNSTOCK, this.item.getId(), new OnModelListener<Void>() {
         @Override
         public void onSuccess(Void results) {
           stockButton.setImageResource(R.drawable.ic_stock_button_48px);
@@ -228,7 +220,7 @@ public class ItemActivity extends AppCompatActivity
         }
       });
     } else {
-      this.model.request(ItemModel.Type.STOCK, this.itemId, new OnModelListener<Void>() {
+      this.model.request(ItemModel.Type.STOCK, this.item.getId(), new OnModelListener<Void>() {
         @Override
         public void onSuccess(Void results) {
           stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
@@ -266,7 +258,7 @@ public class ItemActivity extends AppCompatActivity
     if (verticalOffset >= COLLAPSED_OFFSET) {
       this.toolbarLayout.setTitle("");
     } else {
-      this.toolbarLayout.setTitle(this.itemTitle);
+      this.toolbarLayout.setTitle(this.item.getTitle());
     }
   }
 }

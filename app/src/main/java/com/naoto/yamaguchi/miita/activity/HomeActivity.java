@@ -17,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.converter.ItemConverter;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
+import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
@@ -59,6 +61,8 @@ public class HomeActivity extends AppCompatActivity
 
     private FragmentType() {}
   }
+
+  private static final String INTENT_ITEM_KEY = "item";
 
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
@@ -301,15 +305,17 @@ public class HomeActivity extends AppCompatActivity
 
   @Override
   public void onItemClick(AllItem item) {
-    Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
-    intent = IntentHandler.putItem(intent, item);
+    final Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
+    final Item _item = ItemConverter.convert(item);
+    intent.putExtra(INTENT_ITEM_KEY, _item);
     startActivity(intent);
   }
 
   @Override
   public void onItemClick(StockItem item) {
-    Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
-    intent = IntentHandler.putItem(intent, item);
+    final Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
+    final Item _item = ItemConverter.convert(item);
+    intent.putExtra(INTENT_ITEM_KEY, _item);
     startActivity(intent);
   }
 

@@ -18,6 +18,8 @@ import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 public class TagItemActivity extends AppCompatActivity
         implements TagItemFragment.OnItemClickListener {
 
+  private static final String INTENT_ITEM_KEY = "item";
+
   private Toolbar toolbar;
   private ActionBar actionBar;
   private CollapsingToolbarLayout toolbarLayout;
@@ -75,8 +77,8 @@ public class TagItemActivity extends AppCompatActivity
 
   @Override
   public void onItemClick(Item item) {
-    Intent intent = new Intent(TagItemActivity.this, ItemActivity.class);
-    intent = IntentHandler.putItem(intent, item);
+    final Intent intent = new Intent(TagItemActivity.this, ItemActivity.class);
+    intent.putExtra(INTENT_ITEM_KEY, item);
     startActivity(intent);
   }
 }
