@@ -18,8 +18,10 @@ import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.converter.ItemConverter;
+import com.naoto.yamaguchi.miita.converter.TagConverter;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
@@ -63,6 +65,7 @@ public class HomeActivity extends AppCompatActivity
   }
 
   private static final String INTENT_ITEM_KEY = "item";
+  private static final String INTENT_TAG_KEY = "tag";
 
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
@@ -321,8 +324,9 @@ public class HomeActivity extends AppCompatActivity
 
   @Override
   public void onTagClick(FollowTag tag) {
-    Intent intent = new Intent(HomeActivity.this, TagItemActivity.class);
-    intent = IntentHandler.putTag(intent, tag);
+    final Intent intent = new Intent(HomeActivity.this, TagItemActivity.class);
+    final Tag _tag = TagConverter.convert(tag);
+    intent.putExtra(INTENT_TAG_KEY, _tag);
     startActivity(intent);
   }
 }

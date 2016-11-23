@@ -19,6 +19,7 @@ public class TagItemActivity extends AppCompatActivity
         implements TagItemFragment.OnItemClickListener {
 
   private static final String INTENT_ITEM_KEY = "item";
+  private static final String INTENT_TAG_KEY = "tag";
 
   private Toolbar toolbar;
   private ActionBar actionBar;
@@ -49,7 +50,8 @@ public class TagItemActivity extends AppCompatActivity
   }
 
   private void parseIntent() {
-    this.tag = IntentHandler.getTag(this.getIntent());
+    final Intent intent = this.getIntent();
+    this.tag = intent.getParcelableExtra(INTENT_TAG_KEY);
   }
 
   private void setFragment() {
