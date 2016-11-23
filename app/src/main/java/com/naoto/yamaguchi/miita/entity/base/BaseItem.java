@@ -26,6 +26,7 @@ public interface BaseItem {
   void setUrlString(String urlString);
 
   Date getCreatedAt();
+  String getCreatedAtString();
   void setCreatedAt(Date createdAt);
 
   List<ItemTag> getTags();

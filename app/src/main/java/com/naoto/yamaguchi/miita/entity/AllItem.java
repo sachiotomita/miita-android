@@ -8,6 +8,7 @@ import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,15 @@ public class AllItem extends RealmObject implements BaseItem, Parcelable {
   @Override
   public Date getCreatedAt() {
     return this.createdAt;
+  }
+
+  @Override
+  public String getCreatedAtString() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this.createdAt);
+    return cal.get(Calendar.YEAR) + "年"
+            + cal.get(Calendar.MONTH) + "月"
+            + cal.get(Calendar.DAY_OF_MONTH) + "日";
   }
 
   @Override
