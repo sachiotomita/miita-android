@@ -26,6 +26,8 @@ import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
+import java.util.Calendar;
+
 /**
  * TODO
  * 1. presenter class
@@ -103,6 +105,11 @@ public class ItemActivity extends AppCompatActivity
     this.titleTextView.setText(this.item.getTitle());
 
     this.descTextView = (TextView)findViewById(R.id.item_header_desc);
+    final Calendar calendar = Calendar.getInstance();
+    calendar.setTime(this.item.getCreatedAt());
+    final String desc = this.item.getUser().getId() + "が" + calendar.get(Calendar.YEAR) + "年"
+            + calendar.get(Calendar.MONTH) + "月" + calendar.get(Calendar.DAY_OF_MONTH) + "日に投稿しました";
+    this.descTextView.setText(desc);
 
     this.spinner = (ProgressBar)findViewById(R.id.progress_bar);
     this.spinner.setVisibility(View.VISIBLE);
