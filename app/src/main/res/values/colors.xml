@@ -9,6 +9,10 @@
     <color name="black">#000000</color>
     <color name="white">#fff</color>
 
+    <!-- Item List Row -->
+    <color name="item_list_user_id_text_color">#000000</color>
+    <color name="item_list_tag_text_color">#555</color>
+
     <!-- Stock Button -->
     <color name="stockButton">#fff</color>
     <color name="stockIcon">#59bb0c</color>
