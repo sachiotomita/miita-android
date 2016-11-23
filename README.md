@@ -2,10 +2,11 @@
 
 ## TODO
 - [ ] navigation selected when backpress. (must)
+- [ ] image cache. (must)
 - [ ] adapter ViewHolder. (must)
-- [ ] list layout. (must)
+- [☓] list layout. (must)
 - [☓] item header multi line. (must)
-- [ ] additional entity variable and fix item header. (must)
+- [☓] additional entity variable and fix item header. (must)
 - [☓] license. (must)
 - [☓] setting, license activity back button. (must)
 - [ ] app icon. (must)
