@@ -45,7 +45,7 @@
                     android:id="@+id/item_header_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/abc_text_size_medium_material"
+                    android:textSize="@dimen/abc_text_size_menu_material"
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="@dimen/header_desc_bottom_margin"
                     android:layout_marginStart="@dimen/header_desc_start_margin"
