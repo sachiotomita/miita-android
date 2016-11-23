@@ -26,10 +26,6 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
 
   final private Context context;
   final private LayoutInflater inflater;
-  private ImageView imageView;
-  private TextView userIdTextView;
-  private TextView titleTextView;
-  private TextView tagTextVIew;
   private DownloadImageTask downloadImageTask;
 
   public ItemListAdapter(Context context, List<T> objects) {
@@ -41,13 +37,28 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    // TODO: ViewHolder
+    class ViewHolder {
+      TextView userIdTextView;
+      TextView titleTextView;
+      TextView tagTextView;
+      ImageView imageView;
+    }
+
+    final ViewHolder viewHolder;
 
     if (convertView == null) {
       convertView = this.inflater.inflate(R.layout.item_list, parent, false);
+      viewHolder = new ViewHolder();
+      viewHolder.userIdTextView = (TextView)convertView.findViewById(R.id.item_list_user_id_text);
+      viewHolder.titleTextView = (TextView)convertView.findViewById(R.id.item_list_title_text);
+      viewHolder.tagTextView = (TextView)convertView.findViewById(R.id.item_list_tag_text);
+      viewHolder.imageView = (ImageView)convertView.findViewById(R.id.item_list_image);
+      convertView.setTag(viewHolder);
+    } else {
+      viewHolder = (ViewHolder)convertView.getTag();
     }
 
-    T item = this.getItem(position);
+    final T item = this.getItem(position);
     if (item != null) {
       String userId = item.getUser().getId() + "が" + item.getCreatedAtString() + "に投稿しました";
       String title = item.getTitle();
@@ -58,17 +69,10 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
       String tagsString = TextUtils.join(", ", tagNameList);
       String imageUrl = item.getUser().getImageUrlString();
 
-      this.userIdTextView = (TextView)convertView.findViewById(R.id.item_list_user_id_text);
-      this.userIdTextView.setText(userId);
-
-      this.titleTextView = (TextView)convertView.findViewById(R.id.item_list_title_text);
-      this.titleTextView.setText(title);
-
-      this.tagTextVIew = (TextView)convertView.findViewById(R.id.item_list_tag_text);
-      this.tagTextVIew.setText(tagsString);
-
-      this.imageView = (ImageView)convertView.findViewById(R.id.item_list_image);
-      this.downloadImageTask = new DownloadImageTask(this.context, this.imageView);
+      viewHolder.userIdTextView.setText(userId);
+      viewHolder.titleTextView.setText(title);
+      viewHolder.tagTextView.setText(tagsString);
+      this.downloadImageTask = new DownloadImageTask(this.context, viewHolder.imageView);
       this.downloadImageTask.execute(imageUrl);
     }
 
