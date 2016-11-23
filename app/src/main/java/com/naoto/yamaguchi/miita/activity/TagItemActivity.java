@@ -13,7 +13,6 @@ import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
-import com.naoto.yamaguchi.miita.util.intent.IntentHandler;
 
 public class TagItemActivity extends AppCompatActivity
         implements TagItemFragment.OnItemClickListener {
