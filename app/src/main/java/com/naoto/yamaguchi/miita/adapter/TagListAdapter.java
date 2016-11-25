@@ -38,7 +38,7 @@ public final class TagListAdapter<T extends BaseTag> extends ArrayAdapter<T> {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     // TODO: ViewHolder
-    
+
     View view = convertView;
 
     if (convertView == null) {
