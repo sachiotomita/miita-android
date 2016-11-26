@@ -12,17 +12,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Bitmap Worker Task.
- * After complete Bitmap load, set {@ImageView}.
+ * Bitmap Loader Task extends {@AsyncTask}.
  *
  * Created by naoto on 2016/11/26.
  */
 
-final class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
+final class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewWeakReference;
+    private String urlString;
 
-    public BitmapWorkerTask(ImageView imageView) {
+    public BitmapLoaderTask(ImageView imageView) {
         this.imageViewWeakReference = new WeakReference<ImageView>(imageView);
+    }
+
+    public String getUrlString() {
+        return this.urlString;
     }
 
     @Override
@@ -49,7 +53,7 @@ final class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap bitmap) {
         if (this.imageViewWeakReference != null && bitmap != null) {
             final ImageView imageView = this.imageViewWeakReference.get();
-            final BitmapWorkerTask task = Util.getTaskFromImageView(imageView);
+            final BitmapLoaderTask task = Util.getTaskFromImageView(imageView);
             if (imageView != null && task == this) {
                 imageView.setImageBitmap(bitmap);
             }

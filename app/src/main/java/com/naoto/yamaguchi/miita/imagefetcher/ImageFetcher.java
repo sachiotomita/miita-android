@@ -10,6 +10,10 @@ import com.naoto.yamaguchi.miita.R;
 /**
  * Image Fetcher Client Class.
  *
+ * Reference
+ * - http://y-anz-m.blogspot.jp/2012/08/android-bitmap.html
+ * - http://y-anz-m.blogspot.jp/2012/08/androidbitmap.html
+ *
  * Created by naoto on 2016/11/26.
  */
 
@@ -35,17 +39,23 @@ public final class ImageFetcher {
         return this;
     }
 
-    public void load(String urlString, ImageView imageView) {
+    public void fetch(String urlString, ImageView imageView) {
         if (this.context == null) {
             throw new RuntimeException("should be call setContext().");
         }
 
         // Http
-        final BitmapWorkerTask task = new BitmapWorkerTask(imageView);
-        final BitmapWorkerDrawable drawable = new BitmapWorkerDrawable(
-                this.context.getResources(), this.getLoadingBitmap(), task);
-        imageView.setImageDrawable(drawable);
-        task.execute(urlString);
+        this.load(urlString, imageView);
+    }
+
+    private void load(String urlString, ImageView imageView) {
+        if (Util.cancelPotentialWork(urlString, imageView)) {
+            final BitmapLoaderTask task = new BitmapLoaderTask(imageView);
+            final BitmapLoaderDrawable drawable = new BitmapLoaderDrawable(
+                    this.context.getResources(), this.getLoadingBitmap(), task);
+            imageView.setImageDrawable(drawable);
+            task.execute(urlString);
+        }
     }
 
     private Bitmap getLoadingBitmap() {

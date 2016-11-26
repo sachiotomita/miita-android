@@ -10,18 +10,34 @@ import android.widget.ImageView;
  */
 
 final class Util {
-    public static BitmapWorkerTask getTaskFromImageView(ImageView imageView) {
+    public static BitmapLoaderTask getTaskFromImageView(ImageView imageView) {
         if (imageView != null) {
             final Drawable drawable = imageView.getDrawable();
-            if (drawable instanceof BitmapWorkerDrawable) {
-                final BitmapWorkerDrawable workerDrawable =
-                        (BitmapWorkerDrawable)drawable;
-                return workerDrawable.getBitmapWorkerTask();
+            if (drawable instanceof BitmapLoaderDrawable) {
+                final BitmapLoaderDrawable workerDrawable =
+                        (BitmapLoaderDrawable)drawable;
+                return workerDrawable.getBitmapLoaderTask();
             }
         }
 
         return null;
     }
 
-    private Util() {};
+    public static boolean cancelPotentialWork(String urlString, ImageView imageView) {
+        final BitmapLoaderTask task = Util.getTaskFromImageView(imageView);
+
+        if (task != null) {
+            final String executingUrlString = task.getUrlString();
+            if (executingUrlString.equals(urlString)) {
+                return false;
+            } else {
+                task.cancel(true);
+                return true;
+            }
+        }
+
+        return true;
+    }
+
+    private Util() {}
 }
