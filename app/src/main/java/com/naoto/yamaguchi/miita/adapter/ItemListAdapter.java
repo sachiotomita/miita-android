@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
+import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
 
     final private Context context;
     final private LayoutInflater inflater;
-    private DownloadImageTask downloadImageTask;
 
     public ItemListAdapter(Context context, List<T> objects) {
         super(context, 0);
@@ -72,8 +72,7 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
             viewHolder.userIdTextView.setText(userId);
             viewHolder.titleTextView.setText(title);
             viewHolder.tagTextView.setText(tagsString);
-            this.downloadImageTask = new DownloadImageTask(this.context, viewHolder.imageView);
-            this.downloadImageTask.execute(imageUrl);
+            ImageFetcher.getInstance().fetch(imageUrl, viewHolder.imageView);
         }
 
         return convertView;

@@ -22,7 +22,7 @@ public final class ImageFetcher {
     private Context context;
     private Bitmap loadingBitmap;
 
-    public ImageFetcher getInstance() {
+    public static synchronized ImageFetcher getInstance() {
         if (instance == null) {
             instance = new ImageFetcher();
         }
