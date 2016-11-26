@@ -18,16 +18,11 @@ import java.net.URL;
  * Created by naoto on 2016/11/26.
  */
 
-public final class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
+final class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewWeakReference;
-    private final int width;
-    private final int height;
-    private String path;
 
     public BitmapWorkerTask(ImageView imageView) {
         this.imageViewWeakReference = new WeakReference<ImageView>(imageView);
-        this.width = imageView.getWidth();
-        this.height = imageView.getHeight();
     }
 
     @Override
@@ -54,7 +49,8 @@ public final class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap bitmap) {
         if (this.imageViewWeakReference != null && bitmap != null) {
             final ImageView imageView = this.imageViewWeakReference.get();
-            if (imageView != null) {
+            final BitmapWorkerTask task = Util.getTaskFromImageView(imageView);
+            if (imageView != null && task == this) {
                 imageView.setImageBitmap(bitmap);
             }
         }
