@@ -51,6 +51,10 @@ final class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
+        if (isCancelled()) {
+            bitmap = null;
+        }
+
         if (this.imageViewWeakReference != null && bitmap != null) {
             final ImageView imageView = this.imageViewWeakReference.get();
             final BitmapLoaderTask task = Util.getTaskFromImageView(imageView);
