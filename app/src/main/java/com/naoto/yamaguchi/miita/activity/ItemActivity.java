@@ -39,233 +39,233 @@ public class ItemActivity extends AppCompatActivity
         implements View.OnClickListener,
         AppBarLayout.OnOffsetChangedListener {
 
-  private static final int COLLAPSED_OFFSET = -300;
+    private static final int COLLAPSED_OFFSET = -300;
 
-  private AppBarLayout appBarLayout;
-  private Toolbar toolbar;
-  private ActionBar actionBar;
-  private CollapsingToolbarLayout toolbarLayout;
-  private ProgressBar spinner;
-  private FloatingActionButton stockButton;
-  private WebView webView;
-  private CurrentUser currentUser;
+    private AppBarLayout appBarLayout;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
+    private CollapsingToolbarLayout toolbarLayout;
+    private ProgressBar spinner;
+    private FloatingActionButton stockButton;
+    private WebView webView;
+    private CurrentUser currentUser;
 
-  private TextView titleTextView;
-  private TextView descTextView;
+    private TextView titleTextView;
+    private TextView descTextView;
 
-  // FIXME: model -> presenter or viewModel
-  private ItemModel model;
+    // FIXME: model -> presenter or viewModel
+    private ItemModel model;
 
-  private Item item;
+    private Item item;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_item);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_item);
 
-    this.init();
-    this.parseIntent();
-    this.setLayout();
-    this.checkStock();
-    this.loadBody();
-  }
-
-  private void init() {
-    this.model = new ItemModel(this);
-    this.currentUser = CurrentUser.getInstance();
-  }
-
-  private void parseIntent() {
-    Intent intent = this.getIntent();
-    this.item = intent.getParcelableExtra("item");
-  }
-
-  private void setLayout() {
-    this.appBarLayout = (AppBarLayout)findViewById(R.id.app_bar);
-    this.appBarLayout.addOnOffsetChangedListener(this);
-
-    this.toolbar = (Toolbar)findViewById(R.id.toolbar);
-    setSupportActionBar(this.toolbar);
-
-    this.actionBar = getSupportActionBar();
-    this.actionBar.setDisplayHomeAsUpEnabled(true);
-    this.actionBar.setHomeButtonEnabled(true);
-
-    this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-    this.toolbarLayout.setTitle(this.item.getTitle());
-
-    this.stockButton = (FloatingActionButton)findViewById(R.id.fab);
-    this.stockButton.setOnClickListener(this);
-    this.stockButton.setImageResource(R.drawable.ic_default_stock_button_48px);
-    this.stockButton.setBackgroundTintList(
-            ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
-    );
-
-    this.titleTextView = (TextView)findViewById(R.id.item_header_title);
-    this.titleTextView.setText(this.item.getTitle());
-
-    this.descTextView = (TextView)findViewById(R.id.item_header_desc);
-    final Calendar calendar = Calendar.getInstance();
-    calendar.setTime(this.item.getCreatedAt());
-    final String desc = this.item.getUser().getId() + "が" + calendar.get(Calendar.YEAR) + "年"
-            + calendar.get(Calendar.MONTH) + "月" + calendar.get(Calendar.DAY_OF_MONTH) + "日に投稿しました";
-    this.descTextView.setText(desc);
-
-    this.spinner = (ProgressBar)findViewById(R.id.progress_bar);
-    this.spinner.setVisibility(View.VISIBLE);
-
-    this.webView = (WebView)findViewById(R.id.item_webview);
-    this.webView.getSettings().setJavaScriptEnabled(true);
-    this.webView.setWebViewClient(new WebViewClient() {
-      @Override
-      public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        super.onPageStarted(view, url, favicon);
-
-        webView.setVisibility(View.GONE);
-        spinner.setVisibility(View.VISIBLE);
-      }
-
-      @Override
-      public void onPageFinished(WebView view, String url) {
-        super.onPageFinished(view, url);
-
-        webView.setVisibility(View.VISIBLE);
-        spinner.setVisibility(View.GONE);
-      }
-
-      @Override
-      public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        super.onReceivedError(view, request, error);
-        // TODO: error handle
-      }
-    });
-  }
-
-  private void checkStock() {
-    this.stockButton.setEnabled(false);
-
-    if (!this.currentUser.isAuthorize()) {
-      return;
+        this.init();
+        this.parseIntent();
+        this.setLayout();
+        this.checkStock();
+        this.loadBody();
     }
 
-    this.model.request(ItemModel.Type.CHECK, this.item.getId(), new OnModelListener<Void>() {
-      @Override
-      public void onSuccess(Void results) {
-        stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
-        stockButton.setBackgroundTintList(
-                ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
+    private void init() {
+        this.model = new ItemModel(this);
+        this.currentUser = CurrentUser.getInstance();
+    }
+
+    private void parseIntent() {
+        Intent intent = this.getIntent();
+        this.item = intent.getParcelableExtra("item");
+    }
+
+    private void setLayout() {
+        this.appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        this.appBarLayout.addOnOffsetChangedListener(this);
+
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(this.toolbar);
+
+        this.actionBar = getSupportActionBar();
+        this.actionBar.setDisplayHomeAsUpEnabled(true);
+        this.actionBar.setHomeButtonEnabled(true);
+
+        this.toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        this.toolbarLayout.setTitle(this.item.getTitle());
+
+        this.stockButton = (FloatingActionButton) findViewById(R.id.fab);
+        this.stockButton.setOnClickListener(this);
+        this.stockButton.setImageResource(R.drawable.ic_default_stock_button_48px);
+        this.stockButton.setBackgroundTintList(
+                ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
         );
-      }
 
-      @Override
-      public void onError(MiitaException e) {
-        stockButton.setImageResource(R.drawable.ic_stock_button_48px);
-        stockButton.setBackgroundTintList(
-                ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
+        this.titleTextView = (TextView) findViewById(R.id.item_header_title);
+        this.titleTextView.setText(this.item.getTitle());
+
+        this.descTextView = (TextView) findViewById(R.id.item_header_desc);
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.item.getCreatedAt());
+        final String desc = this.item.getUser().getId() + "が" + calendar.get(Calendar.YEAR) + "年"
+                + calendar.get(Calendar.MONTH) + "月" + calendar.get(Calendar.DAY_OF_MONTH) + "日に投稿しました";
+        this.descTextView.setText(desc);
+
+        this.spinner = (ProgressBar) findViewById(R.id.progress_bar);
+        this.spinner.setVisibility(View.VISIBLE);
+
+        this.webView = (WebView) findViewById(R.id.item_webview);
+        this.webView.getSettings().setJavaScriptEnabled(true);
+        this.webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+
+                webView.setVisibility(View.GONE);
+                spinner.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+                webView.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                // TODO: error handle
+            }
+        });
+    }
+
+    private void checkStock() {
+        this.stockButton.setEnabled(false);
+
+        if (!this.currentUser.isAuthorize()) {
+            return;
+        }
+
+        this.model.request(ItemModel.Type.CHECK, this.item.getId(), new OnModelListener<Void>() {
+            @Override
+            public void onSuccess(Void results) {
+                stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
+                stockButton.setBackgroundTintList(
+                        ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
+                );
+            }
+
+            @Override
+            public void onError(MiitaException e) {
+                stockButton.setImageResource(R.drawable.ic_stock_button_48px);
+                stockButton.setBackgroundTintList(
+                        ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
+                );
+            }
+
+            @Override
+            public void onComplete() {
+                stockButton.setEnabled(true);
+            }
+        });
+    }
+
+    private void loadBody() {
+        String html = this.createHTML(this.item.getBody());
+        this.webView.loadDataWithBaseURL(
+                "file:///android_asset/",
+                html,
+                "text/html",
+                "utf−8",
+                null
         );
-      }
-
-      @Override
-      public void onComplete() {
-        stockButton.setEnabled(true);
-      }
-    });
-  }
-
-  private void loadBody() {
-    String html = this.createHTML(this.item.getBody());
-    this.webView.loadDataWithBaseURL(
-            "file:///android_asset/",
-            html,
-            "text/html",
-            "utf−8",
-            null
-    );
-  }
-
-  public String createHTML(String body) {
-    StringBuffer htmlBuilder = new StringBuffer();
-
-    htmlBuilder.append("<html>");
-    htmlBuilder.append("<head>");
-    htmlBuilder.append("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />");
-    htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
-    htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"github.css\">");
-    htmlBuilder.append("<script type=\"text/javascript\" src=\"highlight.js\"></script>");
-    htmlBuilder.append("</head>");
-    htmlBuilder.append("<body>");
-    htmlBuilder.append(body);
-    htmlBuilder.append("</body>");
-    htmlBuilder.append("<script>var preArray = document.getElementsByTagName(\"pre\");for (var i = 0; i < preArray.length; i++) {hljs.highlightBlock(preArray[i])}</script>");
-    htmlBuilder.append("</html>");
-
-    return htmlBuilder.toString();
-  }
-
-  @Override
-  public void onClick(View view) {
-    this.stockButton.setEnabled(false);
-
-    if (this.model.isStock()) {
-      this.model.request(ItemModel.Type.UNSTOCK, this.item.getId(), new OnModelListener<Void>() {
-        @Override
-        public void onSuccess(Void results) {
-          stockButton.setImageResource(R.drawable.ic_stock_button_48px);
-          stockButton.setBackgroundTintList(
-                  ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
-          );
-        }
-
-        @Override
-        public void onError(MiitaException e) {
-          // TODO: show alert
-        }
-
-        @Override
-        public void onComplete() {
-          stockButton.setEnabled(true);
-        }
-      });
-    } else {
-      this.model.request(ItemModel.Type.STOCK, this.item.getId(), new OnModelListener<Void>() {
-        @Override
-        public void onSuccess(Void results) {
-          stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
-          stockButton.setBackgroundTintList(
-                  ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
-          );
-        }
-
-        @Override
-        public void onError(MiitaException e) {
-          // TODO: show alert
-        }
-
-        @Override
-        public void onComplete() {
-          stockButton.setEnabled(true);
-        }
-      });
     }
-  }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
+    public String createHTML(String body) {
+        StringBuffer htmlBuilder = new StringBuffer();
 
-  @Override
-  public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-    if (verticalOffset >= COLLAPSED_OFFSET) {
-      this.toolbarLayout.setTitle("");
-    } else {
-      this.toolbarLayout.setTitle(this.item.getTitle());
+        htmlBuilder.append("<html>");
+        htmlBuilder.append("<head>");
+        htmlBuilder.append("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />");
+        htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
+        htmlBuilder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"github.css\">");
+        htmlBuilder.append("<script type=\"text/javascript\" src=\"highlight.js\"></script>");
+        htmlBuilder.append("</head>");
+        htmlBuilder.append("<body>");
+        htmlBuilder.append(body);
+        htmlBuilder.append("</body>");
+        htmlBuilder.append("<script>var preArray = document.getElementsByTagName(\"pre\");for (var i = 0; i < preArray.length; i++) {hljs.highlightBlock(preArray[i])}</script>");
+        htmlBuilder.append("</html>");
+
+        return htmlBuilder.toString();
     }
-  }
+
+    @Override
+    public void onClick(View view) {
+        this.stockButton.setEnabled(false);
+
+        if (this.model.isStock()) {
+            this.model.request(ItemModel.Type.UNSTOCK, this.item.getId(), new OnModelListener<Void>() {
+                @Override
+                public void onSuccess(Void results) {
+                    stockButton.setImageResource(R.drawable.ic_stock_button_48px);
+                    stockButton.setBackgroundTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.stockButton))
+                    );
+                }
+
+                @Override
+                public void onError(MiitaException e) {
+                    // TODO: show alert
+                }
+
+                @Override
+                public void onComplete() {
+                    stockButton.setEnabled(true);
+                }
+            });
+        } else {
+            this.model.request(ItemModel.Type.STOCK, this.item.getId(), new OnModelListener<Void>() {
+                @Override
+                public void onSuccess(Void results) {
+                    stockButton.setImageResource(R.drawable.ic_unstock_button_48px);
+                    stockButton.setBackgroundTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.unStockButton))
+                    );
+                }
+
+                @Override
+                public void onError(MiitaException e) {
+                    // TODO: show alert
+                }
+
+                @Override
+                public void onComplete() {
+                    stockButton.setEnabled(true);
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset >= COLLAPSED_OFFSET) {
+            this.toolbarLayout.setTitle("");
+        } else {
+            this.toolbarLayout.setTitle(this.item.getTitle());
+        }
+    }
 }

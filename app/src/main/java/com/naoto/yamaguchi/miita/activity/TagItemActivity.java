@@ -17,69 +17,69 @@ import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 public class TagItemActivity extends AppCompatActivity
         implements TagItemFragment.OnItemClickListener {
 
-  private static final String INTENT_ITEM_KEY = "item";
-  private static final String INTENT_TAG_KEY = "tag";
+    private static final String INTENT_ITEM_KEY = "item";
+    private static final String INTENT_TAG_KEY = "tag";
 
-  private Toolbar toolbar;
-  private ActionBar actionBar;
-  private CollapsingToolbarLayout toolbarLayout;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
+    private CollapsingToolbarLayout toolbarLayout;
 
-  private Tag tag;
+    private Tag tag;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_tag_item);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tag_item);
 
-    this.parseIntent();
-    this.initView();
-    this.setFragment();
-  }
-
-  private void initView() {
-    this.toolbar = (Toolbar)findViewById(R.id.toolbar);
-    setSupportActionBar(this.toolbar);
-
-    this.actionBar = getSupportActionBar();
-    this.actionBar.setDisplayHomeAsUpEnabled(true);
-    this.actionBar.setHomeButtonEnabled(true);
-
-    this.toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-    this.toolbarLayout.setTitle(this.tag.getId());
-  }
-
-  private void parseIntent() {
-    final Intent intent = this.getIntent();
-    this.tag = intent.getParcelableExtra(INTENT_TAG_KEY);
-  }
-
-  private void setFragment() {
-    FragmentRouter.newInstance()
-            .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance(this.tag.getId()))
-            .replace(R.id.tag_item_container_view)
-            .commit();
-  }
-
-  @Override
-  public void onBackPressed() {
-    super.onBackPressed();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
+        this.parseIntent();
+        this.initView();
+        this.setFragment();
     }
-  }
 
-  @Override
-  public void onItemClick(Item item) {
-    final Intent intent = new Intent(TagItemActivity.this, ItemActivity.class);
-    intent.putExtra(INTENT_ITEM_KEY, item);
-    startActivity(intent);
-  }
+    private void initView() {
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(this.toolbar);
+
+        this.actionBar = getSupportActionBar();
+        this.actionBar.setDisplayHomeAsUpEnabled(true);
+        this.actionBar.setHomeButtonEnabled(true);
+
+        this.toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        this.toolbarLayout.setTitle(this.tag.getId());
+    }
+
+    private void parseIntent() {
+        final Intent intent = this.getIntent();
+        this.tag = intent.getParcelableExtra(INTENT_TAG_KEY);
+    }
+
+    private void setFragment() {
+        FragmentRouter.newInstance()
+                .begin(this.getSupportFragmentManager(), TagItemFragment.newInstance(this.tag.getId()))
+                .replace(R.id.tag_item_container_view)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onItemClick(Item item) {
+        final Intent intent = new Intent(TagItemActivity.this, ItemActivity.class);
+        intent.putExtra(INTENT_ITEM_KEY, item);
+        startActivity(intent);
+    }
 }
