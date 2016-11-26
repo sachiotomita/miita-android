@@ -37,8 +37,8 @@ final class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... strings) {
         try {
-            final String urlString = strings[0];
-            final URL imageUrl = new URL(urlString);
+            this.urlString = strings[0];
+            final URL imageUrl = new URL(this.urlString);
             final InputStream stream = imageUrl.openStream();
             final Bitmap bitmap = BitmapFactory.decodeStream(stream);
             return bitmap;
