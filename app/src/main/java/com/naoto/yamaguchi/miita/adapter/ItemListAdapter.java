@@ -72,7 +72,9 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
             viewHolder.userIdTextView.setText(userId);
             viewHolder.titleTextView.setText(title);
             viewHolder.tagTextView.setText(tagsString);
-            ImageFetcher.getInstance().fetch(imageUrl, viewHolder.imageView);
+            ImageFetcher.getInstance()
+                    .setContext(this.context)
+                    .fetch(imageUrl, viewHolder.imageView);
         }
 
         return convertView;
