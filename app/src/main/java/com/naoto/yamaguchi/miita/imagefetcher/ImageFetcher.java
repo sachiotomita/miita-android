@@ -50,11 +50,11 @@ public final class ImageFetcher {
 
     private void load(String urlString, ImageView imageView) {
         if (Util.cancelPotentialWork(urlString, imageView)) {
-            final BitmapLoaderTask task = new BitmapLoaderTask(imageView);
+            final BitmapLoaderTask task = new BitmapLoaderTask(urlString, imageView);
             final BitmapLoaderDrawable drawable = new BitmapLoaderDrawable(
                     this.context.getResources(), this.getLoadingBitmap(), task);
             imageView.setImageDrawable(drawable);
-            task.execute(urlString);
+            task.execute();
         }
     }
 

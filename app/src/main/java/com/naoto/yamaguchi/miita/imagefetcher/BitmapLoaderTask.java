@@ -17,11 +17,12 @@ import java.net.URL;
  * Created by naoto on 2016/11/26.
  */
 
-final class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap> {
+final class BitmapLoaderTask extends AsyncTask<Void, Void, Bitmap> {
+    private final String urlString;
     private final WeakReference<ImageView> imageViewWeakReference;
-    private String urlString;
 
-    public BitmapLoaderTask(ImageView imageView) {
+    public BitmapLoaderTask(String urlString, ImageView imageView) {
+        this.urlString = urlString;
         this.imageViewWeakReference = new WeakReference<ImageView>(imageView);
     }
 
@@ -35,9 +36,8 @@ final class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     @Override
-    protected Bitmap doInBackground(String... strings) {
+    protected Bitmap doInBackground(Void... voids) {
         try {
-            this.urlString = strings[0];
             final URL imageUrl = new URL(this.urlString);
             final InputStream stream = imageUrl.openStream();
             final Bitmap bitmap = BitmapFactory.decodeStream(stream);
