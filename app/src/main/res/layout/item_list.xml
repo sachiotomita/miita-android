@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/item_list_image"
         android:layout_width="@dimen/image_height"
-        android:layout_height="@dimen/image_width"/>
+        android:layout_height="@dimen/image_width"
+        android:backgroundTint="@color/loadingImage"/>
 
     <LinearLayout
         android:layout_width="match_parent"

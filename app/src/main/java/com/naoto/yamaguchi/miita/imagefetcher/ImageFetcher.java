@@ -62,7 +62,8 @@ public final class ImageFetcher {
         if (this.loadingBitmap != null) {
             return this.loadingBitmap;
         }
+        // TODO: use custom drawable.
         return BitmapFactory.decodeResource(this.context.getResources(),
-                R.drawable.ic_loading_image_48px);
+                R.drawable.ic_menu_gallery);
     }
 }
