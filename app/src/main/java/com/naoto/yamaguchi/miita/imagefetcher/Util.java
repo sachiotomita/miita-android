@@ -10,7 +10,7 @@ import android.widget.ImageView;
  */
 
 final class Util {
-    public static BitmapLoaderTask getTaskFromImageView(ImageView imageView) {
+    public static synchronized BitmapLoaderTask getTaskFromImageView(ImageView imageView) {
         if (imageView != null) {
             final Drawable drawable = imageView.getDrawable();
             if (drawable instanceof BitmapLoaderDrawable) {
