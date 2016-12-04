@@ -12,6 +12,7 @@ import java.io.File;
  * Created by naoto on 2016/12/03.
  */
 
+// TODO: implement DiskLruCache class. WIP,,,.
 final class DiskCache {
     private static final int DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
     private static final String DISK_CACHE_SUB_DIR = "mitta_bitmap";

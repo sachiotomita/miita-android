@@ -3,6 +3,8 @@ package com.naoto.yamaguchi.miita.imagefetcher;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.naoto.yamaguchi.miita.R;
@@ -22,11 +24,17 @@ public final class ImageFetcher {
     private Context context;
     private Bitmap loadingBitmap;
 
+    private final MemoryCache memoryCache;
+
     public static synchronized ImageFetcher getInstance() {
         if (instance == null) {
             instance = new ImageFetcher();
         }
         return instance;
+    }
+
+    private ImageFetcher() {
+        this.memoryCache = new MemoryCache();
     }
 
     public ImageFetcher setContext(Context context) {
@@ -44,18 +52,41 @@ public final class ImageFetcher {
             throw new RuntimeException("should be call setContext().");
         }
 
-        // Http
+        // from Memory Cache
+        if (this.memoryCache.get(urlString) != null) {
+            final Bitmap bitmap = this.memoryCache.get(urlString);
+            imageView.setImageBitmap(bitmap);
+            return;
+        }
+
+        // TODO: from Disk Cache
+
+        // from Http Download
         this.load(urlString, imageView);
     }
 
     private void load(String urlString, ImageView imageView) {
         if (Util.cancelPotentialWork(urlString, imageView)) {
-            final BitmapLoaderTask task = new BitmapLoaderTask(urlString, imageView);
+            final BitmapLoaderTask task = new BitmapLoaderTask(urlString, imageView,
+                    this.loadListener());
             final BitmapLoaderDrawable drawable = new BitmapLoaderDrawable(
                     this.context.getResources(), this.getLoadingBitmap(), task);
             imageView.setImageDrawable(drawable);
             task.execute();
         }
+    }
+
+    private BitmapLoaderTask.onLoadListener loadListener() {
+        return new BitmapLoaderTask.onLoadListener() {
+            @Override
+            public void onComplete(@NonNull String urlString, @Nullable Bitmap bitmap) {
+                if (bitmap == null) {
+                    return;
+                }
+
+                memoryCache.put(urlString, bitmap);
+            }
+        };
     }
 
     private Bitmap getLoadingBitmap() {

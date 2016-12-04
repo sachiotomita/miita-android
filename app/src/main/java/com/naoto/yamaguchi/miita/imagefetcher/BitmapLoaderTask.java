@@ -3,6 +3,8 @@ package com.naoto.yamaguchi.miita.imagefetcher;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -18,12 +20,18 @@ import java.net.URL;
  */
 
 final class BitmapLoaderTask extends AsyncTask<Void, Void, Bitmap> {
+    public interface onLoadListener {
+        void onComplete(@NonNull String urlString, @Nullable Bitmap bitmap);
+    }
+
     private final String urlString;
     private final WeakReference<ImageView> imageViewWeakReference;
+    private final onLoadListener listener;
 
-    public BitmapLoaderTask(String urlString, ImageView imageView) {
+    public BitmapLoaderTask(String urlString, ImageView imageView, onLoadListener listener) {
         this.urlString = urlString;
         this.imageViewWeakReference = new WeakReference<ImageView>(imageView);
+        this.listener = listener;
     }
 
     public String getUrlString() {
@@ -61,6 +69,14 @@ final class BitmapLoaderTask extends AsyncTask<Void, Void, Bitmap> {
             if (imageView != null && task == this) {
                 imageView.setImageBitmap(bitmap);
             }
+        }
+
+        this.loadComplete(bitmap);
+    }
+
+    private void loadComplete(@Nullable Bitmap bitmap) {
+        if (this.listener != null) {
+            this.listener.onComplete(this.urlString, bitmap);
         }
     }
 }
