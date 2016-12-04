@@ -2,8 +2,8 @@
 
 ## TODO
 - [ ] navigation selected when backpress. (must)
-- [ ] bitmap memory cache. (must)
-- [ ] adapter ViewHolder. (must)
+- [☓] bitmap memory cache. (must)
+- [☓] adapter ViewHolder. (must)
 - [☓] list layout. (must)
 - [☓] item header multi line. (must)
 - [☓] additional entity variable and fix item header. (must)
