@@ -20,6 +20,11 @@ import com.naoto.yamaguchi.miita.R;
  */
 
 public final class ImageFetcher {
+    // TODO: implement Interface.
+    public interface Callback {
+        void onComplete(@Nullable Bitmap bitmap);
+    }
+
     private static ImageFetcher instance = null;
     private Context context;
     private boolean isDebug;
