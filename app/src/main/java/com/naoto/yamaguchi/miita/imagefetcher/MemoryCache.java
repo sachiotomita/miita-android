@@ -16,7 +16,7 @@ final class MemoryCache {
         this.cache = new LruCache<String, Bitmap>(this.getCacheSize()) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
+                return value.getByteCount() / 1024;
             }
         };
     }
@@ -34,7 +34,7 @@ final class MemoryCache {
     // TODO: fix cache size
     // https://developer.android.com/training/displaying-bitmaps/cache-bitmap.html
     private int getCacheSize() {
-        final int maxMemory = (int)Runtime.getRuntime().maxMemory();
-        return maxMemory * 1024 * 1024 / 10;
+        final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
+        return maxMemory / 8;
     }
 }
