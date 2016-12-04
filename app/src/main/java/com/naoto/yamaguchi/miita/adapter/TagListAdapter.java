@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.base.BaseTag;
+import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 
 import java.util.List;
@@ -20,48 +21,54 @@ import java.util.List;
  * Created by naoto on 16/07/16.
  */
 public final class TagListAdapter<T extends BaseTag> extends ArrayAdapter<T> {
-
-    private Context context;
-    private LayoutInflater inflater;
-    private ImageView imageView;
-    private TextView tagIdTextView;
-    private TextView tagCountTextView;
-    private DownloadImageTask downloadImageTask;
+    private final Context context;
+    private final LayoutInflater inflater;
 
     public TagListAdapter(Context context, List<T> objects) {
         super(context, 0);
         this.addAll(objects);
         this.context = context;
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater =
+                (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO: ViewHolder
+        class ViewHolder {
+            TextView tagIdTextView;
+            TextView itemsCountTextView;
+            ImageView imageView;
+        }
 
-        View view = convertView;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
-            view = this.inflater.inflate(R.layout.tag_list, null);
+            convertView = this.inflater.inflate(R.layout.tag_list, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.tagIdTextView =
+                    (TextView)convertView.findViewById(R.id.tag_list_id_text);
+            viewHolder.itemsCountTextView =
+                    (TextView)convertView.findViewById(R.id.tag_list_count_text);
+            viewHolder.imageView =
+                    (ImageView)convertView.findViewById(R.id.tag_list_image);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        T tag = this.getItem(position);
+        final T tag = this.getItem(position);
         if (tag != null) {
             String tagId = tag.getId();
-            String itemCount = tag.getItemsCount() + " item";
+            String itemsCount = tag.getItemsCount() + "items";
             String imageUrlString = tag.getIconUrlString();
 
-            this.tagIdTextView = (TextView) view.findViewById(R.id.tag_list_id_text);
-            this.tagIdTextView.setText(tagId);
-
-            this.tagCountTextView = (TextView) view.findViewById(R.id.tag_list_count_text);
-            this.tagCountTextView.setText(itemCount);
-
-            this.imageView = (ImageView) view.findViewById(R.id.tag_list_image);
-            this.downloadImageTask = new DownloadImageTask(this.context, this.imageView);
-            this.downloadImageTask.execute(imageUrlString);
+            viewHolder.tagIdTextView.setText(tagId);
+            viewHolder.itemsCountTextView.setText(itemsCount);
+            ImageFetcher.getInstance()
+                    .setContext(this.context)
+                    .fetch(imageUrlString, viewHolder.imageView);
         }
 
-        return view;
+        return convertView;
     }
 }
