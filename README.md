@@ -2,7 +2,7 @@
 
 ## TODO
 - [ ] navigation selected when backpress. (must)
-- [ ] image cache. (must)
+- [ ] bitmap memory cache. (must)
 - [ ] adapter ViewHolder. (must)
 - [☓] list layout. (must)
 - [☓] item header multi line. (must)
@@ -12,3 +12,4 @@
 - [ ] app icon. (must)
 - [ ] share item. (low priority)
 - [ ] search item ,tag. (low priority)
+- [ ] bitmap disk cache (low priority)
