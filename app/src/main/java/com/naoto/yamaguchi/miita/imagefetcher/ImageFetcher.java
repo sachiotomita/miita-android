@@ -22,6 +22,7 @@ import com.naoto.yamaguchi.miita.R;
 public final class ImageFetcher {
     private static ImageFetcher instance = null;
     private Context context;
+    private boolean isDebug;
     private Bitmap loadingBitmap;
 
     private final MemoryCache memoryCache;
@@ -34,11 +35,18 @@ public final class ImageFetcher {
     }
 
     private ImageFetcher() {
+        this.isDebug = false;
         this.memoryCache = new MemoryCache();
     }
 
     public ImageFetcher setContext(Context context) {
         this.context = context;
+        return this;
+    }
+
+    // TODO: debug mode. marking Bitmap.
+    public ImageFetcher setDebug(boolean isDebug) {
+        this.isDebug = isDebug;
         return this;
     }
 
