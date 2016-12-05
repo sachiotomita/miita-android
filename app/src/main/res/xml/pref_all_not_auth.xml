@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- フィードバック -->
-    <Preference
-        android:title="@string/pref_title_feedback"
-        android:key="@string/pref_key_feedback">
-        <intent android:action="android.intent.action.BUG_REPORT" />
-    </Preference>
+    <!--<Preference-->
+        <!--android:title="@string/pref_title_feedback"-->
+        <!--android:key="@string/pref_key_feedback">-->
+        <!--<intent android:action="android.intent.action.BUG_REPORT" />-->
+    <!--</Preference>-->
 
     <!-- 取得件数 -->
     <ListPreference
