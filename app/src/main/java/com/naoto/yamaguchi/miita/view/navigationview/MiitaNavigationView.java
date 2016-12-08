@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 
 /**
  * Custom NavigationView.
@@ -12,6 +13,8 @@ import android.util.AttributeSet;
  */
 
 public final class MiitaNavigationView extends NavigationView {
+    private final Context context;
+    private NavigationMenuType currentMenu;
 
     public MiitaNavigationView(Context context) {
         this(context, null);
@@ -23,10 +26,21 @@ public final class MiitaNavigationView extends NavigationView {
 
     public MiitaNavigationView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         this.init(context);
     }
 
     private void init(Context context) {
-        // initialize
+        this.currentMenu = NavigationMenuType.ALL_ITEM;
+    }
+
+    public void setSelected(NavigationMenuType menuType) {
+        this.getMenu()
+                .getItem(menuType.toInt())
+                .setChecked(true);
+    }
+
+    public void selectedMenu() {
+        // noop
     }
 }
