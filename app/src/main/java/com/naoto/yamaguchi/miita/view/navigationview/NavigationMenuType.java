@@ -1,5 +1,15 @@
 package com.naoto.yamaguchi.miita.view.navigationview;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.MenuItem;
+
+import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
+import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
+import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
+
 /**
  * {@MiitaNavigationView} Menu Type.
  *
@@ -11,51 +21,90 @@ package com.naoto.yamaguchi.miita.view.navigationview;
  */
 
 public enum NavigationMenuType {
-    ALL_ITEM {
+    ALL_ITEM(ActionType.TO_FRAGMENT, R.id.nav_all_item,
+            AllItemFragment.class.getSimpleName()) {
+        @Nullable
         @Override
-        public int toInt() {
-            return 0;
-        }
-
-        @Override
-        public String toFragmentName() {
-            return "AllItemFragment";
+        public Fragment getFragment() {
+            return AllItemFragment.newInstance();
         }
     },
-    STOCK_ITEM {
+    STOCK_ITEM(ActionType.TO_FRAGMENT, R.id.nav_stock_item,
+            StockItemFragment.class.getSimpleName()) {
+        @Nullable
         @Override
-        public int toInt() {
-            return 1;
-        }
-
-        @Override
-        public String toFragmentName() {
-            return "StockItemFragment";
+        public Fragment getFragment() {
+            return StockItemFragment.newInstance();
         }
     },
-    FOLLOW_TAG {
+    FOLLOW_TAG(ActionType.TO_FRAGMENT, R.id.nav_follow_tag,
+            FollowTagFragment.class.getSimpleName()) {
+        @Nullable
         @Override
-        public int toInt() {
-            return 2;
-        }
-
-        @Override
-        public String toFragmentName() {
-            return "FollowTagFragment";
+        public Fragment getFragment() {
+            return FollowTagFragment.newInstance();
         }
     },
-    SETTING {
+    SETTING(ActionType.TO_ACTIVITY, R.id.nav_setting, null) {
+        @Nullable
         @Override
-        public int toInt() {
-            return 3;
-        }
-
-        @Override
-        public String toFragmentName() {
-            return "SettingFragment";
+        public Fragment getFragment() {
+            return null;
         }
     };
 
-    public abstract int toInt();
-    public abstract String toFragmentName();
+    // NOTE: if all transition be transition, delete this type.
+    public enum ActionType {
+        TO_FRAGMENT,
+        TO_ACTIVITY
+    }
+
+    private final ActionType actionType;
+    private final int menuId;
+    private final String fragmentName;
+
+    NavigationMenuType(ActionType type, int menuId, @Nullable String fragmentName) {
+        this.actionType = type;
+        this.menuId = menuId;
+        this.fragmentName = fragmentName;
+    }
+
+    public static NavigationMenuType fromMenuId(MenuItem item) {
+        final int id = item.getItemId();
+        for (NavigationMenuType menu: values()) {
+            if (menu.menuId == id) {
+                return menu;
+            }
+        }
+        throw new AssertionError("Not Found NavigationMenu from MenuItem Id.");
+    }
+
+    public static NavigationMenuType fromName(Fragment fragment) {
+        final String name = fragment.getClass().getSimpleName();
+        for (NavigationMenuType menu: values()) {
+            if (menu.actionType == ActionType.TO_ACTIVITY) {
+                continue;
+            }
+
+            if (menu.fragmentName.equals(name)) {
+                return menu;
+            }
+        }
+        throw new AssertionError("Not Found NavigationMenu from Fragment name");
+    }
+
+    public ActionType getActionType() {
+        return this.actionType;
+    }
+
+    public int getMenuId() {
+        return this.menuId;
+    }
+
+    public String getFragmentName() {
+        return this.fragmentName;
+    }
+
+    @Nullable
+    public abstract Fragment getFragment();
 }
