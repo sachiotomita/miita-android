@@ -23,7 +23,7 @@ import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 
 public enum NavigationMenuType {
     ALL_ITEM(ActionType.TO_FRAGMENT, R.id.nav_all_item, R.string.title_all_item,
-            AllItemFragment.class.getSimpleName()) {
+            AllItemFragment.class.getSimpleName(), false) {
         @Nullable
         @Override
         public Fragment getFragment() {
@@ -31,7 +31,7 @@ public enum NavigationMenuType {
         }
     },
     STOCK_ITEM(ActionType.TO_FRAGMENT, R.id.nav_stock_item, R.string.title_stock_item,
-            StockItemFragment.class.getSimpleName()) {
+            StockItemFragment.class.getSimpleName(), true) {
         @Nullable
         @Override
         public Fragment getFragment() {
@@ -39,14 +39,15 @@ public enum NavigationMenuType {
         }
     },
     FOLLOW_TAG(ActionType.TO_FRAGMENT, R.id.nav_follow_tag, R.string.title_follow_tag,
-            FollowTagFragment.class.getSimpleName()) {
+            FollowTagFragment.class.getSimpleName(), true) {
         @Nullable
         @Override
         public Fragment getFragment() {
             return FollowTagFragment.newInstance();
         }
     },
-    SETTING(ActionType.TO_ACTIVITY, R.id.nav_setting, R.string.title_settings, null) {
+    SETTING(ActionType.TO_ACTIVITY, R.id.nav_setting, R.string.title_settings, null,
+            false) {
         @Nullable
         @Override
         public Fragment getFragment() {
@@ -64,13 +65,15 @@ public enum NavigationMenuType {
     private final @IdRes int menuIdRes;
     private final @StringRes int titleRes;
     private final String fragmentName;
+    private final boolean needAuthorize;
 
     NavigationMenuType(ActionType type, @IdRes int menuIdRes, @StringRes int titleRes,
-                       @Nullable String fragmentName) {
+                       @Nullable String fragmentName, boolean needAuthorize) {
         this.actionType = type;
         this.menuIdRes = menuIdRes;
         this.titleRes = titleRes;
         this.fragmentName = fragmentName;
+        this.needAuthorize = needAuthorize;
     }
 
     public static NavigationMenuType fromMenuId(MenuItem item) {
@@ -111,6 +114,10 @@ public enum NavigationMenuType {
 
     public String getFragmentName() {
         return this.fragmentName;
+    }
+
+    public boolean isNeedAuthorize() {
+        return this.needAuthorize;
     }
 
     @Nullable
