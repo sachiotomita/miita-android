@@ -16,8 +16,8 @@ public final class ModelFactory {
     return new AllItemModel(context);
   }
   @UiThread
-  public static CurrentUserModel getCurrentUserModel(@NonNull Context context) {
-    return new CurrentUserModel(context);
+  public static CurrentUserModel getCurrentUserModel() {
+    return new CurrentUserModel();
   }
   @UiThread
   public static FollowTagModel getFollowTagModel(@NonNull Context context) {

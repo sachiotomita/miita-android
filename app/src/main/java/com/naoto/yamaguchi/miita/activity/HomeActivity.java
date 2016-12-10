@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -36,34 +37,15 @@ import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
+import com.naoto.yamaguchi.miita.view.navigationview.MiitaNavigationView;
+import com.naoto.yamaguchi.miita.view.navigationview.NavigationMenuType;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AllItemFragment.OnItemClickListener,
         StockItemFragment.OnItemClickListener,
-        FollowTagFragment.OnTagClickListener {
-
-    // FIXME: NavMenuType, FragmentTypeをenumにする
-    // FIXME: typo -> STOCK
-    public class NavMenuType {
-        public static final int ALL_ITEM = 0;
-        public static final int STCOK_ITEM = 1;
-        public static final int FOLLOW_TAG = 2;
-        public static final int SETTING = 3;
-
-        private NavMenuType() {
-        }
-    }
-
-    public class FragmentType {
-        public static final String ALL_ITEM = "AllItemFragment";
-        public static final String STOCK_ITEM = "StockItemFragment";
-        public static final String FOLLOW_TAG = "FollowTagFragment";
-        public static final String SETTING = "SettingFragment";
-
-        private FragmentType() {
-        }
-    }
+        FollowTagFragment.OnTagClickListener,
+        FragmentManager.OnBackStackChangedListener {
 
     private static final String INTENT_ITEM_KEY = "item";
     private static final String INTENT_TAG_KEY = "tag";
@@ -71,26 +53,26 @@ public class HomeActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
-    private NavigationView navigationView;
-    private CurrentUser currentUser;
-    private CurrentUserModel currentUserModel;
+    private MiitaNavigationView navigationView;
+
+    private CurrentUser currentUser = CurrentUser.getInstance();
+    private CurrentUserModel currentUserModel = new CurrentUserModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        this.init();
-        this.setLayout();
+        this.initView();
 
-        this.navigationView.getMenu()
-                .getItem(NavMenuType.ALL_ITEM)
-                .setChecked(true);
+        this.navigationView.setSelected(NavigationMenuType.ALL_ITEM);
 
         FragmentRouter.newInstance()
                 .begin(this.getSupportFragmentManager(), AllItemFragment.newInstance())
                 .replace(R.id.home_container_view)
                 .commit();
+
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
     @Override
@@ -120,12 +102,17 @@ public class HomeActivity extends AppCompatActivity
                 public void onComplete() {
                     dialog.dismiss();
 
-                    navigationView.getMenu()
-                            .getItem(NavMenuType.ALL_ITEM)
-                            .setChecked(true);
+                    navigationView.setSelected(NavigationMenuType.ALL_ITEM);
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // listener remove
     }
 
     @Override
@@ -136,43 +123,12 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        FragmentManager manager = this.getSupportFragmentManager();
-
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-            return;
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawers();
         }
 
+        FragmentManager manager = this.getSupportFragmentManager();
         if (manager.getBackStackEntryCount() > 0) {
-            int backStackCount = manager.getBackStackEntryCount();
-            String popFragment =
-                    manager.getFragments().get(backStackCount - 1).getClass().getSimpleName();
-
-            // TODO: use util class
-            switch (popFragment) {
-                case FragmentType.ALL_ITEM:
-                    this.navigationView.getMenu()
-                            .getItem(NavMenuType.ALL_ITEM)
-                            .setChecked(true);
-                    break;
-                case FragmentType.STOCK_ITEM:
-                    this.navigationView.getMenu()
-                            .getItem(NavMenuType.STCOK_ITEM)
-                            .setChecked(true);
-                    break;
-                case FragmentType.FOLLOW_TAG:
-                    this.navigationView.getMenu()
-                            .getItem(NavMenuType.FOLLOW_TAG)
-                            .setChecked(true);
-                    break;
-                case FragmentType.SETTING:
-                    this.navigationView.getMenu()
-                            .getItem(NavMenuType.SETTING)
-                            .setChecked(true);
-                    break;
-            }
-
             manager.popBackStack();
             return;
         }
@@ -180,6 +136,7 @@ public class HomeActivity extends AppCompatActivity
         super.onBackPressed();
     }
 
+    // TODO:
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -187,6 +144,7 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    // TODO:
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -205,62 +163,30 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        boolean isStack = !item.isChecked();
-        FragmentManager manager = this.getSupportFragmentManager();
+        this.drawerLayout.closeDrawers();
 
         if (item.isChecked()) {
-            this.drawerLayout.closeDrawers();
             return true;
         }
 
-        // TODO: use util class
-        switch (id) {
-            case R.id.nav_all_item:
-                FragmentRouter.newInstance()
-                        .begin(manager, AllItemFragment.newInstance())
-                        .replace(R.id.home_container_view)
-                        .addStack(isStack)
-                        .commit();
-                break;
-            case R.id.nav_stock_item:
-                if (this.currentUser.isAuthorize()) {
-                    FragmentRouter.newInstance()
-                            .begin(manager, StockItemFragment.newInstance())
-                            .replace(R.id.home_container_view)
-                            .addStack(isStack)
-                            .commit();
-                } else {
-                    this.showLoginAlert();
-                }
-                break;
-            case R.id.nav_follow_tag:
-                if (this.currentUser.isAuthorize()) {
-                    FragmentRouter.newInstance()
-                            .begin(manager, FollowTagFragment.newInstance())
-                            .replace(R.id.home_container_view)
-                            .addStack(isStack)
-                            .commit();
-                } else {
-                    this.showLoginAlert();
-                }
-                break;
-            case R.id.nav_setting:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                this.startActivity(intent);
-                break;
-        }
-
-        this.drawerLayout.closeDrawers();
+        this.navigationView.selectedMenu(item, this);
         return true;
     }
 
-    private void init() {
-        this.currentUser = CurrentUser.getInstance();
-        this.currentUserModel = new CurrentUserModel(this);
+    @Override
+    public void onBackStackChanged() {
+        final FragmentManager manager = this.getSupportFragmentManager();
+        final Fragment fragment = manager.findFragmentById(R.id.home_container_view);
+
+        if (fragment == null) {
+            finish();
+            return;
+        }
+
+        this.navigationView.onBackPressed(fragment);
     }
 
-    private void setLayout() {
+    private void initView() {
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.toolbar.setTitle("");
         setSupportActionBar(this.toolbar);
@@ -277,7 +203,7 @@ public class HomeActivity extends AppCompatActivity
         this.drawerLayout.setDrawerListener(this.drawerToggle);
         this.drawerToggle.syncState();
 
-        this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+        this.navigationView = (MiitaNavigationView) findViewById(R.id.nav_view);
         this.navigationView.setNavigationItemSelectedListener(this);
     }
 
