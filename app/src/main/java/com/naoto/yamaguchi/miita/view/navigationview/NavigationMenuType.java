@@ -1,7 +1,8 @@
 package com.naoto.yamaguchi.miita.view.navigationview;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
@@ -21,7 +22,7 @@ import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
  */
 
 public enum NavigationMenuType {
-    ALL_ITEM(ActionType.TO_FRAGMENT, R.id.nav_all_item,
+    ALL_ITEM(ActionType.TO_FRAGMENT, R.id.nav_all_item, R.string.title_all_item,
             AllItemFragment.class.getSimpleName()) {
         @Nullable
         @Override
@@ -29,7 +30,7 @@ public enum NavigationMenuType {
             return AllItemFragment.newInstance();
         }
     },
-    STOCK_ITEM(ActionType.TO_FRAGMENT, R.id.nav_stock_item,
+    STOCK_ITEM(ActionType.TO_FRAGMENT, R.id.nav_stock_item, R.string.title_stock_item,
             StockItemFragment.class.getSimpleName()) {
         @Nullable
         @Override
@@ -37,7 +38,7 @@ public enum NavigationMenuType {
             return StockItemFragment.newInstance();
         }
     },
-    FOLLOW_TAG(ActionType.TO_FRAGMENT, R.id.nav_follow_tag,
+    FOLLOW_TAG(ActionType.TO_FRAGMENT, R.id.nav_follow_tag, R.string.title_follow_tag,
             FollowTagFragment.class.getSimpleName()) {
         @Nullable
         @Override
@@ -45,7 +46,7 @@ public enum NavigationMenuType {
             return FollowTagFragment.newInstance();
         }
     },
-    SETTING(ActionType.TO_ACTIVITY, R.id.nav_setting, null) {
+    SETTING(ActionType.TO_ACTIVITY, R.id.nav_setting, R.string.title_settings, null) {
         @Nullable
         @Override
         public Fragment getFragment() {
@@ -60,19 +61,22 @@ public enum NavigationMenuType {
     }
 
     private final ActionType actionType;
-    private final int menuId;
+    private final @IdRes int menuIdRes;
+    private final @StringRes int titleRes;
     private final String fragmentName;
 
-    NavigationMenuType(ActionType type, int menuId, @Nullable String fragmentName) {
+    NavigationMenuType(ActionType type, @IdRes int menuIdRes, @StringRes int titleRes,
+                       @Nullable String fragmentName) {
         this.actionType = type;
-        this.menuId = menuId;
+        this.menuIdRes = menuIdRes;
+        this.titleRes = titleRes;
         this.fragmentName = fragmentName;
     }
 
     public static NavigationMenuType fromMenuId(MenuItem item) {
         final int id = item.getItemId();
         for (NavigationMenuType menu: values()) {
-            if (menu.menuId == id) {
+            if (menu.menuIdRes == id) {
                 return menu;
             }
         }
@@ -97,8 +101,12 @@ public enum NavigationMenuType {
         return this.actionType;
     }
 
-    public int getMenuId() {
-        return this.menuId;
+    public int getMenuIdRes() {
+        return this.menuIdRes;
+    }
+
+    public int getTitleRes() {
+        return this.titleRes;
     }
 
     public String getFragmentName() {
