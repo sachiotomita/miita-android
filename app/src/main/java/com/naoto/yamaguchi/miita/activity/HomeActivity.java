@@ -124,7 +124,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.drawerLayout.closeDrawers();
+            this.drawerLayout.closeDrawer(GravityCompat.START);
         }
 
         FragmentManager manager = this.getSupportFragmentManager();
@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        this.drawerLayout.closeDrawers();
+        this.drawerLayout.closeDrawer(GravityCompat.START);
 
         this.navigationView.selectedMenu(item, this);
         return true;
@@ -232,6 +232,18 @@ public class HomeActivity extends AppCompatActivity
         final FragmentManager manager = this.getSupportFragmentManager();
         final Fragment fragment = manager.findFragmentById(R.id.home_container_view);
         return fragment;
+    }
+
+    private void replaceFragment(NavigationMenuType type) {
+        this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.home_container_view, type.getFragment(),
+                        type.getFragmentName())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void menuSelected(NavigationMenuType type) {
+
     }
 
     @Override
