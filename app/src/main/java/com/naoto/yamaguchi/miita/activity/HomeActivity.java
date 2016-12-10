@@ -164,10 +164,6 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         this.drawerLayout.closeDrawers();
 
-        if (item.isChecked()) {
-            return true;
-        }
-
         this.navigationView.selectedMenu(item, this);
         return true;
     }
