@@ -136,10 +136,9 @@ public class HomeActivity extends AppCompatActivity
         super.onBackPressed();
     }
 
-    // TODO:
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // TODO: if use menu, delete following comment out.
         // getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
