@@ -1,6 +1,5 @@
 package com.naoto.yamaguchi.miita.model;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -22,7 +21,6 @@ import com.naoto.yamaguchi.miita.util.exception.MiitaException;
  */
 public final class CurrentUserModel {
 
-  private final Context context;
   private final AuthorizeService authorizeService;
   private final AuthUserService authUserService;
   private final CurrentUser currentUser;
@@ -32,8 +30,7 @@ public final class CurrentUserModel {
   // 1. token -> user
   // 2. user
 
-  public CurrentUserModel(Context context) {
-    this.context = context;
+  public CurrentUserModel() {
     this.authorizeService = new AuthorizeService();
     this.authUserService = new AuthUserService();
     this.currentUser = CurrentUser.getInstance();
