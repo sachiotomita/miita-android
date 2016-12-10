@@ -52,7 +52,7 @@ public final class MiitaNavigationView extends NavigationView {
 
     public void setSelected(NavigationMenuType menuType) {
         this.getMenu()
-                .getItem(menuType.toInt())
+                .getItem(menuType.getMenuIdRes())
                 .setChecked(true);
     }
 
@@ -84,24 +84,6 @@ public final class MiitaNavigationView extends NavigationView {
             case R.id.nav_setting:
                 Intent intent = new Intent(this.context, SettingsActivity.class);
                 activity.startActivity(intent);
-                break;
-        }
-    }
-
-    public void onBackPressed(Fragment fragment) {
-        String current = fragment.getClass().getSimpleName();
-        switch (current) {
-            case "AllItemFragment":
-                this.setSelected(NavigationMenuType.ALL_ITEM);
-                break;
-            case "StockItemFragment":
-                this.setSelected(NavigationMenuType.STOCK_ITEM);
-                break;
-            case "FollowTagFragment":
-                this.setSelected(NavigationMenuType.FOLLOW_TAG);
-                break;
-            default:
-                // NOOP
                 break;
         }
     }

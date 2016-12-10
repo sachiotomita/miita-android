@@ -174,15 +174,15 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackStackChanged() {
-        final FragmentManager manager = this.getSupportFragmentManager();
-        final Fragment fragment = manager.findFragmentById(R.id.home_container_view);
+        final Fragment fragment = this.getCurrentFragment();
 
         if (fragment == null) {
             finish();
             return;
         }
 
-        this.navigationView.onBackPressed(fragment);
+        final NavigationMenuType type = NavigationMenuType.fromFragment(fragment);
+        this.navigationView.setSelected(type);
     }
 
     private void initView() {
@@ -230,6 +230,12 @@ public class HomeActivity extends AppCompatActivity
                 .setType(MiitaAlertDialogType.LOGIN)
                 .build()
                 .show();
+    }
+
+    private Fragment getCurrentFragment() {
+        final FragmentManager manager = this.getSupportFragmentManager();
+        final Fragment fragment = manager.findFragmentById(R.id.home_container_view);
+        return fragment;
     }
 
     @Override

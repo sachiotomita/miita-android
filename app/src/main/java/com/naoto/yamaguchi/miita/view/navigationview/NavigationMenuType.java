@@ -83,7 +83,7 @@ public enum NavigationMenuType {
         throw new AssertionError("Not Found NavigationMenu from MenuItem Id.");
     }
 
-    public static NavigationMenuType fromName(Fragment fragment) {
+    public static NavigationMenuType fromFragment(Fragment fragment) {
         final String name = fragment.getClass().getSimpleName();
         for (NavigationMenuType menu: values()) {
             if (menu.actionType == ActionType.TO_ACTIVITY) {
