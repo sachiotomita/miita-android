@@ -88,6 +88,24 @@ public final class MiitaNavigationView extends NavigationView {
         }
     }
 
+    public void onBackPressed(Fragment fragment) {
+        String current = fragment.getClass().getSimpleName();
+        switch (current) {
+            case "AllItemFragment":
+                this.setSelected(NavigationMenuType.ALL_ITEM);
+                break;
+            case "StockItemFragment":
+                this.setSelected(NavigationMenuType.STOCK_ITEM);
+                break;
+            case "FollowTagFragment":
+                this.setSelected(NavigationMenuType.FOLLOW_TAG);
+                break;
+            default:
+                // NOOP
+                break;
+        }
+    }
+
     private void transitionFragment(FragmentManager manager, Fragment fragment,
                                     boolean isStack) {
         FragmentRouter.newInstance()
