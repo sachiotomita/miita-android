@@ -164,7 +164,8 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         this.drawerLayout.closeDrawer(GravityCompat.START);
 
-        this.navigationView.selectedMenu(item, this);
+        final NavigationMenuType type = NavigationMenuType.fromMenuItem(item);
+        this.menuItemSelected(type);
         return true;
     }
 
@@ -242,8 +243,12 @@ public class HomeActivity extends AppCompatActivity
                 .commit();
     }
 
-    private void menuSelected(NavigationMenuType type) {
-
+    private void menuItemSelected(NavigationMenuType type) {
+        if (type.isNeedAuthorize() && !this.currentUser.isAuthorize()) {
+            this.showLoginAlert();
+        } else {
+            this.replaceFragment(type);
+        }
     }
 
     @Override

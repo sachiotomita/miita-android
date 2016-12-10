@@ -56,38 +56,6 @@ public final class MiitaNavigationView extends NavigationView {
                 .setChecked(true);
     }
 
-    public void selectedMenu(MenuItem item, HomeActivity activity) {
-        final int itemId = item.getItemId();
-        final boolean isStack = !item.isChecked();
-        final FragmentManager manager = activity.getSupportFragmentManager();
-
-        switch (itemId) {
-            case R.id.nav_all_item:
-                this.transitionFragment(manager, AllItemFragment.newInstance(), isStack);
-                break;
-            case R.id.nav_stock_item:
-                if (this.currentUser.isAuthorize()) {
-                    this.transitionFragment(manager, StockItemFragment.newInstance(),
-                            isStack);
-                } else {
-                    this.showLoginAlert();
-                }
-                break;
-            case R.id.nav_follow_tag:
-                if (this.currentUser.isAuthorize()) {
-                    this.transitionFragment(manager, FollowTagFragment.newInstance(),
-                            isStack);
-                } else {
-                    this.showLoginAlert();
-                }
-                break;
-            case R.id.nav_setting:
-                Intent intent = new Intent(this.context, SettingsActivity.class);
-                activity.startActivity(intent);
-                break;
-        }
-    }
-
     private void transitionFragment(FragmentManager manager, Fragment fragment,
                                     boolean isStack) {
         FragmentRouter.newInstance()

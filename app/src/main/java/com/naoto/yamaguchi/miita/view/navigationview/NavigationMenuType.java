@@ -76,7 +76,7 @@ public enum NavigationMenuType {
         this.needAuthorize = needAuthorize;
     }
 
-    public static NavigationMenuType fromMenuId(MenuItem item) {
+    public static NavigationMenuType fromMenuItem(MenuItem item) {
         final int id = item.getItemId();
         for (NavigationMenuType menu: values()) {
             if (menu.menuIdRes == id) {
