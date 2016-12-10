@@ -3,6 +3,10 @@ package com.naoto.yamaguchi.miita.view.navigationview;
 /**
  * {@MiitaNavigationView} Menu Type.
  *
+ * TODO Later:
+ * - http://qiita.com/KeithYokoma/items/51852d343002d969d841
+ * - http://qiita.com/wasnot/items/dfc33bb91f64abfec04c
+ *
  * Created by naoto on 2016/12/09.
  */
 
