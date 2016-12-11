@@ -29,7 +29,6 @@ import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
 public final class MiitaNavigationView extends NavigationView {
     private final Context context;
     private final CurrentUser currentUser;
-    private NavigationMenuType currentMenu; // TODO: delete
 
     public MiitaNavigationView(Context context) {
         this(context, null);
@@ -54,21 +53,5 @@ public final class MiitaNavigationView extends NavigationView {
         this.getMenu()
                 .getItem(menuType.getMenuIdRes())
                 .setChecked(true);
-    }
-
-    private void transitionFragment(FragmentManager manager, Fragment fragment,
-                                    boolean isStack) {
-        FragmentRouter.newInstance()
-                .begin(manager, fragment)
-                .replace(R.id.home_container_view)
-                .addStack(isStack)
-                .commit();
-    }
-
-    private void showLoginAlert() {
-        new MiitaAlertDialogBuilder(this.context)
-                .setType(MiitaAlertDialogType.LOGIN)
-                .build()
-                .show();
     }
 }
