@@ -49,33 +49,27 @@ public final class MiitaAlertDialogBuilder {
     }
 
     private void _build() {
-        switch (this.type) {
-            case LOGIN:
-                this.builder.setTitle(R.string.alert_login_title)
-                        .setMessage(R.string.alert_login_message)
-                        .setPositiveButton(R.string.alert_login_ok,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface,
-                                                        int i) {
-                                        Uri uri = Uri.parse(Constants.AUTHORIZE_URL);
-                                        Intent intent = new Intent(Intent.ACTION_VIEW,
-                                                uri);
-                                        context.startActivity(intent);
-                                        callPositiveButtonClick();
-                                    }
-                                }
-                        )
-                        .setNegativeButton(R.string.alert_login_cancel,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface,
-                                                        int i) {
-                                        callNegativeButtonClick();
-                                    }
-                                }
-                        );
-                break;
+        this.builder.setTitle(this.type.getTitleRes())
+                .setMessage(this.type.getMessageRes());
+
+        if (this.type.isHasPositiveButton()) {
+            this.builder.setPositiveButton(this.type.getPositiveButtonRes(),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            callPositiveButtonClick();
+                        }
+                    });
+        }
+
+        if (this.type.isHasNegativeButton()) {
+            this.builder.setNegativeButton(this.type.getNegativeButtonRes(),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            callNegativeButtonClick();
+                        }
+                    });
         }
     }
 

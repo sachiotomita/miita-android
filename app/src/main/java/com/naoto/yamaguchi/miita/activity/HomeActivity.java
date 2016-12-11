@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
+import com.naoto.yamaguchi.miita.application.Constants;
 import com.naoto.yamaguchi.miita.converter.ItemConverter;
 import com.naoto.yamaguchi.miita.converter.TagConverter;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
@@ -36,6 +38,7 @@ import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
+import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogListener;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
 import com.naoto.yamaguchi.miita.view.navigationview.MiitaNavigationView;
 import com.naoto.yamaguchi.miita.view.navigationview.NavigationMenuType;
@@ -223,8 +226,21 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showLoginAlert() {
-        new MiitaAlertDialogBuilder(this)
-                .setType(MiitaAlertDialogType.LOGIN)
+        new MiitaAlertDialogBuilder(this, MiitaAlertDialogType.LOGIN)
+                .setPositiveListener(new MiitaAlertDialogListener() {
+                    @Override
+                    public void onClick() {
+                        Uri uri = Uri.parse(Constants.AUTHORIZE_URL);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeListener(new MiitaAlertDialogListener() {
+                    @Override
+                    public void onClick() {
+                        // TODO: change navigation selected.
+                    }
+                })
                 .build()
                 .show();
     }
