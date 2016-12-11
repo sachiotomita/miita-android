@@ -260,6 +260,12 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void menuItemSelected(NavigationMenuType type) {
+        if (type == NavigationMenuType.SETTING) {
+            final Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         if (type.isNeedAuthorize() && !this.currentUser.isAuthorize()) {
             this.showLoginAlert();
         } else {
