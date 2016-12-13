@@ -69,11 +69,7 @@ public class HomeActivity extends AppCompatActivity
         this.initView();
 
         this.navigationView.setSelected(NavigationMenuType.ALL_ITEM);
-
-        FragmentRouter.newInstance()
-                .begin(this.getSupportFragmentManager(), AllItemFragment.newInstance())
-                .replace(R.id.home_container_view)
-                .commit();
+        this.replaceFragment(NavigationMenuType.ALL_ITEM);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
@@ -81,6 +77,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        this.setSelectedNavigationItem();
 
         if (!this.currentUser.isAuthorize()
                 && this.currentUserModel.isExistCodeQuery(this.getIntent())) {
@@ -104,8 +101,6 @@ public class HomeActivity extends AppCompatActivity
                 @Override
                 public void onComplete() {
                     dialog.dismiss();
-
-                    navigationView.setSelected(NavigationMenuType.ALL_ITEM);
                 }
             });
         }
@@ -174,15 +169,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackStackChanged() {
-        final Fragment fragment = this.getCurrentFragment();
-
-        if (fragment == null) {
-            finish();
-            return;
-        }
-
-        final NavigationMenuType type = NavigationMenuType.fromFragment(fragment);
-        this.navigationView.setSelected(type);
+        this.setSelectedNavigationItem();
     }
 
     private void initView() {
@@ -238,17 +225,24 @@ public class HomeActivity extends AppCompatActivity
                 .setNegativeListener(new MiitaAlertDialogListener() {
                     @Override
                     public void onClick() {
-                        // TODO: change navigation selected.
+                        setSelectedNavigationItem();
                     }
                 })
                 .build()
                 .show();
     }
 
-    private Fragment getCurrentFragment() {
+    private void setSelectedNavigationItem() {
         final FragmentManager manager = this.getSupportFragmentManager();
         final Fragment fragment = manager.findFragmentById(R.id.home_container_view);
-        return fragment;
+
+        if (fragment == null) {
+            finish();
+            return;
+        }
+
+        final NavigationMenuType type = NavigationMenuType.fromFragment(fragment);
+        this.navigationView.setSelected(type);
     }
 
     private void replaceFragment(NavigationMenuType type) {
