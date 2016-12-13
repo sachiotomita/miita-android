@@ -50,7 +50,8 @@ public final class MiitaAlertDialogBuilder {
 
     private void _build() {
         this.builder.setTitle(this.type.getTitleRes())
-                .setMessage(this.type.getMessageRes());
+                .setMessage(this.type.getMessageRes())
+                .setCancelable(false);
 
         if (this.type.isHasPositiveButton()) {
             this.builder.setPositiveButton(this.type.getPositiveButtonRes(),
