@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity
 
         this.initView();
 
-        this.navigationView.setSelected(NavigationMenuType.ALL_ITEM);
+        this.navigationView.setCheckedItem(NavigationMenuType.ALL_ITEM);
         this.replaceFragment(NavigationMenuType.ALL_ITEM);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -242,7 +242,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         final NavigationMenuType type = NavigationMenuType.fromFragment(fragment);
-        this.navigationView.setSelected(type);
+        this.navigationView.setCheckedItem(type);
     }
 
     private void replaceFragment(NavigationMenuType type) {

@@ -36,9 +36,7 @@ public final class MiitaNavigationView extends NavigationView {
         // NOOP
     }
 
-    public void setSelected(NavigationMenuType menuType) {
-        this.getMenu()
-                .getItem(menuType.getMenuIdRes())
-                .setChecked(true);
+    public void setCheckedItem(NavigationMenuType menuType) {
+        this.setCheckedItem(menuType.getMenuIdRes());
     }
 }
