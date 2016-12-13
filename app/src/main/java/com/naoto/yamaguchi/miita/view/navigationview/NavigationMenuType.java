@@ -55,7 +55,7 @@ public enum NavigationMenuType {
         }
     };
 
-    // NOTE: if all transition be transition, delete this type.
+    // NOTE: if all transition be fragment, delete this type.
     public enum ActionType {
         TO_FRAGMENT,
         TO_ACTIVITY
@@ -64,7 +64,7 @@ public enum NavigationMenuType {
     private final ActionType actionType;
     private final @IdRes int menuIdRes;
     private final @StringRes int titleRes;
-    private final String fragmentName;
+    private final @Nullable String fragmentName;
     private final boolean needAuthorize;
 
     NavigationMenuType(ActionType type, @IdRes int menuIdRes, @StringRes int titleRes,
@@ -104,15 +104,15 @@ public enum NavigationMenuType {
         return this.actionType;
     }
 
-    public int getMenuIdRes() {
+    public @IdRes int getMenuIdRes() {
         return this.menuIdRes;
     }
 
-    public int getTitleRes() {
+    public @StringRes int getTitleRes() {
         return this.titleRes;
     }
 
-    public String getFragmentName() {
+    public @Nullable String getFragmentName() {
         return this.fragmentName;
     }
 
