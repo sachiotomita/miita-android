@@ -1,24 +1,11 @@
 package com.naoto.yamaguchi.miita.view.navigationview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.view.MenuItem;
 
-import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.activity.HomeActivity;
-import com.naoto.yamaguchi.miita.activity.SettingsActivity;
-import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
-import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
-import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
-import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
-import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
-import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
 
 /**
  * Custom NavigationView.
