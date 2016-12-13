@@ -36,7 +36,6 @@ import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
-import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogListener;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;

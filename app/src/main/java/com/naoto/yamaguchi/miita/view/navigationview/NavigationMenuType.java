@@ -14,13 +14,13 @@ import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 /**
  * {@MiitaNavigationView} Menu Type.
  *
- * TODO Later:
- * - http://qiita.com/KeithYokoma/items/51852d343002d969d841
+ * TODO:
  * - http://qiita.com/wasnot/items/dfc33bb91f64abfec04c
  *
  * Created by naoto on 2016/12/09.
  */
 
+// TODO: rename NavigationItemType
 public enum NavigationMenuType {
     ALL_ITEM(ActionType.TO_FRAGMENT, R.id.nav_all_item, R.string.title_all_item,
             AllItemFragment.class.getSimpleName(), false) {
