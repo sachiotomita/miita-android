@@ -19,7 +19,7 @@ public final class MiitaProgressDialogBuilder {
         this.type = type;
         this.dialog = new ProgressDialog(this.context);
     }
-    
+
     public MiitaProgressDialogBuilder build() {
         this._build();
         return this;
