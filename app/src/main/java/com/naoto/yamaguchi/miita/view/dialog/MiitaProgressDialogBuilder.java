@@ -29,6 +29,10 @@ public final class MiitaProgressDialogBuilder {
         this.dialog.show();
     }
 
+    public void dismiss() {
+        this.dialog.dismiss();
+    }
+
     private void _build() {
         this.dialog.setTitle(this.type.getTitle());
         this.dialog.setMessage(this.type.getMessage());
