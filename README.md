@@ -1,7 +1,7 @@
 # miita-android
 
 ## TODO
-- [ ] navigation selected when backpress. (must)
+- [☓] navigation selected when backpress. (must)
 - [☓] bitmap memory cache. (must)
 - [☓] adapter ViewHolder. (must)
 - [☓] list layout. (must)
