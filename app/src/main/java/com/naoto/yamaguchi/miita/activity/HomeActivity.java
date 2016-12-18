@@ -176,15 +176,9 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(this.toolbar);
 
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        this.drawerToggle = new ActionBarDrawerToggle(
-                this,
-                this.drawerLayout,
-                this.toolbar,
-                R.string.drawer_open,
-                R.string.drawer_close
-        );
-        // FIXME: may be unnecessary
-        this.drawerLayout.setDrawerListener(this.drawerToggle);
+        this.drawerToggle = new ActionBarDrawerToggle(this, this.drawerLayout,
+                this.toolbar, R.string.drawer_open, R.string.drawer_close);
+        this.drawerLayout.addDrawerListener(this.drawerToggle);
         this.drawerToggle.syncState();
 
         this.navigationView = (MiitaNavigationView) findViewById(R.id.nav_view);
