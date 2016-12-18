@@ -109,7 +109,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 
-        // listener remove
+        getSupportFragmentManager().removeOnBackStackChangedListener(this);
     }
 
     @Override
