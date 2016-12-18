@@ -206,9 +206,11 @@ public class HomeActivity extends AppCompatActivity
 
         final NavigationMenuType type = NavigationMenuType.fromFragment(fragment);
         this.navigationView.setCheckedItem(type);
+        this.toolbar.setTitle(type.getTitleRes());
     }
 
     private void replaceFragment(NavigationMenuType type) {
+        this.toolbar.setTitle(type.getTitleRes());
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.home_container_view, type.getFragment(),
                         type.getFragmentName())
