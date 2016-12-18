@@ -1,6 +1,5 @@
 package com.naoto.yamaguchi.miita.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,15 +24,13 @@ import com.naoto.yamaguchi.miita.converter.TagConverter;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.entity.Tag;
-import com.naoto.yamaguchi.miita.entity.User;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
 import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
 import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
-import com.naoto.yamaguchi.miita.model.CurrentUserModel;
-import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.presenter.HomePresenter;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
@@ -47,7 +44,8 @@ public class HomeActivity extends AppCompatActivity
         AllItemFragment.OnItemClickListener,
         StockItemFragment.OnItemClickListener,
         FollowTagFragment.OnTagClickListener,
-        FragmentManager.OnBackStackChangedListener {
+        FragmentManager.OnBackStackChangedListener,
+        HomePresenter.View {
 
     private static final String INTENT_ITEM_KEY = "item";
     private static final String INTENT_TAG_KEY = "tag";
@@ -56,20 +54,18 @@ public class HomeActivity extends AppCompatActivity
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private MiitaNavigationView navigationView;
-
+    private HomePresenter presenter;
     private CurrentUser currentUser = CurrentUser.getInstance();
-    private CurrentUserModel currentUserModel = new CurrentUserModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        this.presenter = new HomePresenter(this);
+        this.presenter.attachView(this);
         this.initView();
-
-        this.navigationView.setCheckedItem(NavigationMenuType.ALL_ITEM);
         this.replaceFragment(NavigationMenuType.ALL_ITEM);
-
         getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
@@ -77,38 +73,12 @@ public class HomeActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         this.setSelectedNavigationItem();
-
-        if (!this.currentUser.isAuthorize()
-                && this.currentUserModel.isExistCodeQuery(this.getIntent())) {
-
-            final ProgressDialog dialog = new ProgressDialog(this);
-            dialog.setMessage("ログイン中...");
-            dialog.show();
-
-            String code = this.currentUserModel.getCodeQuery(this.getIntent());
-            this.currentUserModel.request(code, new OnModelListener<User>() {
-                @Override
-                public void onSuccess(User results) {
-                    // TODO: snack bar
-                }
-
-                @Override
-                public void onError(MiitaException e) {
-                    // TODO: show alert
-                }
-
-                @Override
-                public void onComplete() {
-                    dialog.dismiss();
-                }
-            });
-        }
+        this.presenter.loadAccessToken(this.getIntent());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         getSupportFragmentManager().removeOnBackStackChangedListener(this);
     }
 
@@ -183,6 +153,7 @@ public class HomeActivity extends AppCompatActivity
 
         this.navigationView = (MiitaNavigationView) findViewById(R.id.nav_view);
         this.navigationView.setNavigationItemSelectedListener(this);
+        this.navigationView.setCheckedItem(NavigationMenuType.ALL_ITEM);
     }
 
     // TODO: create header view class
@@ -281,5 +252,25 @@ public class HomeActivity extends AppCompatActivity
         final Tag _tag = TagConverter.convert(tag);
         intent.putExtra(INTENT_TAG_KEY, _tag);
         startActivity(intent);
+    }
+
+    @Override
+    public void showLoggingProgress() {
+
+    }
+
+    @Override
+    public void hideLoggingProgress() {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+
+    }
+
+    @Override
+    public void showErrorAlert(MiitaException e) {
+
     }
 }

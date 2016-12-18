@@ -11,16 +11,19 @@ import com.naoto.yamaguchi.miita.presenter.base.Presenter;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 /**
- * {@HomeActivity} Presenter.
- *
+ * {@link com.naoto.yamaguchi.miita.activity.HomeActivity} Presenter.
+ * <p>
  * Created by naoto on 2016/12/18.
  */
 
 public final class HomePresenter extends Presenter<HomePresenter.View> {
     public interface View {
         void showLoggingProgress();
+
         void hideLoggingProgress();
+
         void showSnackbar(String message);
+
         void showErrorAlert(MiitaException e);
     }
 
@@ -44,27 +47,31 @@ public final class HomePresenter extends Presenter<HomePresenter.View> {
     }
 
     public void loadAccessToken(Intent intent) {
-       if (!this.currentUser.isAuthorize() &&
-               this.currentUserModel.isExistCodeQuery(intent)) {
-           this.view.showLoggingProgress();
+        if (intent == null) {
+            return;
+        }
 
-           final String code = this.currentUserModel.getCodeQuery(intent);
-           this.currentUserModel.request(code, new OnModelListener<User>() {
-               @Override
-               public void onSuccess(User results) {
-                   view.showSnackbar("ログインしました");
-               }
+        if (!this.currentUser.isAuthorize() &&
+                this.currentUserModel.isExistCodeQuery(intent)) {
+            this.view.showLoggingProgress();
 
-               @Override
-               public void onError(MiitaException e) {
-                   view.showErrorAlert(e);
-               }
+            final String code = this.currentUserModel.getCodeQuery(intent);
+            this.currentUserModel.request(code, new OnModelListener<User>() {
+                @Override
+                public void onSuccess(User results) {
+                    view.showSnackbar("ログインしました");
+                }
 
-               @Override
-               public void onComplete() {
-                   view.hideLoggingProgress();
-               }
-           });
-       }
+                @Override
+                public void onError(MiitaException e) {
+                    view.showErrorAlert(e);
+                }
+
+                @Override
+                public void onComplete() {
+                    view.hideLoggingProgress();
+                }
+            });
+        }
     }
 }
