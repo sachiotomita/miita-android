@@ -3,7 +3,9 @@ package com.naoto.yamaguchi.miita.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -36,6 +38,8 @@ import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogListener;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogType;
+import com.naoto.yamaguchi.miita.view.dialog.MiitaProgressDialog;
+import com.naoto.yamaguchi.miita.view.dialog.MiitaProgressDialogType;
 import com.naoto.yamaguchi.miita.view.navigationview.MiitaNavigationView;
 import com.naoto.yamaguchi.miita.view.navigationview.NavigationMenuType;
 
@@ -54,6 +58,8 @@ public class HomeActivity extends AppCompatActivity
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private MiitaNavigationView navigationView;
+    private CoordinatorLayout coordinatorLayout;
+    private MiitaProgressDialog progressDialog;
     private HomePresenter presenter;
     private CurrentUser currentUser = CurrentUser.getInstance();
 
@@ -154,6 +160,13 @@ public class HomeActivity extends AppCompatActivity
         this.navigationView = (MiitaNavigationView) findViewById(R.id.nav_view);
         this.navigationView.setNavigationItemSelectedListener(this);
         this.navigationView.setCheckedItem(NavigationMenuType.ALL_ITEM);
+
+        this.coordinatorLayout =
+                (CoordinatorLayout)findViewById(R.id.home_coordinator_layout);
+
+        this.progressDialog = new MiitaProgressDialog(this,
+                MiitaProgressDialogType.LOGGING_IN);
+        this.progressDialog.build();
     }
 
     // TODO: create header view class
@@ -258,21 +271,22 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void showLoggingProgress() {
-
+        this.progressDialog.show();
     }
 
     @Override
     public void hideLoggingProgress() {
-
+        this.progressDialog.dismiss();
     }
 
     @Override
     public void showSnackbar(String message) {
-
+        Snackbar.make(this.coordinatorLayout, "ログインしました", Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
     public void showErrorAlert(MiitaException e) {
-
+        // TODO: show error alert.
     }
 }
