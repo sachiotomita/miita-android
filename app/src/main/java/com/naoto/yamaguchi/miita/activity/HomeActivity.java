@@ -173,7 +173,6 @@ public class HomeActivity extends AppCompatActivity
 
     private void initView() {
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
-        this.toolbar.setTitle("");
         setSupportActionBar(this.toolbar);
 
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
