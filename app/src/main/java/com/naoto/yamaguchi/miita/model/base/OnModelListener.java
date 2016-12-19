@@ -4,14 +4,14 @@ import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 /**
  * Model CallBack Listener.
- *
+ * <p>
  * Created by naoto on 16/09/22.
  */
 public interface OnModelListener<T> {
 
-  void onSuccess(T results);
+    void onSuccess(T results);
 
-  void onError(MiitaException e);
+    void onError(MiitaException e);
 
-  void onComplete();
+    void onComplete();
 }

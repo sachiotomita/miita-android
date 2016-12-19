@@ -16,93 +16,93 @@ import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 /**
  * Current User Model.
- *
+ * <p>
  * Created by naoto on 16/06/30.
  */
 public final class CurrentUserModel {
 
-  private final AuthorizeService authorizeService;
-  private final AuthUserService authUserService;
-  private final CurrentUser currentUser;
-  private OnModelListener<User> listener;
+    private final AuthorizeService authorizeService;
+    private final AuthUserService authUserService;
+    private final CurrentUser currentUser;
+    private OnModelListener<User> listener;
 
-  // TODO: 2通り用意する
-  // 1. token -> user
-  // 2. user
+    // TODO: 2通り用意する
+    // 1. token -> user
+    // 2. user
 
-  public CurrentUserModel() {
-    this.authorizeService = new AuthorizeService();
-    this.authUserService = new AuthUserService();
-    this.currentUser = CurrentUser.getInstance();
-  }
-
-  public boolean isExistCodeQuery(Intent intent) {
-    Uri uri = intent.getData();
-
-    if (uri == null) {
-      return false;
+    public CurrentUserModel() {
+        this.authorizeService = new AuthorizeService();
+        this.authUserService = new AuthUserService();
+        this.currentUser = CurrentUser.getInstance();
     }
 
-    String code = uri.getQueryParameter("code");
-    if (code.isEmpty()) {
-      return false;
+    public boolean isExistCodeQuery(Intent intent) {
+        Uri uri = intent.getData();
+
+        if (uri == null) {
+            return false;
+        }
+
+        String code = uri.getQueryParameter("code");
+        if (code.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 
-    return true;
-  }
-
-  public String getCodeQuery(Intent intent) {
-    Uri uri = intent.getData();
-    return uri.getQueryParameter("code");
-  }
-
-  public void request(String code, OnModelListener<User> listener) {
-    this.listener = listener;
-    this.authorizeService.setCode(code);
-    API.request(this.authorizeService, new Callback<String>() {
-      @Override
-      public void onResponse(Response<String> response) {
-        String token = response.result();
-        currentUser.setToken(token);
-        getAuthUserRequest();
-      }
-
-      @Override
-      public void onFailure(HttpException e) {
-        callError(e);
-      }
-    });
-  }
-
-  private void getAuthUserRequest() {
-    API.request(this.authUserService, new Callback<User>() {
-      @Override
-      public void onResponse(Response<User> response) {
-        User user = response.result();
-        currentUser.setID(user.getId());
-        currentUser.setImageUrl(user.getImageUrlString());
-        callSuccess(response);
-      }
-
-      @Override
-      public void onFailure(HttpException e) {
-        callError(e);
-      }
-    });
-  }
-
-  private void callSuccess(Response<User> response) {
-    if (this.listener != null) {
-      this.listener.onSuccess(response.result());
-      this.listener.onComplete();
+    public String getCodeQuery(Intent intent) {
+        Uri uri = intent.getData();
+        return uri.getQueryParameter("code");
     }
-  }
 
-  private void callError(HttpException e) {
-    MiitaException exception = new MiitaException(e.getMessage());
-    if (this.listener != null) {
-      this.listener.onError(exception);
-      this.listener.onComplete();
+    public void request(String code, OnModelListener<User> listener) {
+        this.listener = listener;
+        this.authorizeService.setCode(code);
+        API.request(this.authorizeService, new Callback<String>() {
+            @Override
+            public void onResponse(Response<String> response) {
+                String token = response.result();
+                currentUser.setToken(token);
+                getAuthUserRequest();
+            }
+
+            @Override
+            public void onFailure(HttpException e) {
+                callError(e);
+            }
+        });
     }
-  }
+
+    private void getAuthUserRequest() {
+        API.request(this.authUserService, new Callback<User>() {
+            @Override
+            public void onResponse(Response<User> response) {
+                User user = response.result();
+                currentUser.setID(user.getId());
+                currentUser.setImageUrl(user.getImageUrlString());
+                callSuccess(response);
+            }
+
+            @Override
+            public void onFailure(HttpException e) {
+                callError(e);
+            }
+        });
+    }
+
+    private void callSuccess(Response<User> response) {
+        if (this.listener != null) {
+            this.listener.onSuccess(response.result());
+            this.listener.onComplete();
+        }
+    }
+
+    private void callError(HttpException e) {
+        MiitaException exception = new MiitaException(e.getMessage());
+        if (this.listener != null) {
+            this.listener.onError(exception);
+            this.listener.onComplete();
+        }
+    }
 }
