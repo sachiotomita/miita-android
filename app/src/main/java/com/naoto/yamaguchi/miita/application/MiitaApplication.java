@@ -7,20 +7,20 @@ import io.realm.RealmConfiguration;
 
 /**
  * Application class.
- *
+ * <p>
  * Created by naoto on 16/06/23.
  */
 public class MiitaApplication extends Application {
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    // Context
-    MiitaContext.onCreateApplication(getApplicationContext());
+        // Context
+        MiitaContext.onCreateApplication(getApplicationContext());
 
-    // Realm
-    RealmConfiguration config = new RealmConfiguration.Builder(this).build();
-    Realm.setDefaultConfiguration(config);
-  }
+        // Realm
+        RealmConfiguration config = new RealmConfiguration.Builder(this).build();
+        Realm.setDefaultConfiguration(config);
+    }
 }
