@@ -11,49 +11,49 @@ import java.util.List;
 
 /**
  * JSON to List<BaseTag>.
- *
+ * <p>
  * Created by naoto on 16/07/12.
  */
 public final class TagListObjectMapper {
 
-  private static final String ID_KEY = "id";
-  private static final String ICON_KEY = "icon_url";
-  private static final String ITEM_COUNT_KEY = "items_count";
-  private static final String FOLLOWERS_COUNT_KEY = "followers_count";
+    private static final String ID_KEY = "id";
+    private static final String ICON_KEY = "icon_url";
+    private static final String ITEM_COUNT_KEY = "items_count";
+    private static final String FOLLOWERS_COUNT_KEY = "followers_count";
 
-  public static <T extends BaseTag> List<T> map(Class<T> aClass, String jsonString)
-          throws JSONException, IllegalAccessException, InstantiationException {
-    try {
-      List<T> tagList = new ArrayList<>();
-      JSONArray jsonArray = new JSONArray(jsonString);
+    public static <T extends BaseTag> List<T> map(Class<T> aClass, String jsonString)
+            throws JSONException, IllegalAccessException, InstantiationException {
+        try {
+            List<T> tagList = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray(jsonString);
 
-      for (int i = 0; i < jsonArray.length(); i++) {
-        T tag = aClass.newInstance();
-        JSONObject tagJson = jsonArray.getJSONObject(i);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                T tag = aClass.newInstance();
+                JSONObject tagJson = jsonArray.getJSONObject(i);
 
-        String id = tagJson.getString(ID_KEY);
-        tag.setId(id);
+                String id = tagJson.getString(ID_KEY);
+                tag.setId(id);
 
-        String iconUrlString = tagJson.getString(ICON_KEY);
-        tag.setIconUrlString(iconUrlString);
+                String iconUrlString = tagJson.getString(ICON_KEY);
+                tag.setIconUrlString(iconUrlString);
 
-        int itemsCount = tagJson.getInt(ITEM_COUNT_KEY);
-        tag.setItemsCount(itemsCount);
+                int itemsCount = tagJson.getInt(ITEM_COUNT_KEY);
+                tag.setItemsCount(itemsCount);
 
-        int followersCount = tagJson.getInt(FOLLOWERS_COUNT_KEY);
-        tag.setFollowersCount(followersCount);
+                int followersCount = tagJson.getInt(FOLLOWERS_COUNT_KEY);
+                tag.setFollowersCount(followersCount);
 
-        tagList.add(tag);
-      }
+                tagList.add(tag);
+            }
 
-      return tagList;
+            return tagList;
 
-    } catch (JSONException e) {
-      throw e;
-    } catch (IllegalAccessException e) {
-      throw e;
-    } catch (InstantiationException e) {
-      throw e;
+        } catch (JSONException e) {
+            throw e;
+        } catch (IllegalAccessException e) {
+            throw e;
+        } catch (InstantiationException e) {
+            throw e;
+        }
     }
-  }
 }
