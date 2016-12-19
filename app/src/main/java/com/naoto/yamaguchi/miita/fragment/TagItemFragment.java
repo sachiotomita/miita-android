@@ -30,177 +30,179 @@ public class TagItemFragment extends Fragment
         AdapterView.OnItemClickListener,
         TagItemPresenter.View {
 
-  public interface OnItemClickListener {
-    void onItemClick(Item item);
-  }
-
-  private OnItemClickListener listener;
-  private ListView listView;
-  private SwipeRefreshLayout refreshLayout;
-  private View footerView;
-  private ProgressBar spinner;
-  private ItemListAdapter<Item> adapter;
-
-  private final TagItemPresenter presenter;
-
-  public TagItemFragment() {
-    this.presenter = new TagItemPresenter(this.getContext());
-  }
-
-  public static TagItemFragment newInstance(String tagId) {
-    TagItemFragment fragment = new TagItemFragment();
-
-    Bundle args = new Bundle();
-    args.putString("tag_id", tagId);
-    fragment.setArguments(args);
-
-    return fragment;
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    if (getArguments() != null) {
-      String tagId = getArguments().getString("tag_id");
-      this.presenter.setTagId(tagId);
-    }
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_tag_item, container, false);
-
-    // ((TagItemActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_follow_tag);
-
-    this.refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_widget);
-    this.refreshLayout.setOnRefreshListener(this);
-
-    this.listView = (ListView)rootView.findViewById(R.id.listView);
-    this.listView.setOnScrollListener(this);
-    this.listView.setOnItemClickListener(this);
-    ViewCompat.setNestedScrollingEnabled(this.listView, true);
-
-    this.adapter = new ItemListAdapter<>(this.getContext(), new ArrayList<Item>());
-    this.listView.setAdapter(this.adapter);
-
-    this.spinner = (ProgressBar)rootView.findViewById(R.id.progress_bar);
-    this.spinner.setVisibility(View.GONE);
-    return rootView;
-  }
-
-  @Override
-  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    this.presenter.attachView(this);
-    this.presenter.loadItems();
-  }
-
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    if (context instanceof OnItemClickListener) {
-      this.listener = (OnItemClickListener) context;
-    } else {
-      throw new RuntimeException(context.toString()
-              + " must implement OnFragmentInteractionListener");
-    }
-  }
-
-  @Override
-  public void onDetach() {
-    super.onDetach();
-    this.listener = null;
-  }
-
-  @Override
-  public void onRefresh() {
-    this.presenter.refreshItems();
-  }
-
-  @Override
-  public void onScrollStateChanged(AbsListView absListView, int i) {}
-
-  @Override
-  public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-    String perPage = PerPage.get();
-    if (totalItemCount < (Integer.parseInt(perPage) * this.presenter.getPage())) {
-      return;
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
     }
 
-    if (firstVisibleItem + visibleItemCount == totalItemCount) {
-      this.presenter.nextLoadItems();
-    }
-  }
-   @Override
-   public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-     if (this.listener == null) {
-       return;
-     }
+    private OnItemClickListener listener;
+    private ListView listView;
+    private SwipeRefreshLayout refreshLayout;
+    private View footerView;
+    private ProgressBar spinner;
+    private ItemListAdapter<Item> adapter;
 
-     ListView listView = (ListView)parent;
-     if (listView.getId() == R.id.listView) {
-       Item item = (Item)listView.getItemAtPosition(position);
-       this.listener.onItemClick(item);
-     }
-   }
+    private final TagItemPresenter presenter;
 
-  @Override
-  public void showLoading() {
-    this.spinner.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  public void hideLoading() {
-    this.spinner.setVisibility(View.GONE);
-  }
-
-  @Override
-  public void showListView() {
-    this.listView.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  public void hideListView() {
-    this.listView.setVisibility(View.GONE);
-  }
-
-  @Override
-  public void beginRefreshing() {
-    this.refreshLayout.setEnabled(false);
-  }
-
-  @Override
-  public void endRefreshing() {
-    this.refreshLayout.setEnabled(true);
-    this.refreshLayout.setRefreshing(false);
-  }
-
-  @Override
-  public void addFooterView() {
-    this.footerView =
-            getActivity().getLayoutInflater().inflate(R.layout.progress_footer, null);
-    this.listView.addFooterView(this.footerView);
-  }
-
-  @Override
-  public void removeFooterView() {
-    this.listView.removeFooterView(this.footerView);
-  }
-
-  @Override
-  public void reloadData(boolean forceUpdate, List<Item> items) {
-    if (forceUpdate) {
-      this.adapter.clear();
+    public TagItemFragment() {
+        this.presenter = new TagItemPresenter(this.getContext());
     }
 
-    this.adapter.addAll(items);
-    this.adapter.notifyDataSetChanged();
-  }
+    public static TagItemFragment newInstance(String tagId) {
+        TagItemFragment fragment = new TagItemFragment();
 
-  @Override
-  public void showError(MiitaException e) {
-    // TODO: show alert
-  }
+        Bundle args = new Bundle();
+        args.putString("tag_id", tagId);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            String tagId = getArguments().getString("tag_id");
+            this.presenter.setTagId(tagId);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_tag_item, container, false);
+
+        this.refreshLayout =
+                (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_widget);
+        this.refreshLayout.setOnRefreshListener(this);
+
+        this.listView = (ListView) rootView.findViewById(R.id.listView);
+        this.listView.setOnScrollListener(this);
+        this.listView.setOnItemClickListener(this);
+        ViewCompat.setNestedScrollingEnabled(this.listView, true);
+
+        this.adapter = new ItemListAdapter<>(this.getContext(), new ArrayList<Item>());
+        this.listView.setAdapter(this.adapter);
+
+        this.spinner = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        this.spinner.setVisibility(View.GONE);
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.presenter.attachView(this);
+        this.presenter.loadItems();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnItemClickListener) {
+            this.listener = (OnItemClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.listener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        this.presenter.refreshItems();
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int firstVisibleItem,
+                         int visibleItemCount, int totalItemCount) {
+        String perPage = PerPage.get();
+        if (totalItemCount < (Integer.parseInt(perPage) * this.presenter.getPage())) {
+            return;
+        }
+
+        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+            this.presenter.nextLoadItems();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+        if (this.listener == null) {
+            return;
+        }
+
+        ListView listView = (ListView) parent;
+        if (listView.getId() == R.id.listView) {
+            Item item = (Item) listView.getItemAtPosition(position);
+            this.listener.onItemClick(item);
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        this.spinner.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        this.spinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showListView() {
+        this.listView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideListView() {
+        this.listView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void beginRefreshing() {
+        this.refreshLayout.setEnabled(false);
+    }
+
+    @Override
+    public void endRefreshing() {
+        this.refreshLayout.setEnabled(true);
+        this.refreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void addFooterView() {
+        this.footerView =
+                getActivity().getLayoutInflater().inflate(R.layout.progress_footer, null);
+        this.listView.addFooterView(this.footerView);
+    }
+
+    @Override
+    public void removeFooterView() {
+        this.listView.removeFooterView(this.footerView);
+    }
+
+    @Override
+    public void reloadData(boolean forceUpdate, List<Item> items) {
+        if (forceUpdate) {
+            this.adapter.clear();
+        }
+
+        this.adapter.addAll(items);
+        this.adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(MiitaException e) {
+        // TODO: show alert
+    }
 }
