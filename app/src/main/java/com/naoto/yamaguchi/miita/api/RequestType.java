@@ -4,34 +4,37 @@ import java.util.Map;
 
 /**
  * Request Interface.
- *
+ * <p>
  * Created by naoto on 2016/10/08.
  */
 
 public interface RequestType<T> {
 
-  /**
-   * HTTP Method.
-   * @return Method
-   */
-  Method getMethod();
+    /**
+     * HTTP Method.
+     *
+     * @return Method
+     */
+    Method getMethod();
 
-  /**
-   * request path.
-   * @return String
-   */
-  String getPath();
+    /**
+     * request path.
+     *
+     * @return String
+     */
+    String getPath();
 
-  /**
-   * query params or request body.
-   * @return Map<String, String>
-   */
-  Map<String, String> getParameters();
+    /**
+     * query params or request body.
+     *
+     * @return Map<String, String>
+     */
+    Map<String, String> getParameters();
 
-  /**
-   * @param response
-   * @return null or process response.
-   * @throws HttpException
-   */
-  T processResponse(String response) throws HttpException;
+    /**
+     * @param response
+     * @return null or process response.
+     * @throws HttpException
+     */
+    T processResponse(String response) throws HttpException;
 }
