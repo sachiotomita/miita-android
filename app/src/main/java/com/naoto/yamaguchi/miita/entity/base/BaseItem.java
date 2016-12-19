@@ -8,30 +8,38 @@ import java.util.List;
 
 /**
  * Base Item Interface.
- *
+ * <p>
  * Created by naoto on 16/06/25.
  */
 public interface BaseItem {
 
-  String getId();
-  void setId(String id);
+    String getId();
 
-  String getTitle();
-  void setTitle(String title);
+    void setId(String id);
 
-  String getBody();
-  void setBody(String body);
+    String getTitle();
 
-  String getUrlString();
-  void setUrlString(String urlString);
+    void setTitle(String title);
 
-  Date getCreatedAt();
-  String getCreatedAtString();
-  void setCreatedAt(Date createdAt);
+    String getBody();
 
-  List<ItemTag> getTags();
-  void setTags(List<ItemTag> tags);
+    void setBody(String body);
 
-  User getUser();
-  void setUser(User user);
+    String getUrlString();
+
+    void setUrlString(String urlString);
+
+    Date getCreatedAt();
+
+    String getCreatedAtString();
+
+    void setCreatedAt(Date createdAt);
+
+    List<ItemTag> getTags();
+
+    void setTags(List<ItemTag> tags);
+
+    User getUser();
+
+    void setUser(User user);
 }

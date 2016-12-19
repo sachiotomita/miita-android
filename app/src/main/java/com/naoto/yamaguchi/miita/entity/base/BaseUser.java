@@ -2,26 +2,32 @@ package com.naoto.yamaguchi.miita.entity.base;
 
 /**
  * Base User Interface.
- *
+ * <p>
  * Created by naoto on 16/06/25.
  */
 public interface BaseUser {
 
-  String getId();
-  void setId(String id);
+    String getId();
 
-  String getName();
-  void setName(String name);
+    void setId(String id);
 
-  String getDescription();
-  void setDescription(String description);
+    String getName();
 
-  String getImageUrlString();
-  void setImageUrlString(String imageUrlString);
+    void setName(String name);
 
-  int getFolloweesCount();
-  void setFolloweesCount(int count);
+    String getDescription();
 
-  int getFollowersCount();
-  void setFollowersCount(int count);
+    void setDescription(String description);
+
+    String getImageUrlString();
+
+    void setImageUrlString(String imageUrlString);
+
+    int getFolloweesCount();
+
+    void setFolloweesCount(int count);
+
+    int getFollowersCount();
+
+    void setFollowersCount(int count);
 }
