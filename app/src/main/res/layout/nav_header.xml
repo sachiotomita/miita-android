@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_header"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:gravity="bottom"
+    android:background="@color/colorPrimary"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingLeft="64dp"
+    android:paddingRight="64dp"
+    >
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:paddingTop="16dp"
+        android:src="@android:drawable/sym_def_app_icon"/>
+
+    <TextView
+        android:id="@+id/user_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:text="@string/nav_default_user_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/user_id_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nav_default_user_id"/>
 
 </LinearLayout>
