@@ -10,6 +10,7 @@ import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
  */
 public final class CurrentUser {
     private static final String ID_KEY = "Qiita.User.id";
+    private static final String NAME_KEY = "Qiita.User.name";
     private static final String IMAGE_URL_KEY = "Qiita.User.imageUrl";
     private static final String DEFAULT_VALUE = "";
 
@@ -22,8 +23,7 @@ public final class CurrentUser {
         return instance;
     }
 
-    private CurrentUser() {
-    }
+    private CurrentUser() {}
 
     public boolean isAuthorize() {
         return AccessToken.isExist();
@@ -47,6 +47,14 @@ public final class CurrentUser {
 
     public void setID(String id) {
         SharedPreferencesUtil.setString(ID_KEY, id);
+    }
+
+    public String getName() {
+        return SharedPreferencesUtil.getString(NAME_KEY, DEFAULT_VALUE);
+    }
+
+    public void setName(String name) {
+        SharedPreferencesUtil.setString(NAME_KEY, name);
     }
 
     public String getImageUrl() {

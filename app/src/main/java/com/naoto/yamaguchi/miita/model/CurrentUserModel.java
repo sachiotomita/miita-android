@@ -80,6 +80,7 @@ public final class CurrentUserModel {
             public void onResponse(Response<User> response) {
                 User user = response.result();
                 currentUser.setID(user.getId());
+                currentUser.setName(user.getName());
                 currentUser.setImageUrl(user.getImageUrlString());
                 callSuccess(response);
             }
