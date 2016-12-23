@@ -8,6 +8,8 @@ import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
  * <p>
  * Created by naoto on 16/06/23.
  */
+
+// TODO: make {@link RealmObject}
 public final class CurrentUser {
     private static final String ID_KEY = "Qiita.User.id";
     private static final String NAME_KEY = "Qiita.User.name";
