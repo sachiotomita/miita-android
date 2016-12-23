@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.util.AttributeSet;
+import android.view.View;
 
+import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 
 /**
@@ -14,8 +16,11 @@ import com.naoto.yamaguchi.miita.oauth.CurrentUser;
  */
 
 public final class MiitaNavigationView extends NavigationView {
+    private static final int INDEX_HEADER = 0;
+
     private final Context context;
     private final CurrentUser currentUser;
+    private final MiitaNavigationHeader header;
 
     public MiitaNavigationView(Context context) {
         this(context, null);
@@ -29,14 +34,16 @@ public final class MiitaNavigationView extends NavigationView {
         super(context, attrs, defStyleAttr);
         this.context = context;
         this.currentUser = CurrentUser.getInstance();
-        this.init(context);
-    }
 
-    private void init(Context context) {
-        // NOOP
+        View headerLayout = this.getHeaderView(INDEX_HEADER);
+        this.header = (MiitaNavigationHeader)headerLayout.findViewById(R.id.nav_header_view);
     }
 
     public void setCheckedItem(NavigationMenuType menuType) {
         this.setCheckedItem(menuType.getMenuIdRes());
+    }
+
+    public void updateHeader() {
+        this.header.update();
     }
 }

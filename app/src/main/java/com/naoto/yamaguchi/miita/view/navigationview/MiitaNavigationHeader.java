@@ -48,7 +48,7 @@ public class MiitaNavigationHeader extends LinearLayout {
         this.update();
     }
 
-    private void update() {
+    public void update() {
         if (this.currentUser.isAuthorize()) {
             final String userId = this.currentUser.getID();
             final String userName = this.currentUser.getName();
