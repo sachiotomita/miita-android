@@ -22,9 +22,9 @@ public class MiitaNavigationHeader extends LinearLayout {
 
     private final Context context;
     private final CurrentUser currentUser;
-    private final ImageView imageView;
-    private final TextView userNameTextView;
     private final TextView userIdTextView;
+    private final TextView userNameTextView;
+    private final ImageView imageView;
 
     public MiitaNavigationHeader(Context context) {
         this(context, null);
@@ -34,32 +34,35 @@ public class MiitaNavigationHeader extends LinearLayout {
         this(context, attrs, 0);
     }
 
-    public MiitaNavigationHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MiitaNavigationHeader(Context context, @Nullable AttributeSet attrs,
+                                 int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         this.currentUser = CurrentUser.getInstance();
 
         View layout = LayoutInflater.from(context).inflate(R.layout.nav_header, this);
-        this.imageView = (ImageView)layout.findViewById(R.id.nav_user_image);
-        this.userNameTextView = (TextView)layout.findViewById(R.id.nav_user_name_text);
         this.userIdTextView = (TextView)layout.findViewById(R.id.nav_user_id_text);
+        this.userNameTextView = (TextView)layout.findViewById(R.id.nav_user_name_text);
+        this.imageView = (ImageView)layout.findViewById(R.id.nav_user_image);
 
         this.update();
     }
 
     private void update() {
         if (this.currentUser.isAuthorize()) {
-            // TODO: set user name
-            final String imageString = this.currentUser.getImageUrl();
             final String userId = this.currentUser.getID();
+            final String userName = this.currentUser.getName();
+            final String imageString = this.currentUser.getImageUrl();
 
-            ImageFetcher.getInstance().fetch(imageString, this.imageView);
             this.userIdTextView.setText(userId);
+            this.userNameTextView.setText(userName);
+            ImageFetcher.getInstance().fetch(imageString, this.imageView);
         } else {
-            final Drawable drawable = this.context.getDrawable(android.R.drawable.sym_def_app_icon);
-            this.imageView.setImageDrawable(drawable);
-            this.userNameTextView.setText(R.string.nav_default_user_name);
             this.userIdTextView.setText(R.string.nav_default_user_id);
+            this.userNameTextView.setText(R.string.nav_default_user_name);
+            final Drawable drawable =
+                    this.context.getDrawable(android.R.drawable.sym_def_app_icon);
+            this.imageView.setImageDrawable(drawable);
         }
     }
 }
