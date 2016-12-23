@@ -15,9 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.application.Constants;
@@ -33,7 +30,6 @@ import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.presenter.HomePresenter;
-import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogListener;
@@ -167,25 +163,6 @@ public class HomeActivity extends AppCompatActivity
         this.progressDialog = new MiitaProgressDialog(this,
                 MiitaProgressDialogType.LOGGING_IN);
         this.progressDialog.build();
-    }
-
-    // TODO: create header view class
-    private void updateDrawerHeader() {
-        View header = this.navigationView.getHeaderView(0);
-
-        ImageView userImage = (ImageView) header.findViewById(R.id.user_image);
-        TextView userNameView = (TextView) header.findViewById(R.id.user_name_text);
-        TextView userIdView = (TextView) header.findViewById(R.id.user_id_text);
-
-        // TODO: get user name
-        String imageUrlString = this.currentUser.getImageUrl();
-        String userId = this.currentUser.getID();
-
-        userNameView.setText("TODO");
-        userIdView.setText(userId);
-
-        DownloadImageTask task = new DownloadImageTask(this, userImage);
-        task.execute(imageUrlString);
     }
 
     private void showLoginAlert() {
