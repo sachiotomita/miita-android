@@ -10,26 +10,26 @@ import com.naoto.yamaguchi.miita.util.preference.SharedPreferencesUtil;
  * Created by naoto on 16/06/24.
  */
 
-public final class AccessToken {
+final class AccessToken {
     private static final String TOKEN_KEY = "Qiita.AccessToken";
     private static final String DEFAULT_VALUE = "";
 
-    public static boolean isExist() {
+    static boolean isExist() {
         if (TextUtils.isEmpty(get())) {
             return false;
         }
         return true;
     }
 
-    public static String get() {
+    static String get() {
         return SharedPreferencesUtil.getString(TOKEN_KEY, DEFAULT_VALUE);
     }
 
-    public static void set(String token) {
+    static void set(String token) {
         SharedPreferencesUtil.setString(TOKEN_KEY, token);
     }
 
-    public static void delete() {
+    static void delete() {
         SharedPreferencesUtil.deleteString(TOKEN_KEY);
     }
 }
