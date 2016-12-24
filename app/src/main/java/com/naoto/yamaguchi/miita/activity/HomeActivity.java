@@ -134,7 +134,19 @@ public class HomeActivity extends AppCompatActivity
         this.drawerLayout.closeDrawer(GravityCompat.START);
 
         final NavigationMenuType type = NavigationMenuType.fromMenuItem(item);
-        this.menuItemSelected(type);
+
+        if (type == NavigationMenuType.SETTING) {
+            final Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (type.isNeedAuthorize() && !this.currentUser.isAuthorize()) {
+            this.showLoginAlert();
+        } else {
+            this.replaceFragment(type);
+        }
+
         return true;
     }
 
@@ -210,20 +222,6 @@ public class HomeActivity extends AppCompatActivity
                         type.getFragmentName())
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private void menuItemSelected(NavigationMenuType type) {
-        if (type == NavigationMenuType.SETTING) {
-            final Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            return;
-        }
-
-        if (type.isNeedAuthorize() && !this.currentUser.isAuthorize()) {
-            this.showLoginAlert();
-        } else {
-            this.replaceFragment(type);
-        }
     }
 
     @Override
