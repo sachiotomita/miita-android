@@ -2,12 +2,7 @@ package com.naoto.yamaguchi.miita.view.alert;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
-
-import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.application.Constants;
 
 /**
  * Provide Alert Dialog each {@MiitaAlertDialogType}.

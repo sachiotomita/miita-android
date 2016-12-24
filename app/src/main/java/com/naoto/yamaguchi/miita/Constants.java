@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.application;
+package com.naoto.yamaguchi.miita;
 
 /**
  * Created by naoto on 16/07/01.

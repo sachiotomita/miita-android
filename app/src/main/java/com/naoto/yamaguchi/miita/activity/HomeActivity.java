@@ -17,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.application.Constants;
+import com.naoto.yamaguchi.miita.Constants;
 import com.naoto.yamaguchi.miita.converter.ItemConverter;
 import com.naoto.yamaguchi.miita.converter.TagConverter;
 import com.naoto.yamaguchi.miita.entity.FollowTag;

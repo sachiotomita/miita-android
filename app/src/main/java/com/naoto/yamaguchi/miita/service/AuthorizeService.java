@@ -3,7 +3,7 @@ package com.naoto.yamaguchi.miita.service;
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
-import com.naoto.yamaguchi.miita.application.Constants;
+import com.naoto.yamaguchi.miita.Constants;
 import com.naoto.yamaguchi.miita.mapper.AccessTokenObjectMapper;
 
 import org.json.JSONException;
