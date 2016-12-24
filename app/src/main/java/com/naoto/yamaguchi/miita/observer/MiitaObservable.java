@@ -10,7 +10,7 @@ public final class MiitaObservable extends Observable {
 
     private static MiitaObservable instance = null;
 
-    public MiitaObservable getInstance() {
+    public static synchronized MiitaObservable getInstance() {
         if (instance == null) {
             instance = new MiitaObservable();
         }
