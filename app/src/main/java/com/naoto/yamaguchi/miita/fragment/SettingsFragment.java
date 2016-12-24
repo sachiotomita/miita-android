@@ -7,6 +7,8 @@ import android.preference.PreferenceFragment;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.observer.MiitaEventObject;
+import com.naoto.yamaguchi.miita.observer.MiitaObservable;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
 
@@ -84,7 +86,11 @@ public final class SettingsFragment extends PreferenceFragment {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
                             currentUser.logout();
-                            // TODO: HomeActivityに値を渡したい
+                            
+                            final MiitaEventObject eventObject = new MiitaEventObject(
+                                    getActivity(), MiitaEventObject.Type.LOGOUT);
+                            MiitaObservable.getInstance().notify(eventObject);
+
                             getActivity().finish();
                             return true;
                         }
