@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        this.setSelectedNavigationItem();
+        this.updateState();
     }
 
     @Override
@@ -140,7 +140,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackStackChanged() {
-        this.setSelectedNavigationItem();
+        this.updateState();
     }
 
     private void initView() {
@@ -178,25 +178,29 @@ public class HomeActivity extends AppCompatActivity
                 .setNegativeListener(new MiitaAlertDialogListener() {
                     @Override
                     public void onClick() {
-                        setSelectedNavigationItem();
+                        updateState();
                     }
                 })
                 .build()
                 .show();
     }
 
-    private void setSelectedNavigationItem() {
-        final FragmentManager manager = this.getSupportFragmentManager();
-        final Fragment fragment = manager.findFragmentById(R.id.home_container_view);
-
+    private void updateState() {
+        final FragmentManager fm = this.getSupportFragmentManager();
+        final Fragment fragment = fm.findFragmentById(R.id.home_container_view);
         if (fragment == null) {
             finish();
             return;
         }
 
         final NavigationMenuType type = NavigationMenuType.fromFragment(fragment);
-        this.navigationView.setCheckedItem(type);
-        this.toolbar.setTitle(type.getTitleRes());
+
+        if (type.isNeedAuthorize() && !this.currentUser.isAuthorize()) {
+            this.onBackPressed();
+        } else {
+            this.toolbar.setTitle(type.getTitleRes());
+            this.navigationView.setCheckedItem(type);
+        }
     }
 
     private void replaceFragment(NavigationMenuType type) {
