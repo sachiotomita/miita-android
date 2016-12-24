@@ -29,6 +29,8 @@ import com.naoto.yamaguchi.miita.fragment.AllItemFragment;
 import com.naoto.yamaguchi.miita.fragment.FollowTagFragment;
 import com.naoto.yamaguchi.miita.fragment.StockItemFragment;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.observer.MiitaEventObject;
+import com.naoto.yamaguchi.miita.observer.MiitaObservable;
 import com.naoto.yamaguchi.miita.presenter.HomePresenter;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
@@ -39,13 +41,17 @@ import com.naoto.yamaguchi.miita.view.dialog.MiitaProgressDialogType;
 import com.naoto.yamaguchi.miita.view.navigationview.MiitaNavigationView;
 import com.naoto.yamaguchi.miita.view.navigationview.NavigationMenuType;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AllItemFragment.OnItemClickListener,
         StockItemFragment.OnItemClickListener,
         FollowTagFragment.OnTagClickListener,
         FragmentManager.OnBackStackChangedListener,
-        HomePresenter.View {
+        HomePresenter.View,
+        Observer {
 
     private static final String INTENT_ITEM_KEY = "item";
     private static final String INTENT_TAG_KEY = "tag";
@@ -69,6 +75,7 @@ public class HomeActivity extends AppCompatActivity
         this.initView();
         this.replaceFragment(NavigationMenuType.ALL_ITEM);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+        MiitaObservable.getInstance().addObserver(this);
     }
 
     @Override
@@ -272,5 +279,15 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void loginSuccess() {
         this.navigationView.updateHeader();
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        final MiitaEventObject eventObject = (MiitaEventObject)o;
+        switch (eventObject.getType()) {
+            case LOGOUT:
+                this.navigationView.updateHeader();
+                break;
+        }
     }
 }

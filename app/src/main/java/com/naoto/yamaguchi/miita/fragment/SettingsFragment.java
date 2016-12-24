@@ -86,7 +86,7 @@ public final class SettingsFragment extends PreferenceFragment {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
                             currentUser.logout();
-                            
+
                             final MiitaEventObject eventObject = new MiitaEventObject(
                                     getActivity(), MiitaEventObject.Type.LOGOUT);
                             MiitaObservable.getInstance().notify(eventObject);
