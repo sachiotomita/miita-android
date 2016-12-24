@@ -75,7 +75,6 @@ public class HomeActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         this.setSelectedNavigationItem();
-        this.presenter.loadAccessToken(this.getIntent());
     }
 
     @Override
@@ -87,7 +86,8 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        this.setIntent(intent);
+
+        this.presenter.loadAccessToken(intent);
     }
 
     @Override
