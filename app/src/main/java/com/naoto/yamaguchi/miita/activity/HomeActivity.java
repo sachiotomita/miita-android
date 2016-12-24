@@ -266,4 +266,9 @@ public class HomeActivity extends AppCompatActivity
     public void showErrorAlert(MiitaException e) {
         // TODO: show error alert.
     }
+
+    @Override
+    public void loginSuccess() {
+        this.navigationView.updateHeader();
+    }
 }

@@ -25,6 +25,8 @@ public final class HomePresenter extends Presenter<HomePresenter.View> {
         void showSnackbar(String message);
 
         void showErrorAlert(MiitaException e);
+
+        void loginSuccess();
     }
 
     private final CurrentUserModel currentUserModel;
@@ -60,6 +62,7 @@ public final class HomePresenter extends Presenter<HomePresenter.View> {
                 @Override
                 public void onSuccess(User results) {
                     view.showSnackbar("ログインしました");
+                    view.loginSuccess();
                 }
 
                 @Override
