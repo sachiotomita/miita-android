@@ -11,12 +11,11 @@ import android.widget.TextView;
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.base.BaseTag;
 import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
-import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 
 import java.util.List;
 
 /**
- * ListView Adapter for {@BaseTag}.
+ * ListView Adapter for {@link BaseTag}.
  * <p>
  * Created by naoto on 16/07/16.
  */
@@ -34,10 +33,10 @@ public final class TagListAdapter<T extends BaseTag> extends ArrayAdapter<T> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        class ViewHolder {
-            TextView tagIdTextView;
-            TextView itemsCountTextView;
-            ImageView imageView;
+        final class ViewHolder {
+            private TextView tagIdTextView;
+            private TextView itemsCountTextView;
+            private ImageView imageView;
         }
 
         final ViewHolder viewHolder;
