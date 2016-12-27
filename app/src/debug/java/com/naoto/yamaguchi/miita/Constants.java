@@ -1,8 +1,9 @@
 package com.naoto.yamaguchi.miita;
 
 /**
- * Created by naoto on 16/07/01.
+ * Created by naoto on 2016/12/27.
  */
+
 public final class Constants {
     public static final String ENTRY_POINT = "https://qiita.com/api/v2";
     public static final String CLIENT_ID_KEY = "client_id";
