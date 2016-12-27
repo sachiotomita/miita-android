@@ -42,3 +42,6 @@ captures/
 # Mac
 .DS_Store 
 
+# release
+app/src/release/java/com/naoto/yamaguchi/miita/Constants.java
+
