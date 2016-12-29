@@ -189,7 +189,7 @@ public class HomeActivity extends AppCompatActivity
                 .setPositiveListener(new MiitaAlertDialogListener() {
                     @Override
                     public void onClick() {
-                        Uri uri = Uri.parse(Constants.AUTHORIZE_URL);
+                        Uri uri = Uri.parse(Constants.Qiita.AUTHORIZE_URL);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                     }

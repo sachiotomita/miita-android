@@ -42,9 +42,9 @@ public final class AuthorizeService implements RequestType<String> {
     public Map<String, String> getParameters() {
         return new HashMap<String, String>() {
             {
-                put(Constants.CLIENT_ID_KEY, Constants.CLIENT_ID);
-                put(Constants.CLIENT_SECRET_KEY, Constants.CLIENT_SECRET);
-                put(Constants.CODE_KEY, code);
+                put(Constants.Qiita.CLIENT_ID_KEY, Constants.Qiita.CLIENT_ID);
+                put(Constants.Qiita.CLIENT_SECRET_KEY, Constants.Qiita.CLIENT_SECRET);
+                put(Constants.Qiita.CODE_KEY, code);
             }
         };
     }
