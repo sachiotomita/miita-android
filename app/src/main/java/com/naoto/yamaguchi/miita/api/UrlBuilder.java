@@ -18,15 +18,25 @@ final class UrlBuilder {
     private StringBuilder builder;
     private Map<String, String> params;
 
-    public UrlBuilder() {
+    UrlBuilder() {
         this.builder = new StringBuilder(ENTRY_POINT);
         this.params = new HashMap<>();
     }
 
-    public String build() {
+    String build() {
         String urlString = this.builder.toString() + this.buildQuery();
         this.clean();
         return urlString;
+    }
+
+    UrlBuilder setPath(@NonNull String path) {
+        this.builder.append(path);
+        return this;
+    }
+
+    UrlBuilder setParams(@NonNull Map<String, String> params) {
+        this.params = params;
+        return this;
     }
 
     private void clean() {
@@ -34,16 +44,6 @@ final class UrlBuilder {
         if (this.params != null) {
             this.params.clear();
         }
-    }
-
-    public UrlBuilder setPath(@NonNull String path) {
-        this.builder.append(path);
-        return this;
-    }
-
-    public UrlBuilder setParams(@NonNull Map<String, String> params) {
-        this.params = params;
-        return this;
     }
 
     private String buildQuery() {
