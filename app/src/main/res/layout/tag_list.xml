@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/tag_list_id_text_size"
+                android:textColor="@color/colorAccent"
                 android:lines="2" />
 
             <TextView
@@ -36,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/tag_list_count_text_size"
+                android:textColor="@color/tag_list_count_text_color"
                 android:lines="3" />
 
         </LinearLayout>

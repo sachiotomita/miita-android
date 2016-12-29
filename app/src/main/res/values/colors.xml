@@ -14,6 +14,9 @@
     <color name="item_list_user_id_text_color">#000000</color>
     <color name="item_list_tag_text_color">#555</color>
 
+    <!-- Tag List Row -->
+    <color name="tag_list_count_text_color">#555</color>
+
     <!-- Stock Button -->
     <color name="stockButton">#fff</color>
     <color name="stockIcon">#59bb0c</color>
