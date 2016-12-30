@@ -28,6 +28,9 @@ android {
             resources.srcDirs = ['src/main/resources', 'src/test/resources/']
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
