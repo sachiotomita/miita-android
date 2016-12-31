@@ -25,7 +25,7 @@ android {
     }
     sourceSets {
         main {
-            resources.srcDirs = ['src/main/resources', 'src/test/resources/']
+            resources.srcDirs = ['src/main/resources', 'src/test/resources/', 'src/androidTest/resources']
         }
     }
     testOptions {
