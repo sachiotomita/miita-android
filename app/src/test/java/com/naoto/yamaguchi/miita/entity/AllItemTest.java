@@ -4,6 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import static org.junit.Assert.*;
 
 /**
@@ -34,5 +39,19 @@ public class AllItemTest {
         assertEquals("hoge-title", item.getTitle());
         assertEquals("<p>body</p>", item.getBody());
         assertEquals("https://google.com", item.getUrlString());
+    }
+
+    @Test
+    public void createdAt() throws Exception {
+        final AllItem item = new AllItem();
+        item.setCreatedAt(this.getDate("2016-12-30T17:07:09+09:00"));
+
+        assertEquals("2016年12月30日", item.getCreatedAtString());
+    }
+
+    private Date getDate(String dateString) throws ParseException {
+        final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss",
+                Locale.JAPAN);
+        return df.parse(dateString);
     }
 }
