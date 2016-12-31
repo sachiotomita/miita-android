@@ -63,9 +63,11 @@ public final class ItemListObjectMapper {
                 String urlString = itemJson.getString(URL_KEY);
                 item.setUrlString(urlString);
 
+                // TODO: check format
+                // - yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
                 String createdAtString = itemJson.getString(CREATED_AT_KEY);
                 SimpleDateFormat df =
-                        new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ", Locale.JAPAN);
+                        new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.JAPAN);
                 Date createdAt = df.parse(createdAtString);
                 item.setCreatedAt(createdAt);
 
