@@ -1,0 +1,37 @@
+[
+  {
+    "rendered_body": "<p>body</p>",
+    "body": "body",
+    "coediting": false,
+    "created_at": "2016-12-30T17:07:09+09:00",
+    "group": null,
+    "id": "19cc04de6c5e0113868a",
+    "private": false,
+    "tags": [
+      {
+        "name": "swift",
+        "versions": []
+      }
+    ],
+    "title": "タイトル",
+    "updated_at": "2016-12-30T17:07:09+09:00",
+    "url": "http://qiita.com/naoto0822/hoge",
+    "user": {
+      "description": null,
+      "facebook_id": null,
+      "followees_count": 16,
+      "followers_count": 8,
+      "github_login_name": "naoto0822",
+      "id": "naoto0822",
+      "items_count": 14,
+      "linkedin_id": null,
+      "location": null,
+      "name": "",
+      "organization": null,
+      "permanent_id": 60120,
+      "profile_image_url": "https://qiita-image-store.s3.amazonaws.com/profile-images/",
+      "twitter_screen_name": null,
+      "website_url": null
+    }
+  }
+]

@@ -5,9 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * create json from local file.
- *
- * Created by naoto on 2016/12/30.
+ * Created by naoto on 2016/12/31.
  */
 
 public final class JSONHelper {
