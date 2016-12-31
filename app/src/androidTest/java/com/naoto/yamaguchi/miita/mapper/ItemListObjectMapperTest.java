@@ -22,7 +22,6 @@ public class ItemListObjectMapperTest {
 
     @Test
     public void map() throws Exception {
-
+        assertEquals(2, 1+1);
     }
-
 }
