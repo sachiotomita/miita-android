@@ -11,6 +11,10 @@
       {
         "name": "swift",
         "versions": []
+      },
+      {
+        "name": "android",
+        "versions": []
       }
     ],
     "title": "タイトル",

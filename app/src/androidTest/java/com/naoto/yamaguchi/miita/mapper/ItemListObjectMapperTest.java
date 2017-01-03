@@ -1,27 +1,56 @@
 package com.naoto.yamaguchi.miita.mapper;
 
+import com.naoto.yamaguchi.miita.entity.AllItem;
+import com.naoto.yamaguchi.miita.entity.ItemTag;
+import com.naoto.yamaguchi.miita.helper.JSONHelper;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
+ * Unit Test {@link ItemListObjectMapper}
+ *
  * Created by naoto on 2016/12/31.
  */
 public class ItemListObjectMapperTest {
     @Before
     public void setUp() throws Exception {
-
+        // NOOP
     }
 
     @After
     public void tearDown() throws Exception {
-
+        // NOOP
     }
 
     @Test
     public void map() throws Exception {
-        assertEquals(2, 1+1);
+        final String jsonString = JSONHelper.getInstance()
+                .getJSONString("all_item_response.json");
+        final List<AllItem> items = ItemListObjectMapper.map(jsonString, AllItem.class);
+        assertNotNull(items);
+        assertEquals(1, items.size());
+
+        final AllItem item = items.get(0);
+        assertEquals(item.getId(), "19cc04de6c5e0113868a");
+        assertEquals(item.getTitle(), "タイトル");
+        assertEquals(item.getBody(), "<p>body</p>");
+        assertEquals(item.getUrlString(), "http://qiita.com/naoto0822/hoge");
+        assertEquals(item.getCreatedAtString(), "2016年12月30日");
+
+        final List<ItemTag> tags = item.getTags();
+        assertNotNull(tags);
+        assertEquals(2, tags.size());
+        final ItemTag tag1 = tags.get(0);
+        assertNotNull(tag1);
+        assertEquals("swift", tag1.getName());
+        final ItemTag tag2 = tags.get(1);
+        assertNotNull(tag2);
+        assertEquals("android", tag2.getName());
     }
 }
