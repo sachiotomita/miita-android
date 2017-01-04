@@ -101,6 +101,9 @@ public final class SettingsFragment extends PreferenceFragment {
                     }
                 });
 
+        String perPage = PerPage.get();
+        this.perPagePref.setSummary(perPage + "件");
+
         this.licensePref = findPreference(PreferencesConstants.LICENSE_KEY);
         this.licensePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -109,9 +112,6 @@ public final class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-
-        String perPage = PerPage.get();
-        this.perPagePref.setSummary(perPage + "件");
 
         if (this.currentUser.isAuthorize()) {
             this.logoutPref = findPreference(PreferencesConstants.LOGOUT_KEY);
