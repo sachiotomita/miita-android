@@ -29,6 +29,12 @@ android {
         main {
             resources.srcDirs = ['src/main/resources', 'src/androidTest/resources']
         }
+        debug {
+            manifest.srcFile 'src/debug/AndroidManifest.xml'
+        }
+        release {
+            manifest.srcFile 'src/release/AndroidManifest.xml'
+        }
     }
     testOptions {
         unitTests.returnDefaultValues = true

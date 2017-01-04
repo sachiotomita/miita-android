@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Miita</string>
+    <string name="app_name_release">Miita</string>
+    <string name="app_name_debug">Miita(Debug)</string>
     <string name="action_settings">Settings</string>
 
     <!-- Navigation Header Default -->
