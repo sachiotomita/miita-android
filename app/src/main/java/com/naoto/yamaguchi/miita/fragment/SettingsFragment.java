@@ -1,5 +1,6 @@
 package com.naoto.yamaguchi.miita.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -19,9 +20,16 @@ import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
  */
 public final class SettingsFragment extends PreferenceFragment {
 
+    public interface OnPreferenceClickListener {
+        // TODO: use ENUM
+        void onLicensePrefClick();
+    }
+
     private ListPreference perPagePref;
+    private Preference licensePref;
     private Preference logoutPref;
     private CurrentUser currentUser;
+    private OnPreferenceClickListener listener;
 
     // NOTE:
     // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
@@ -46,6 +54,23 @@ public final class SettingsFragment extends PreferenceFragment {
         this.initView();
         this.loadPref();
         this.init();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnPreferenceClickListener) {
+            this.listener = (OnPreferenceClickListener)context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnPreferenceClickListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.listener = null;
     }
 
     private void initView() {
@@ -75,6 +100,15 @@ public final class SettingsFragment extends PreferenceFragment {
                         return false;
                     }
                 });
+
+        this.licensePref = findPreference(PreferencesConstants.LICENSE_KEY);
+        this.licensePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                listener.onLicensePrefClick();
+                return true;
+            }
+        });
 
         String perPage = PerPage.get();
         this.perPagePref.setSummary(perPage + "件");

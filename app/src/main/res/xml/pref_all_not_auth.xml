@@ -22,12 +22,6 @@
     <Preference
         android:title="@string/pref_title_license"
         android:key="@string/pref_key_license">
-        <!-- intent -->
-        <intent
-            android:action="android.intent.action.MAIN"
-            android:targetPackage="com.naoto.yamaguchi.miita"
-            android:targetClass="com.naoto.yamaguchi.miita.activity.LicenseActivity">
-        </intent>
     </Preference>
 
     <!-- Version -->

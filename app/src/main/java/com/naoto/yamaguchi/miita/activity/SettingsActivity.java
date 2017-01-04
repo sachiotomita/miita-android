@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -22,7 +23,8 @@ import com.naoto.yamaguchi.miita.fragment.SettingsFragment;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class SettingsActivity extends AppCompatPreferenceActivity
+        implements SettingsFragment.OnPreferenceClickListener {
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -89,5 +91,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onLicensePrefClick() {
+        final Intent intent = new Intent(SettingsActivity.this, LicenseActivity.class);
+        startActivity(intent);
     }
 }
