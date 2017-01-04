@@ -1,5 +1,7 @@
 package com.naoto.yamaguchi.miita.mapper;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.helper.JSONHelper;
@@ -7,6 +9,7 @@ import com.naoto.yamaguchi.miita.helper.JSONHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
@@ -17,6 +20,7 @@ import static org.junit.Assert.*;
  *
  * Created by naoto on 2016/12/31.
  */
+@RunWith(AndroidJUnit4.class)
 public class ItemListObjectMapperTest {
     @Before
     public void setUp() throws Exception {
