@@ -7,6 +7,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_release"
         tools:replace="android:icon, android:label">
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name_release"
+            tools:replace="android:label">
+        </activity>
     </application>
 
 </manifest>
