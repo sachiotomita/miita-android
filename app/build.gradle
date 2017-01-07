@@ -41,12 +41,21 @@ android {
             versionNameSuffix "-debug"
             debuggable true
             minifyEnabled false
+
+            buildConfigField("String", "CLIENT_ID", "\"${qiita_client_id_debug}\"")
+            buildConfigField("String", "CLIENT_SECRET", "\"${qiita_client_secret_debug}\"")
         }
         release {
             signingConfig signingConfigs.release
             debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            def configFile = file("../deploy/miita/android/release.properties")
+            def props = new Properties()
+            props.load(new FileInputStream(configFile))
+            buildConfigField("String", "CLIENT_ID", "\"${props.qiitaClientID}\"")
+            buildConfigField("String", "CLIENT_SECRET", "\"${props.qiitaClientSecret}\"")
         }
     }
     sourceSets {
