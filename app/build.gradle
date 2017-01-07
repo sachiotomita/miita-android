@@ -22,6 +22,16 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+        release {
+            def configFile = file("../deploy/miita/android/release.properties")
+            def props = new Properties()
+            props.load(new FileInputStream(configFile))
+
+            storeFile file(props.storeFile)
+            storePassword props.storePassword
+            keyAlias props.keyAlias
+            keyPassword props.keyPassword
+        }
     }
 
     buildTypes {
@@ -33,6 +43,7 @@ android {
             minifyEnabled false
         }
         release {
+            signingConfig signingConfigs.release
             debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
