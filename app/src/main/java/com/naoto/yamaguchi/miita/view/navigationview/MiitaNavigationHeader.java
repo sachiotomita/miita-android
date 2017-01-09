@@ -56,7 +56,9 @@ public class MiitaNavigationHeader extends LinearLayout {
 
             this.userIdTextView.setText(userId);
             this.userNameTextView.setText(userName);
-            ImageFetcher.getInstance().fetch(imageString, this.imageView);
+            ImageFetcher.getInstance()
+                    .setContext(this.context)
+                    .fetch(imageString, this.imageView);
         } else {
             this.userIdTextView.setText(R.string.nav_default_user_id);
             this.userNameTextView.setText(R.string.nav_default_user_name);
