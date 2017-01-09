@@ -9,8 +9,8 @@
 - [☓] ~~additional entity variable and fix item header. (**must**)~~
 - [☓] ~~license. (**must**)~~
 - [☓] ~~setting, license activity back button. (**must**)~~
-- [ ] integrate crashlytics. (**must**)
-- [ ] integrate Firebase. (**must**)
+- [☓] ~~integrate crashlytics. (**must**)~~
+- [☓] ~~integrate Firebase. (**must**)~~
 - [ ] circle CI. (**must**)
 - [ ] DeployGate. (**must**)
 - [ ] app icon. (**must**)
