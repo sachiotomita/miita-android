@@ -32,6 +32,7 @@ import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.observer.MiitaEventObject;
 import com.naoto.yamaguchi.miita.observer.MiitaObservable;
 import com.naoto.yamaguchi.miita.presenter.HomePresenter;
+import com.naoto.yamaguchi.miita.util.analytics.Analytics;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogBuilder;
 import com.naoto.yamaguchi.miita.view.alert.MiitaAlertDialogListener;
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Analytics.getInstance().onCreate(this);
         this.presenter = new HomePresenter(this);
         this.presenter.attachView(this);
         this.initView();

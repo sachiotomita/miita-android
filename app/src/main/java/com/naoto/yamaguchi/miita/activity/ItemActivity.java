@@ -24,6 +24,7 @@ import com.naoto.yamaguchi.miita.entity.Item;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
+import com.naoto.yamaguchi.miita.util.analytics.Analytics;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 
 import java.util.Calendar;
@@ -63,6 +64,7 @@ public class ItemActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
+        Analytics.getInstance().onCreate(this);
         this.init();
         this.parseIntent();
         this.setLayout();
@@ -207,6 +209,8 @@ public class ItemActivity extends AppCompatActivity
         this.stockButton.setEnabled(false);
 
         if (this.model.isStock()) {
+            Analytics.getInstance().sendEvent(Analytics.ActionType.UNSTOCK, this.item.getId());
+
             this.model.request(ItemModel.Type.UNSTOCK, this.item.getId(), new OnModelListener<Void>() {
                 @Override
                 public void onSuccess(Void results) {
@@ -227,6 +231,8 @@ public class ItemActivity extends AppCompatActivity
                 }
             });
         } else {
+            Analytics.getInstance().sendEvent(Analytics.ActionType.STOCK, this.item.getId());
+
             this.model.request(ItemModel.Type.STOCK, this.item.getId(), new OnModelListener<Void>() {
                 @Override
                 public void onSuccess(Void results) {
