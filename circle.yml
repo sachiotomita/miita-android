@@ -7,8 +7,7 @@ machine:
 checkout:
   post:
     - git submodule sync
-    - git submodule init
-    - git submodule update
+    - git submodule update --init --recursive
 
 dependencies:
   override:
