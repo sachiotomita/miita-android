@@ -27,5 +27,6 @@ deployment:
   master:
     branch: master
     commands:
+      - ./init.sh
       - ./gradlew assembleDebug
       - ./gradlew assembleRelease
