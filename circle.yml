@@ -9,8 +9,12 @@ checkout:
     - git submodule update --init --recursive
 
 dependencies:
-  override:
+  pre:
     - echo y | android update sdk --no-ui --filter "android-24,build-tools-24.0.0,extra-android-support,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository"
+  cache_directories:
+    - ~/.android
+  override:
+    - ./gradlew dependencies
 
 test:
   override:
