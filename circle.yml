@@ -1,6 +1,6 @@
 machine:
   java:
-    version: openjdk7
+    version: oraclejdk8
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
 
@@ -14,8 +14,9 @@ dependencies:
 
 test:
   override:
+    - ./gradlew clean assembleDebug
     - ./gradlew clean test
-    - ./gradlew clean connectedAndroidTest
+#    - ./gradlew clean connectedAndroidTest
 
 general:
   artifacts:
@@ -26,5 +27,5 @@ deployment:
     branch: master
     commands:
       - ./init.sh
-      - ./gradlew assembleDebug
-      - ./gradlew assembleRelease
+      - ./gradlew clean assembleDebug
+      - ./gradlew clean assembleRelease
