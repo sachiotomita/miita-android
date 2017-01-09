@@ -1,0 +1,25 @@
+machine:
+  java:
+    version: openjdk7
+  environment:
+    ANDROID_HOME: /usr/local/android-sdk-linux
+
+dependencies:
+  override:
+    - echo y | android update sdk --no-ui --filter "android-24,build-tools-24.0.0,extra-android-support,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository"
+
+test:
+  override:
+    - ./gradlew clean test
+    - ./gradlew clean connectedAndroidTest
+
+general:
+  artifacts:
+    - "app/build/outputs/apk/app-release.apk"
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - ./gradlew assembleDebug
+      - ./gradlew assembleRelease
