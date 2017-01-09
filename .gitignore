@@ -47,3 +47,6 @@ captures/
 # fabric
 app/fabric.properties
 
+# Firebase
+app/src/release/google-services.json
+
