@@ -21,8 +21,10 @@ dependencies:
     - ./gradlew dependencies
 
 test:
+  pre:
+    - ./scripts/prepare.sh
+
   override:
-    - ./init.sh
     - ./gradlew clean
     - ./gradlew assembleDebug
     - ./gradlew test
@@ -39,7 +41,7 @@ deployment:
   master:
     branch: master
     commands:
-      - ./init.sh
+      - ./scripts/prepare.sh
       - ./gradlew clean
       - ./gradlew assembleDebug
       - ./gradlew assembleRelease
