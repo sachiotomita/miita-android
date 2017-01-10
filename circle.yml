@@ -11,8 +11,14 @@ checkout:
 dependencies:
   cache_directories:
     - ~/.android
-  pre:
-    - echo y | android update sdk --no-ui --all --filter "android-24,build-tools-24.0.3,extra-android-support,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository"
+  override:
+    - echo y | android update sdk --no-ui --all --filter android-24
+    - echo y | android update sdk --no-ui --all --filter build-tools-24.0.3
+    - echo y | android update sdk --no-ui --all --filter extra-android-support
+    - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+    - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+    - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+    - ./gradlew dependencies
 
 test:
   override:
@@ -23,7 +29,8 @@ test:
 
 general:
   artifacts:
-    - "app/build/outputs/apk/app-release.apk"
+    - app/build/outputs
+    - app/build/reports
 
 deployment:
   master:
