@@ -45,3 +45,4 @@ deployment:
       - ./gradlew clean
       - ./gradlew assembleDebug
       - ./gradlew assembleRelease
+      - make deploy-debug
