@@ -1,4 +1,6 @@
-# miita-android
+# Miita for Android
+
+[![CircleCI](https://circleci.com/gh/naoto0822/miita-android.svg?style=svg)](https://circleci.com/gh/naoto0822/miita-android)
 
 ## TODO
 - [☓] ~~navigation selected when backpress. (**must**)~~
@@ -11,7 +13,7 @@
 - [☓] ~~setting, license activity back button. (**must**)~~
 - [☓] ~~integrate crashlytics. (**must**)~~
 - [☓] ~~integrate Firebase. (**must**)~~
-- [ ] circle CI. (**must**)
+- [☓] ~~circle CI. (**must**)~~
 - [ ] DeployGate. (**must**)
 - [ ] app icon. (**must**)
 - [ ] share item. (low priority)
