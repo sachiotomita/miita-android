@@ -22,7 +22,7 @@ dependencies:
 
 test:
   pre:
-    - ./scripts/prepare.sh
+    - make prepare
   override:
     - ./gradlew clean
     - ./gradlew assembleDebug
@@ -41,7 +41,7 @@ deployment:
   master:
     branch: master
     commands:
-      - ./scripts/prepare.sh
+      - make prepare
       - ./gradlew clean
       - ./gradlew assembleDebug
       - ./gradlew assembleRelease
