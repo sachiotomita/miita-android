@@ -1,6 +1,30 @@
+> TODO: app icon.
+
 # Miita for Android
 
 [![CircleCI](https://circleci.com/gh/naoto0822/miita-android.svg?style=svg)](https://circleci.com/gh/naoto0822/miita-android)
+
+> TODO: deplygate badge.
+
+> TODO: app description.
+
+> TODO: app image.
+
+## Getting Started
+
+-
+
+## CI
+
+- image
+
+## Use 3rd Party SDK
+
+- Firebase, Fabric(Crash)
+
+## License
+
+-
 
 ## TODO
 - [☓] ~~navigation selected when backpress. (**must**)~~
