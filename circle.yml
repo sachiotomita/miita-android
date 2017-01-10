@@ -23,10 +23,10 @@ dependencies:
 test:
   pre:
     - ./scripts/prepare.sh
-
   override:
     - ./gradlew clean
     - ./gradlew assembleDebug
+    - ./gradlew assembleRelease
     - ./gradlew test
 
     # TODO: install and run emulator
