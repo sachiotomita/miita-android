@@ -24,8 +24,11 @@ test:
   override:
     - ./init.sh
     - ./gradlew clean
+    - ./gradlew assembleDebug
     - ./gradlew test
-#    - ./gradlew clean connectedAndroidTest
+
+    # TODO: install and run emulator
+    # - ./gradlew clean connectedAndroidTest
 
 general:
   artifacts:
@@ -37,5 +40,6 @@ deployment:
     branch: master
     commands:
       - ./init.sh
-      - ./gradlew clean assembleDebug
-      - ./gradlew clean assembleRelease
+      - ./gradlew clean
+      - ./gradlew assembleDebug
+      - ./gradlew assembleRelease
