@@ -23,8 +23,8 @@ dependencies:
 test:
   override:
     - ./init.sh
-    - ./gradlew clean assembleDebug
-    - ./gradlew clean test
+    - ./gradlew clean
+    - ./gradlew test
 #    - ./gradlew clean connectedAndroidTest
 
 general:
