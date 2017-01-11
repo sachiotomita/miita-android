@@ -42,7 +42,10 @@ captures/
 !debug.keystore
 
 # Mac
-.DS_Store 
+.DS_Store
+
+# properties
+debug.properties
 
 # fabric
 app/fabric.properties
