@@ -35,9 +35,11 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
+                <!-- debug: miita://callback.debug -->
+                <!-- release: miita://callback -->
                 <data
-                    android:host="callback"
-                    android:scheme="miita"/>
+                    android:scheme="miita"
+                    android:host="${callbackHost}" />
             </intent-filter>
         </activity>
         <activity
