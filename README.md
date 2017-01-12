@@ -15,28 +15,29 @@
 
 1. clone this repositpry.
 
-```sh
-$ git clone https://github.com/naoto0822/miita-android.git
-```
+ ```sh
+ $ git clone https://github.com/naoto0822/miita-android.git
+ ```
 
 2. `cd` in project and run `make bootstrap` that generate `debug.properties`.
 
-```sh
-$ make bootstrap
-```
+ ```sh
+ $ make bootstrap
+ ```
 
 3. register new Application in Qiita(https://qiita.com/settings/applications).
    enter the following value.
-```
-Authorization callback URL: miita://callback.debug
-```
+
+ ```
+ Authorization callback URL: miita://callback.debug
+ ```
 
 4. edit `debug.properties`.
 
-```
-qiitaClientID=<YOUR_CLIENT_ID>
-qiitaClientSecret=<YOUR_CLIENT_SECRET>
-```
+ ```
+ qiitaClientID=<YOUR_CLIENT_ID>
+ qiitaClientSecret=<YOUR_CLIENT_SECRET>
+ ```
 
 5. run in debug build.
 
