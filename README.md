@@ -1,6 +1,4 @@
-> TODO: app icon.
-
-# Miita for Android
+# ![](./app/src/main/res/mipmap-mdpi/ic_launcher.png) Miita for Android
 
 [![CircleCI](https://circleci.com/gh/naoto0822/miita-android.svg?style=svg)](https://circleci.com/gh/naoto0822/miita-android)
 [<img src="https://dply.me/4j2gcf/button/large" alt="Try it on your device via DeployGate">](https://dply.me/4j2gcf#install)
@@ -84,7 +82,7 @@ limitations under the License.
 - [☓] ~~integrate Firebase. (**must**)~~
 - [☓] ~~circle CI. (**must**)~~
 - [☓] ~~DeployGate. (**must**)~~
-- [ ] app icon. (**must**)
+- [☓] ~~app icon. (**must**)~~
 - [ ] share item.
 - [ ] search item ,tag.
 - [ ] bitmap disk cache.
