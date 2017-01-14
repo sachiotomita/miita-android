@@ -1,4 +1,6 @@
-# ![](./app/src/main/res/mipmap-mdpi/ic_launcher.png) Miita for Android
+![](./app/src/main/res/mipmap-mdpi/ic_launcher.png)
+
+# Miita for Android
 
 [![CircleCI](https://circleci.com/gh/naoto0822/miita-android.svg?style=svg)](https://circleci.com/gh/naoto0822/miita-android)
 [<img src="https://dply.me/4j2gcf/button/large" alt="Try it on your device via DeployGate">](https://dply.me/4j2gcf#install)
