@@ -70,21 +70,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
-
-## TODO
-- [☓] ~~navigation selected when backpress. (**must**)~~
-- [☓] ~~bitmap memory cache. (**must**)~~
-- [☓] ~~adapter ViewHolder. (**must**)~~
-- [☓] ~~list layout. (**must**)~~
-- [☓] ~~item header multi line. (**must**)~~
-- [☓] ~~additional entity variable and fix item header. (**must**)~~
-- [☓] ~~license. (**must**)~~
-- [☓] ~~setting, license activity back button. (**must**)~~
-- [☓] ~~integrate crashlytics. (**must**)~~
-- [☓] ~~integrate Firebase. (**must**)~~
-- [☓] ~~circle CI. (**must**)~~
-- [☓] ~~DeployGate. (**must**)~~
-- [☓] ~~app icon. (**must**)~~
-- [ ] share item.
-- [ ] search item ,tag.
-- [ ] bitmap disk cache.
