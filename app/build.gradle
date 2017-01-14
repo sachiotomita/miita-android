@@ -3,16 +3,21 @@ apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
 
+def PACKAGE_NAME = "com.naoto.yamaguchi.miita"
+def VERSION_MAJOR = 0
+def VERSION_MINOR = 1
+def VERSION_PATCH = 0
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
 
     defaultConfig {
-        applicationId "com.naoto.yamaguchi.miita"
+        applicationId PACKAGE_NAME
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_MAJOR * 100 + VERSION_MINOR * 10 + VERSION_PATCH
+        versionName "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
