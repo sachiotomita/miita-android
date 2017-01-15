@@ -49,3 +49,9 @@ deployment:
       - ./gradlew assembleDebug
       - ./gradlew assembleRelease
       - make deploy-debug
+  release:
+    branch: release
+    commands:
+      - make bootstrap
+      - make prepare
+      - ./gradlew clean assembleRelease
