@@ -40,9 +40,10 @@ general:
     - app/build/reports
 
 deployment:
-  master:
-    branch: master
+  debug:
+    branch: /^(?!release$).*$/
     commands:
+      - echo "deployment id debug"
       - make bootstrap
       - make prepare
       - ./gradlew clean
@@ -52,6 +53,7 @@ deployment:
   release:
     branch: release
     commands:
+      - echo "deployment is release"
       - make bootstrap
       - make prepare
       - ./gradlew clean assembleRelease
