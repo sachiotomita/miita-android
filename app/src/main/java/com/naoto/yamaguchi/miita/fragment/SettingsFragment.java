@@ -10,6 +10,7 @@ import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.observer.MiitaEventObject;
 import com.naoto.yamaguchi.miita.observer.MiitaObservable;
+import com.naoto.yamaguchi.miita.util.device.Device;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
 
@@ -28,6 +29,7 @@ public final class SettingsFragment extends PreferenceFragment {
     private ListPreference perPagePref;
     private Preference licensePref;
     private Preference logoutPref;
+    private Preference versionPref;
     private CurrentUser currentUser;
     private OnPreferenceClickListener listener;
 
@@ -130,5 +132,16 @@ public final class SettingsFragment extends PreferenceFragment {
                         }
                     });
         }
+
+        this.versionPref = findPreference(PreferencesConstants.VERSION_KEY);
+        final String title = this.versionTitle(this.versionPref);
+        this.versionPref.setTitle(title);
+    }
+
+    private String versionTitle(Preference versionPref) {
+        final String title = versionPref.getTitle().toString();
+        final String space = " ";
+
+        return title + space + Device.getAppVersionName();
     }
 }
