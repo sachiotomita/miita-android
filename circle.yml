@@ -43,7 +43,7 @@ deployment:
   debug:
     branch: /^(?!release$).*$/
     commands:
-      - echo "deployment id debug"
+      - echo "deployment is debug"
       - make bootstrap
       - make prepare
       - ./gradlew clean
