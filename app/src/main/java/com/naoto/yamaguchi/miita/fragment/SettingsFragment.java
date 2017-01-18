@@ -16,7 +16,7 @@ import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
 
 /**
  * Setting Fragment.
- * <p>
+ *
  * Created by naoto on 16/08/24.
  */
 public final class SettingsFragment extends PreferenceFragment {
@@ -33,12 +33,13 @@ public final class SettingsFragment extends PreferenceFragment {
     private CurrentUser currentUser;
     private OnPreferenceClickListener listener;
 
+    // TODO: create feed back page.
+
     // NOTE:
-    // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
-    // 2. 取得件数
-    // 3. LICENSE Intent
-    // 4. Logout (ログインしてたら。)
-    // 5. Version (No Action)
+    // 1. 取得件数
+    // 2. LICENSE Intent
+    // 3. Logout (ログインしてたら。)
+    // 4. Version (No Action)
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
