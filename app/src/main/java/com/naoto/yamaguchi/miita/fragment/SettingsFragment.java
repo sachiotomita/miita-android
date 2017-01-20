@@ -10,12 +10,13 @@ import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.observer.MiitaEventObject;
 import com.naoto.yamaguchi.miita.observer.MiitaObservable;
+import com.naoto.yamaguchi.miita.util.device.Device;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 import com.naoto.yamaguchi.miita.util.preference.PreferencesConstants;
 
 /**
  * Setting Fragment.
- * <p>
+ *
  * Created by naoto on 16/08/24.
  */
 public final class SettingsFragment extends PreferenceFragment {
@@ -28,15 +29,17 @@ public final class SettingsFragment extends PreferenceFragment {
     private ListPreference perPagePref;
     private Preference licensePref;
     private Preference logoutPref;
+    private Preference versionPref;
     private CurrentUser currentUser;
     private OnPreferenceClickListener listener;
 
+    // TODO: create feed back page.
+
     // NOTE:
-    // 1. FeedBack http://blog.excite.co.jp/spdev/20711466/
-    // 2. 取得件数
-    // 3. LICENSE Intent
-    // 4. Logout (ログインしてたら。)
-    // 5. Version (No Action)
+    // 1. 取得件数
+    // 2. LICENSE Intent
+    // 3. Logout (ログインしてたら。)
+    // 4. Version (No Action)
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -130,5 +133,16 @@ public final class SettingsFragment extends PreferenceFragment {
                         }
                     });
         }
+
+        this.versionPref = findPreference(PreferencesConstants.VERSION_KEY);
+        final String title = this.versionTitle(this.versionPref);
+        this.versionPref.setTitle(title);
+    }
+
+    private String versionTitle(Preference versionPref) {
+        final String title = versionPref.getTitle().toString();
+        final String space = " ";
+
+        return title + space + Device.getAppVersionName();
     }
 }
