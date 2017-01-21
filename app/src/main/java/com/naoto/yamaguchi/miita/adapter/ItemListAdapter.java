@@ -64,16 +64,12 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
         if (item != null) {
             String userId = item.getUser().getId() + "が" + item.getCreatedAtString() + "に投稿しました";
             String title = item.getTitle();
-            List<String> tagNameList = new ArrayList<>();
-            for (ItemTag tag : item.getTags()) {
-                tagNameList.add(tag.getName());
-            }
-            String tagsString = TextUtils.join(", ", tagNameList);
             String imageUrl = item.getUser().getImageUrlString();
 
             viewHolder.userIdTextView.setText(userId);
             viewHolder.titleTextView.setText(title);
 
+            viewHolder.tagFlexbox.removeAllViews();
             for (ItemTag tag: item.getTags()) {
                 final MiitaTagView tagView = new MiitaTagView(this.context);
                 tagView.setTitle(tag.getName());
