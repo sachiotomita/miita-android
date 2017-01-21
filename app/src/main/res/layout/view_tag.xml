@@ -11,6 +11,7 @@
         android:id="@+id/tag_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/item_list_tag_text_size"
         android:textColor="@color/item_list_tag_text_color"
         android:gravity="center"/>
 
