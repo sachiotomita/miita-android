@@ -16,7 +16,7 @@
     <!-- Toolbar Title -->
     <string name="title_all_item">すべての投稿</string>
     <string name="title_stock_item">ストックした投稿</string>
-    <string name="title_follow_tag"></string>
+    <string name="title_follow_tag">フォローしたタグ</string>
     <string name="title_settings">設定</string>
     <string name="title_license">License</string>
 
