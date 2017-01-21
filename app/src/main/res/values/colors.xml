@@ -13,6 +13,8 @@
     <!-- Item List Row -->
     <color name="item_list_user_id_text_color">#000000</color>
     <color name="item_list_tag_text_color">#555</color>
+    <color name="item_list_tag_background_color">#fff</color>
+    <color name="item_list_tag_border_color">#555</color>
 
     <!-- Tag List Row -->
     <color name="tag_list_count_text_color">#555</color>
