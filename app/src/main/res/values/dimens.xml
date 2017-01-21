@@ -35,8 +35,9 @@
     <!-- Tag List Layout -->
     <dimen name="tag_list_padding">10dp</dimen>
     <dimen name="tag_list_text_container_margin_start">10dp</dimen>
-    <dimen name="tag_list_image_width">60dp</dimen>
-    <dimen name="tag_list_image_height">60dp</dimen>
+    <dimen name="tag_list_image_padding_top">10dp</dimen>
+    <dimen name="tag_list_image_width">35dp</dimen>
+    <dimen name="tag_list_image_height">35dp</dimen>
     <dimen name="tag_list_id_text_size">16sp</dimen>
     <dimen name="tag_list_count_text_size">14sp</dimen>
 </resources>
