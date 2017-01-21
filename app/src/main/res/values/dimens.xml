@@ -29,7 +29,9 @@
     <dimen name="image_height">60dp</dimen>
     <dimen name="image_width">60dp</dimen>
     <dimen name="item_list_user_id_text_size">14sp</dimen>
+    <dimen name="item_list_user_id_margin_bottom">4dp</dimen>
     <dimen name="item_list_title_text_size">16sp</dimen>
+    <dimen name="item_list_title_margin_bottom">4dp</dimen>
     <dimen name="item_list_tag_text_size">14sp</dimen>
     <dimen name="item_list_tag_text_padding_top">2dp</dimen>
     <dimen name="item_list_tag_text_padding_bottom">2dp</dimen>
