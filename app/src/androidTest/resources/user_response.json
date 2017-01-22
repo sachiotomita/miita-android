@@ -1,5 +1,5 @@
 {
-  "description": null,
+  "description": "desc",
   "facebook_id": null,
   "followees_count": 16,
   "followers_count": 8,
@@ -8,7 +8,7 @@
   "items_count": 14,
   "linkedin_id": null,
   "location": null,
-  "name": "",
+  "name": "user_name",
   "organization": null,
   "permanent_id": 60120,
   "profile_image_url": "https://qiita-image-store.s3.amazonaws.com/profile-images/",
