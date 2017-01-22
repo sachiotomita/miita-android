@@ -58,7 +58,7 @@ public final class TagListAdapter<T extends BaseTag> extends ArrayAdapter<T> {
         final T tag = this.getItem(position);
         if (tag != null) {
             String tagId = tag.getId();
-            String itemsCount = tag.getItemsCount() + "items";
+            String itemsCount = tag.getItemsCount() + " " + "items";
             String imageUrlString = tag.getIconUrlString();
 
             viewHolder.tagIdTextView.setText(tagId);
