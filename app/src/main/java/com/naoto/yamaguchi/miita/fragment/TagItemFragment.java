@@ -17,9 +17,11 @@ import android.widget.ProgressBar;
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.presenter.TagItemPresenter;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
+import com.naoto.yamaguchi.miita.view.tagview.TagClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +30,13 @@ public class TagItemFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
-        TagItemPresenter.View {
+        TagItemPresenter.View, TagClickListener {
 
     public interface OnItemClickListener {
+
         void onItemClick(Item item);
+
+        void onTagClick(ItemTag itemTag);
     }
 
     private OnItemClickListener listener;
@@ -81,7 +86,7 @@ public class TagItemFragment extends Fragment
         this.listView.setOnItemClickListener(this);
         ViewCompat.setNestedScrollingEnabled(this.listView, true);
 
-        this.adapter = new ItemListAdapter<>(this.getContext(), new ArrayList<Item>());
+        this.adapter = new ItemListAdapter<>(this.getContext(), new ArrayList<Item>(), this);
         this.listView.setAdapter(this.adapter);
 
         this.spinner = (ProgressBar) rootView.findViewById(R.id.progress_bar);
@@ -145,6 +150,13 @@ public class TagItemFragment extends Fragment
         if (listView.getId() == R.id.listView) {
             Item item = (Item) listView.getItemAtPosition(position);
             this.listener.onItemClick(item);
+        }
+    }
+
+    @Override
+    public void onTagClick(ItemTag tag) {
+        if (this.listener != null) {
+            this.listener.onTagClick(tag);
         }
     }
 

@@ -16,6 +16,7 @@ import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.view.tagview.MiitaTagView;
+import com.naoto.yamaguchi.miita.view.tagview.TagClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +30,14 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
 
     final private Context context;
     final private LayoutInflater inflater;
+    final private TagClickListener tagClickListener;
 
-    public ItemListAdapter(Context context, List<T> objects) {
+    public ItemListAdapter(Context context, List<T> objects, TagClickListener tagClickListener) {
         super(context, 0);
         this.addAll(objects);
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.tagClickListener = tagClickListener;
     }
 
     @Override
@@ -70,9 +73,15 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
             viewHolder.titleTextView.setText(title);
 
             viewHolder.tagFlexbox.removeAllViews();
-            for (ItemTag tag: item.getTags()) {
+            for (final ItemTag tag: item.getTags()) {
                 final MiitaTagView tagView = new MiitaTagView(this.context);
                 tagView.setTitle(tag.getName());
+                tagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tagClick(tag);
+                    }
+                });
                 viewHolder.tagFlexbox.addView(tagView);
             }
 
@@ -82,5 +91,11 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
         }
 
         return convertView;
+    }
+
+    private void tagClick(ItemTag tag) {
+        if (this.tagClickListener != null) {
+            this.tagClickListener.onTagClick(tag);
+        }
     }
 }

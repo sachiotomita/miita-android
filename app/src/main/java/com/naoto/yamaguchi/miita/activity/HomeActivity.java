@@ -22,6 +22,7 @@ import com.naoto.yamaguchi.miita.converter.ItemConverter;
 import com.naoto.yamaguchi.miita.converter.TagConverter;
 import com.naoto.yamaguchi.miita.entity.FollowTag;
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.entity.Tag;
 import com.naoto.yamaguchi.miita.entity.AllItem;
 import com.naoto.yamaguchi.miita.entity.StockItem;
@@ -54,8 +55,10 @@ public class HomeActivity extends AppCompatActivity
         HomePresenter.View,
         Observer {
 
+    // TODO: move Entity class.
     private static final String INTENT_ITEM_KEY = "item";
     private static final String INTENT_TAG_KEY = "tag";
+    private static final String INTENT_ITEM_TAG_KEY = "item_tag";
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -242,10 +245,24 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
+    public void onTagClick(ItemTag tag) {
+        final Intent intent = new Intent(HomeActivity.this, TagItemActivity.class);
+        intent.putExtra(INTENT_ITEM_TAG_KEY, tag);
+        startActivity(intent);
+    }
+
+    @Override
     public void onItemClick(StockItem item) {
         final Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
         final Item _item = ItemConverter.convert(item);
         intent.putExtra(INTENT_ITEM_KEY, _item);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTagClickFromStockFragment(ItemTag itemTag) {
+        final Intent intent = new Intent(HomeActivity.this, TagItemActivity.class);
+        intent.putExtra(INTENT_ITEM_TAG_KEY, itemTag);
         startActivity(intent);
     }
 
