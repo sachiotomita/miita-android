@@ -29,7 +29,8 @@ public class StockItemFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
-        StockItemPresenter.View, TagClickListener {
+        StockItemPresenter.View,
+        TagClickListener {
 
     public interface OnItemClickListener {
 

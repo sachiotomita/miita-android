@@ -30,7 +30,8 @@ public class TagItemFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
-        TagItemPresenter.View, TagClickListener {
+        TagItemPresenter.View,
+        TagClickListener {
 
     public interface OnItemClickListener {
 

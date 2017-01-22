@@ -29,7 +29,8 @@ public class AllItemFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
-        AllItemPresenter.View, TagClickListener {
+        AllItemPresenter.View,
+        TagClickListener {
 
     public interface OnItemClickListener {
 
