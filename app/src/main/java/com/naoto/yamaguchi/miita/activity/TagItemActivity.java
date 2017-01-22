@@ -48,7 +48,19 @@ public class TagItemActivity extends AppCompatActivity
         this.actionBar.setHomeButtonEnabled(true);
 
         this.toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        this.toolbarLayout.setTitle(this.tag.getId());
+
+        // TODO: refactor
+        String title = null;
+
+        if (this.tag != null) {
+            title = this.tag.getId();
+        }
+
+        if (this.itemTag != null) {
+            title = this.itemTag.getName();
+        }
+
+        this.toolbarLayout.setTitle(title);
     }
 
     private void parseIntent() {
@@ -64,6 +76,7 @@ public class TagItemActivity extends AppCompatActivity
     }
 
     private void setFragment() {
+        // TODO: refactor
         String tagId = null;
 
         if (this.tag != null) {
