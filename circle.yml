@@ -51,7 +51,7 @@ deployment:
       - ./gradlew assembleDebug
       - ./gradlew assembleStaging
       - ./gradlew assembleRelease
-      - make deploy-debug
+      - make deploy-staging
   release:
     branch: release
     commands:
