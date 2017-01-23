@@ -62,6 +62,26 @@ android {
                     callbackHost: "callback.debug"
             ]
         }
+        staging {
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            debuggable true
+            minifyEnabled false
+
+            def configFile = file("../deploy/miita/android/staging.properties")
+            def props = new Properties()
+            props.load(new FileInputStream(configFile))
+            buildConfigField("String", "CLIENT_ID", "\"${props.qiitaClientID}\"")
+            buildConfigField("String", "CLIENT_SECRET", "\"${props.qiitaClientSecret}\"")
+
+            ext.enableCrashlytics = false
+
+            manifestPlaceholders = [
+                    fabricApiKey: "UNDEFINED",
+                    callbackHost: "callback.staging"
+            ]
+        }
         release {
             signingConfig signingConfigs.release
             debuggable false
