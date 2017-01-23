@@ -28,6 +28,7 @@ test:
   override:
     - ./gradlew clean
     - ./gradlew assembleDebug
+    - ./gradlew assembleStaging
     - ./gradlew assembleRelease
     - ./gradlew test
 
@@ -40,14 +41,15 @@ general:
     - app/build/reports
 
 deployment:
-  debug:
+  staging:
     branch: /^(?!release$).*$/
     commands:
-      - echo "deployment is debug"
+      - echo "deployment is staging"
       - make bootstrap
       - make prepare
       - ./gradlew clean
       - ./gradlew assembleDebug
+      - ./gradlew assembleStaging
       - ./gradlew assembleRelease
       - make deploy-debug
   release:
