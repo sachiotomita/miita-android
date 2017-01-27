@@ -26,13 +26,27 @@ test:
     - make bootstrap
     - make prepare
   override:
+    # JUnit
     - ./gradlew clean
-    - ./gradlew assembleDebug
-    - ./gradlew assembleRelease
+    - ./gradlew assembleDebug assembleStaging assembleRelease
     - ./gradlew test
 
-    # TODO: install and run emulator
-    # - ./gradlew clean connectedAndroidTest
+    # AndroidTest
+    # start the emulator
+    - emulator -avd circleci-android24 -no-window:
+        background: true
+        parallel: true
+    # wait for it to have booted
+    - circle-android wait-for-boot
+    # unlock the emulator screen
+    - sleep 30
+    - adb shell input keyevent 82
+    # run tests  against the emulator.
+    - ./gradlew connectedAndroidTest
+    # copy the build outputs to artifacts
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    # copy the test results to the test results directory.
+    - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
 
 general:
   artifacts:
@@ -40,16 +54,17 @@ general:
     - app/build/reports
 
 deployment:
-  debug:
+  staging:
     branch: /^(?!release$).*$/
     commands:
-      - echo "deployment is debug"
+      - echo "deployment is staging"
       - make bootstrap
       - make prepare
       - ./gradlew clean
       - ./gradlew assembleDebug
+      - ./gradlew assembleStaging
       - ./gradlew assembleRelease
-      - make deploy-debug
+      - make deploy-staging
   release:
     branch: release
     commands:
