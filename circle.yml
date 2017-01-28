@@ -30,6 +30,7 @@ test:
     - ./gradlew clean
     - ./gradlew assembleDebug assembleStaging assembleRelease
     - ./gradlew test
+    - fastlane android test
 
     # AndroidTest
     # start the emulator
