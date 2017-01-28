@@ -31,7 +31,6 @@ test:
     - ./gradlew clean
     - ./gradlew assembleDebug assembleStaging assembleRelease
     - ./gradlew test
-    - bundle exec fastlane android test
 
     # AndroidTest
     # start the emulator
@@ -73,4 +72,5 @@ deployment:
       - echo "deployment is release"
       - make bootstrap
       - make prepare
-      - ./gradlew clean assembleRelease
+      - ./gradlew clean
+      - bundle exec fastlane android deploy
