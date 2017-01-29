@@ -13,6 +13,7 @@ dependencies:
     - ~/.android
   override:
     - make bootstrap
+    - bundle install
     - echo y | android update sdk --no-ui --all --filter android-24
     - echo y | android update sdk --no-ui --all --filter build-tools-24.0.3
     - echo y | android update sdk --no-ui --all --filter extra-android-support
@@ -71,4 +72,5 @@ deployment:
       - echo "deployment is release"
       - make bootstrap
       - make prepare
-      - ./gradlew clean assembleRelease
+      - ./gradlew clean
+      - bundle exec fastlane android deploy

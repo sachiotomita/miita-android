@@ -1,0 +1,2 @@
+json_key_file "./deploy/miita/android/Google_Play_Android_Developer-8425d6ae766e.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+package_name "com.naoto.yamaguchi.miita" # e.g. com.krausefx.app
