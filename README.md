@@ -4,8 +4,17 @@
 
 [![CircleCI](https://circleci.com/gh/naoto0822/miita-android.svg?style=svg)](https://circleci.com/gh/naoto0822/miita-android)
 [<img src="https://dply.me/4j2gcf/button/large" alt="Try it on your device via DeployGate">](https://dply.me/4j2gcf#install)
+[![GitHub release](https://img.shields.io/github/release/naoto0822/miita-android.svg)](https://github.com/naoto0822/miita-android/releases)
+[![GitHub issues](https://img.shields.io/github/issues/naoto0822/miita-android.svg)](https://github.com/naoto0822/miita-android/issues)
+[![license](https://img.shields.io/github/license/naoto0822/miita-android.svg)](https://github.com/naoto0822/miita-android/blob/master/LICENSE)
 
-The unofficial Android app for [Qiita](http://qiita.com "Qiita").
+The unofficial android app for [Qiita](http://qiita.com "Qiita").
+origin of the app name(Miita) is "Mobile for Qiita".
+
+- browse all items and item detail.
+- browse tag items.
+- browse stock items, follow tags after login.
+- stock/unstock item after login.
 
 > TODO: app image.
 
@@ -50,6 +59,11 @@ Only debug build and only owner can release.
 ## CI
 
 > TODO: image
+
+## OSS
+
+- [Realm](https://realm.io/jp/)
+- [flexbox-layout](https://github.com/google/flexbox-layout)
 
 ## 3rd Party SDK
 
