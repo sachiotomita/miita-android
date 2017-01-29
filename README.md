@@ -56,9 +56,9 @@ Only debug build and only owner can release.
 
 5. run in debug build.
 
-## CI
+## CI/CD
 
-> TODO: image
+<img src="./docs/images/cicd_image.png" width="690" height="354">
 
 ## OSS
 
