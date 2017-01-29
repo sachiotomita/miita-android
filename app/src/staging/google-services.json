@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "UNDEFINED",
+    "firebase_url": "UNDEFINED",
+    "project_id": "UNDEFINED",
+    "storage_bucket": "UNDEFINED"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "UNDEFINED",
+        "android_client_info": {
+          "package_name": "com.naoto.yamaguchi.miita.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "UNDEFINED",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "UNDEFINED"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

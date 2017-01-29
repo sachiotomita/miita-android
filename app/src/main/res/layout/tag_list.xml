@@ -11,6 +11,7 @@
         android:id="@+id/tag_list_image"
         android:layout_width="@dimen/tag_list_image_width"
         android:layout_height="@dimen/tag_list_image_height"
+        android:paddingTop="@dimen/tag_list_image_padding_top"
         android:backgroundTint="@color/loadingImage" />
 
     <LinearLayout
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/tag_list_count_text_size"
                 android:textColor="@color/tag_list_count_text_color"
-                android:lines="3" />
+                android:lines="1" />
 
         </LinearLayout>
     </LinearLayout>

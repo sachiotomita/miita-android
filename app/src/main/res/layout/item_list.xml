@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginBottom="@dimen/item_list_user_id_margin_bottom"
                 android:textSize="@dimen/item_list_user_id_text_size"
                 android:textColor="@color/item_list_user_id_text_color"
                 android:minLines="1"
@@ -39,21 +40,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginBottom="@dimen/item_list_title_margin_bottom"
                 android:textSize="@dimen/item_list_title_text_size"
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:minLines="2"
                 android:maxLines="4"/>
 
-            <TextView
-                android:id="@+id/item_list_tag_text"
+            <com.google.android.flexbox.FlexboxLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/item_list_tag_flexbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="@dimen/item_list_tag_text_size"
-                android:textColor="@color/item_list_tag_text_color"
-                android:minLines="1"
-                android:maxLines="2"/>
+                app:flexDirection="row"
+                app:flexWrap="wrap"
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

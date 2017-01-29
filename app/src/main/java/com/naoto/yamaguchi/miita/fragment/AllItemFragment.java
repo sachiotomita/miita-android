@@ -16,9 +16,11 @@ import android.widget.ProgressBar;
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
 import com.naoto.yamaguchi.miita.entity.AllItem;
+import com.naoto.yamaguchi.miita.entity.ItemTag;
 import com.naoto.yamaguchi.miita.presenter.AllItemPresenter;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
+import com.naoto.yamaguchi.miita.view.tagview.TagClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,14 @@ public class AllItemFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener,
-        AllItemPresenter.View {
+        AllItemPresenter.View,
+        TagClickListener {
 
     public interface OnItemClickListener {
+
         void onItemClick(AllItem item);
+
+        void onTagClick(ItemTag tag);
     }
 
     /**
@@ -76,7 +82,7 @@ public class AllItemFragment extends Fragment
         this.listView.setOnScrollListener(this);
         this.listView.setOnItemClickListener(this);
 
-        this.adapter = new ItemListAdapter<>(this.getContext(), this.items);
+        this.adapter = new ItemListAdapter<>(this.getContext(), this.items, this);
         this.listView.setAdapter(this.adapter);
 
         this.spinner = (ProgressBar) rootView.findViewById(R.id.progress_bar);
@@ -143,6 +149,13 @@ public class AllItemFragment extends Fragment
         if (listView.getId() == R.id.listView) {
             AllItem item = (AllItem) listView.getItemAtPosition(position);
             this.listener.onItemClick(item);
+        }
+    }
+
+    @Override
+    public void onTagClick(ItemTag tag) {
+        if (this.listener != null) {
+            this.listener.onTagClick(tag);
         }
     }
 
