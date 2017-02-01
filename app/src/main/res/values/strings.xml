@@ -34,6 +34,9 @@
     <string name="alert_login_title">ログインしますか？</string>
     <string name="alert_login_message">ログインすることで使用できます</string>
 
+    <!-- Share Compat -->
+    <string name="title_share_item">アプリを選択</string>
+
     <!-- Home / Item Activity Intent params -->
     <!-- TODO: item_id, item_title, etc,,, -->
 
