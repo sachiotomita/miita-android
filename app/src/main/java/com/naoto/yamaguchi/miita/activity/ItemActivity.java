@@ -17,11 +17,13 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
@@ -54,6 +56,8 @@ public class ItemActivity extends AppCompatActivity
     private CurrentUser currentUser;
 
     private TextView titleTextView;
+    private ImageView userImageView;
+    private TextView userIdTextView;
     private TextView descTextView;
 
     // FIXME: model -> presenter or viewModel
@@ -127,6 +131,14 @@ public class ItemActivity extends AppCompatActivity
 
         this.titleTextView = (TextView) findViewById(R.id.item_header_title);
         this.titleTextView.setText(this.item.getTitle());
+
+        this.userImageView = (ImageView) findViewById(R.id.item_header_user_image);
+        ImageFetcher.getInstance()
+                .setContext(this)
+                .fetch(this.item.getUser().getImageUrlString(), this.userImageView);
+
+        this.userIdTextView = (TextView) findViewById(R.id.item_header_user_id);
+        this.userIdTextView.setText(this.item.getUser().getId());
 
         this.descTextView = (TextView) findViewById(R.id.item_header_desc);
         final Calendar calendar = Calendar.getInstance();

@@ -11,7 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="230dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -23,10 +23,14 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/item_header"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="80dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="32dp">
 
                 <TextView
                     android:id="@+id/item_header_title"
@@ -35,12 +39,30 @@
                     android:textSize="@dimen/abc_text_size_large_material"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
-                    android:layout_marginTop="@dimen/header_title_top_margin"
-                    android:layout_marginBottom="@dimen/header_title_bottom_margin"
-                    android:layout_marginStart="@dimen/header_title_start_margin"
-                    android:layout_marginEnd="@dimen/header_title_end_margin"
+                    android:layout_marginBottom="10dp"
                     app:layout_collapseMode="parallax"
                     android:maxLines="3"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    app:layout_collapseMode="parallax">
+
+                    <ImageView
+                        android:id="@+id/item_header_user_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+
+                    <TextView
+                        android:id="@+id/item_header_user_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/item_header_desc"
@@ -48,13 +70,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/abc_text_size_menu_material"
                     android:textColor="@android:color/white"
-                    android:layout_marginBottom="@dimen/header_desc_bottom_margin"
-                    android:layout_marginStart="@dimen/header_desc_start_margin"
-                    android:layout_marginEnd="@dimen/header_desc_end_margin"
+                    android:layout_marginBottom="1dp"
                     app:layout_collapseMode="parallax"
-                    android:layout_gravity="bottom"
                     android:maxLines="2"/>
-            </FrameLayout>
+            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
