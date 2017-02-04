@@ -29,6 +29,7 @@ import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.analytics.Analytics;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
+import com.naoto.yamaguchi.miita.util.logger.Logger;
 import com.naoto.yamaguchi.miita.util.share.ShareUtil;
 
 import java.util.Calendar;
@@ -56,6 +57,7 @@ public class ItemActivity extends AppCompatActivity
     private CurrentUser currentUser;
 
     private TextView titleTextView;
+    private View userView;
     private ImageView userImageView;
     private TextView userIdTextView;
     private TextView descTextView;
@@ -128,6 +130,14 @@ public class ItemActivity extends AppCompatActivity
         this.stockButton.setBackgroundTintList(
                 ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
         );
+
+        this.userView = findViewById(R.id.item_header_user_view);
+        this.userView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: transition user activity
+            }
+        });
 
         this.titleTextView = (TextView) findViewById(R.id.item_header_title);
         this.titleTextView.setText(this.item.getTitle());

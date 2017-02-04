@@ -25,6 +25,7 @@
     <dimen name="item_header_user_image_width">20dp</dimen>
     <dimen name="item_header_user_image_height">20dp</dimen>
     <dimen name="item_header_user_id_text_size">16sp</dimen>
+    <dimen name="item_header_user_id_margin_start">10dp</dimen>
     <dimen name="item_header_desc_margin_bottom">5dp</dimen>
     <dimen name="item_header_desc_text_size">16sp</dimen>
 
