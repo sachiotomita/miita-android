@@ -17,16 +17,19 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.analytics.Analytics;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
+import com.naoto.yamaguchi.miita.util.logger.Logger;
 import com.naoto.yamaguchi.miita.util.share.ShareUtil;
 
 import java.util.Calendar;
@@ -54,6 +57,9 @@ public class ItemActivity extends AppCompatActivity
     private CurrentUser currentUser;
 
     private TextView titleTextView;
+    private View userView;
+    private ImageView userImageView;
+    private TextView userIdTextView;
     private TextView descTextView;
 
     // FIXME: model -> presenter or viewModel
@@ -125,8 +131,24 @@ public class ItemActivity extends AppCompatActivity
                 ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
         );
 
+        this.userView = findViewById(R.id.item_header_user_view);
+        this.userView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: transition user activity
+            }
+        });
+
         this.titleTextView = (TextView) findViewById(R.id.item_header_title);
         this.titleTextView.setText(this.item.getTitle());
+
+        this.userImageView = (ImageView) findViewById(R.id.item_header_user_image);
+        ImageFetcher.getInstance()
+                .setContext(this)
+                .fetch(this.item.getUser().getImageUrlString(), this.userImageView);
+
+        this.userIdTextView = (TextView) findViewById(R.id.item_header_user_id);
+        this.userIdTextView.setText(this.item.getUser().getId());
 
         this.descTextView = (TextView) findViewById(R.id.item_header_desc);
         final Calendar calendar = Calendar.getInstance();

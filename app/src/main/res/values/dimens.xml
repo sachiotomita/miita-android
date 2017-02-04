@@ -15,13 +15,19 @@
     <dimen name="item_activity_bottom_margin">72dp</dimen>
     <dimen name="item_progress_top_margin">70dp</dimen>
     <!-- header text view margin -->
-    <dimen name="header_title_top_margin">56dp</dimen>
-    <dimen name="header_title_bottom_margin">20dp</dimen>
-    <dimen name="header_title_start_margin">48dp</dimen>
-    <dimen name="header_title_end_margin">32dp</dimen>
-    <dimen name="header_desc_bottom_margin">32dp</dimen>
-    <dimen name="header_desc_start_margin">48dp</dimen>
-    <dimen name="header_desc_end_margin">32dp</dimen>
+    <dimen name="item_header_height">230dp</dimen>
+    <dimen name="item_header_margin_top">80dp</dimen>
+    <dimen name="item_header_margin_start">48dp</dimen>
+    <dimen name="item_header_margin_end">32dp</dimen>
+    <dimen name="item_header_title_text_size">22sp</dimen>
+    <dimen name="item_header_title_margin_bottom">10dp</dimen>
+    <dimen name="item_header_user_margin_bottom">10dp</dimen>
+    <dimen name="item_header_user_image_width">20dp</dimen>
+    <dimen name="item_header_user_image_height">20dp</dimen>
+    <dimen name="item_header_user_id_text_size">16sp</dimen>
+    <dimen name="item_header_user_id_margin_start">10dp</dimen>
+    <dimen name="item_header_desc_margin_bottom">5dp</dimen>
+    <dimen name="item_header_desc_text_size">16sp</dimen>
 
     <!-- Item List Layout -->
     <dimen name="item_padding">10dp</dimen>
