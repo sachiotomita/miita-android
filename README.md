@@ -16,7 +16,8 @@ origin of the app name(Miita) is "Mobile for Qiita".
 - browse stock items, follow tags after login.
 - stock/unstock item after login.
 
-> TODO: app image.
+<img src="./assets/screenshot_01.png" width="239" height="397">
+<img src="./assets/screenshot_02.png" width="239" height="397">
 
 ## Google Play Store
 
