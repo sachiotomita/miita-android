@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -34,7 +35,7 @@ public class AllItemFragment extends Fragment
 
     public interface OnItemClickListener {
 
-        void onItemClick(AllItem item);
+        void onItemClick(AllItem item, ImageView userImageView);
 
         void onTagClick(ItemTag tag);
     }
@@ -147,8 +148,9 @@ public class AllItemFragment extends Fragment
 
         ListView listView = (ListView) parent;
         if (listView.getId() == R.id.listView) {
-            AllItem item = (AllItem) listView.getItemAtPosition(position);
-            this.listener.onItemClick(item);
+            final AllItem item = (AllItem) listView.getItemAtPosition(position);
+            final ImageView imageView = (ImageView)view.findViewById(R.id.item_list_image);
+            this.listener.onItemClick(item, imageView);
         }
     }
 

@@ -54,7 +54,8 @@
                     <ImageView
                         android:id="@+id/item_header_user_image"
                         android:layout_width="@dimen/item_header_user_image_width"
-                        android:layout_height="@dimen/item_header_user_image_height"/>
+                        android:layout_height="@dimen/item_header_user_image_height"
+                        android:transitionName="@string/transition_image_item_list_to_item"/>
 
                     <TextView
                         android:id="@+id/item_header_user_id"

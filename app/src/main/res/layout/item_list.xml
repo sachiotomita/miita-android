@@ -11,7 +11,8 @@
         android:id="@+id/item_list_image"
         android:layout_width="@dimen/image_height"
         android:layout_height="@dimen/image_width"
-        android:backgroundTint="@color/loadingImage"/>
+        android:backgroundTint="@color/loadingImage"
+        android:transitionName="@string/transition_image_item_list_to_item"/>
 
     <LinearLayout
         android:layout_width="match_parent"

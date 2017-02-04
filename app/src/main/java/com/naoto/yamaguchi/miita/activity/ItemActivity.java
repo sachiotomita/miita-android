@@ -90,7 +90,7 @@ public class ItemActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                supportFinishAfterTransition();
                 return true;
             case R.id.action_share:
                 ShareUtil.share(this, this.item);
@@ -143,6 +143,7 @@ public class ItemActivity extends AppCompatActivity
         this.titleTextView.setText(this.item.getTitle());
 
         this.userImageView = (ImageView) findViewById(R.id.item_header_user_image);
+        this.userImageView.setTransitionName(getString(R.string.transition_image_item_list_to_item));
         ImageFetcher.getInstance()
                 .setContext(this)
                 .fetch(this.item.getUser().getImageUrlString(), this.userImageView);

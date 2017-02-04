@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.naoto.yamaguchi.miita.Constants;
 import com.naoto.yamaguchi.miita.R;
@@ -237,11 +240,15 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(AllItem item) {
+    public void onItemClick(AllItem item, ImageView userImageView) {
         final Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
         final Item _item = ItemConverter.convert(item);
+        final ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(HomeActivity.this, userImageView,
+                        getString(R.string.transition_image_item_list_to_item));
+
         intent.putExtra(INTENT_ITEM_KEY, _item);
-        startActivity(intent);
+        startActivity(intent, optionsCompat.toBundle());
     }
 
     @Override
