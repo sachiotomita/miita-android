@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class AllItemFragment extends Fragment
 
     public interface OnItemClickListener {
 
-        void onItemClick(AllItem item, ImageView userImageView);
+        void onAllItemClick(AllItem item, Pair<View, String>... sharedElements);
 
         void onTagClick(ItemTag tag);
     }
@@ -150,7 +151,10 @@ public class AllItemFragment extends Fragment
         if (listView.getId() == R.id.listView) {
             final AllItem item = (AllItem) listView.getItemAtPosition(position);
             final ImageView imageView = (ImageView)view.findViewById(R.id.item_list_image);
-            this.listener.onItemClick(item, imageView);
+            final Pair<View, String> pair1 = new Pair<View, String>(imageView,
+                    getString(R.string.transition_image_item_list_to_item));
+
+            this.listener.onAllItemClick(item, pair1);
         }
     }
 
