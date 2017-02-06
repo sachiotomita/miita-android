@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
@@ -150,11 +151,21 @@ public class AllItemFragment extends Fragment
         ListView listView = (ListView) parent;
         if (listView.getId() == R.id.listView) {
             final AllItem item = (AllItem) listView.getItemAtPosition(position);
+            final TextView titleTextView = (TextView)view.findViewById(R.id.item_list_title_text);
             final ImageView imageView = (ImageView)view.findViewById(R.id.item_list_image);
-            final Pair<View, String> pair1 = new Pair<View, String>(imageView,
-                    getString(R.string.transition_image_item_list_to_item));
+            final TextView userIdTextView = (TextView)view.findViewById(R.id.item_list_user_id_text);
+            final TextView createdTextView = (TextView)view.findViewById(R.id.item_list_created_text);
 
-            this.listener.onAllItemClick(item, pair1);
+            final Pair<View, String> pair1 = new Pair<View, String>(titleTextView,
+                    getString(R.string.transition_title_item_list_to_item));
+            final Pair<View, String> pair2 = new Pair<View, String>(imageView,
+                    getString(R.string.transition_image_item_list_to_item));
+            final Pair<View, String> pair3 = new Pair<View, String>(userIdTextView,
+                    getString(R.string.transition_user_id_item_list_to_item));
+            final Pair<View, String> pair4 = new Pair<View, String>(createdTextView,
+                    getString(R.string.transition_created_item_list_to_item));
+
+            this.listener.onAllItemClick(item, pair1, pair2, pair3, pair4);
         }
     }
 

@@ -140,6 +140,7 @@ public class ItemActivity extends AppCompatActivity
         });
 
         this.titleTextView = (TextView) findViewById(R.id.item_header_title);
+        this.titleTextView.setTransitionName(getString(R.string.transition_title_item_list_to_item));
         this.titleTextView.setText(this.item.getTitle());
 
         this.userImageView = (ImageView) findViewById(R.id.item_header_user_image);
@@ -149,9 +150,11 @@ public class ItemActivity extends AppCompatActivity
                 .fetch(this.item.getUser().getImageUrlString(), this.userImageView);
 
         this.userIdTextView = (TextView) findViewById(R.id.item_header_user_id);
+        this.userIdTextView.setTransitionName(getString(R.string.transition_user_id_item_list_to_item));
         this.userIdTextView.setText(this.item.getUser().getId());
 
         this.createdTextView = (TextView) findViewById(R.id.item_header_created);
+        this.createdTextView.setTransitionName(getString(R.string.transition_created_item_list_to_item));
         final String desc = this.item.getCreatedAtString() + "に投稿しました";
         this.createdTextView.setText(desc);
 
