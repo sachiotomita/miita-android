@@ -40,6 +40,7 @@
 
     <!-- Activity Transition -->
     <string name="transition_image_item_list_to_item">image_item_list_to_item</string>
+    <string name="transition_title_item_list_to_item">title_item_list_to_item</string>
     
     <!-- Home / Item Activity Intent params -->
     <!-- TODO: item_id, item_title, etc,,, -->
