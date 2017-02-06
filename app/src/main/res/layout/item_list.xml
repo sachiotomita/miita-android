@@ -34,7 +34,7 @@
 
                 <TextView
                     android:id="@+id/item_list_user_id_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/item_list_user_id_text_size"
                     android:textColor="@color/item_list_user_id_text_color"
@@ -44,8 +44,9 @@
 
                 <TextView
                     android:id="@+id/item_list_created_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_list_created_margin_start"
                     android:textSize="@dimen/item_list_created_text_size"
                     android:textColor="@color/item_list_created_text_color"
                     android:minLines="1"
