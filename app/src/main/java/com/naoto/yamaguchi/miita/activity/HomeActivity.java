@@ -260,11 +260,14 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(StockItem item) {
+    public void onItemClick(StockItem item, Pair<View, String>... sharedElements) {
         final Intent intent = new Intent(HomeActivity.this, ItemActivity.class);
         final Item _item = ItemConverter.convert(item);
+        final ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(HomeActivity.this, sharedElements);
+
         intent.putExtra(INTENT_ITEM_KEY, _item);
-        startActivity(intent);
+        startActivity(intent, optionsCompat.toBundle());
     }
 
     @Override

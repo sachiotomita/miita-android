@@ -4,14 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
@@ -34,7 +37,7 @@ public class StockItemFragment extends Fragment
 
     public interface OnItemClickListener {
 
-        void onItemClick(StockItem item);
+        void onItemClick(StockItem item, Pair<View, String>... sharedElements);
 
         void onTagClickFromStockFragment(ItemTag itemTag);
     }
@@ -143,7 +146,21 @@ public class StockItemFragment extends Fragment
         ListView listView = (ListView) parent;
         if (listView.getId() == R.id.listView) {
             StockItem item = (StockItem) listView.getItemAtPosition(position);
-            this.listener.onItemClick(item);
+            final TextView titleTextView = (TextView)view.findViewById(R.id.item_list_title_text);
+            final ImageView imageView = (ImageView)view.findViewById(R.id.item_list_image);
+            final TextView userIdTextView = (TextView)view.findViewById(R.id.item_list_user_id_text);
+            final TextView createdTextView = (TextView)view.findViewById(R.id.item_list_created_text);
+
+            final Pair<View, String> pair1 = new Pair<View, String>(titleTextView,
+                    getString(R.string.transition_title_item_list_to_item));
+            final Pair<View, String> pair2 = new Pair<View, String>(imageView,
+                    getString(R.string.transition_image_item_list_to_item));
+            final Pair<View, String> pair3 = new Pair<View, String>(userIdTextView,
+                    getString(R.string.transition_user_id_item_list_to_item));
+            final Pair<View, String> pair4 = new Pair<View, String>(createdTextView,
+                    getString(R.string.transition_created_item_list_to_item));
+
+            this.listener.onItemClick(item, pair1, pair2, pair3, pair4);
         }
     }
 
