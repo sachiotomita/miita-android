@@ -11,7 +11,8 @@
         android:id="@+id/item_list_image"
         android:layout_width="@dimen/image_height"
         android:layout_height="@dimen/image_width"
-        android:backgroundTint="@color/loadingImage"/>
+        android:backgroundTint="@color/loadingImage"
+        android:transitionName="@string/transition_image_item_list_to_item"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,16 +25,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/item_list_user_id_text"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginBottom="@dimen/item_list_user_id_margin_bottom"
-                android:textSize="@dimen/item_list_user_id_text_size"
-                android:textColor="@color/item_list_user_id_text_color"
-                android:minLines="1"
-                android:maxLines="2"/>
+                android:layout_marginBottom="@dimen/item_list_user_margin_bottom">
+
+                <TextView
+                    android:id="@+id/item_list_user_id_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/item_list_user_id_text_size"
+                    android:textColor="@color/item_list_user_id_text_color"
+                    android:textStyle="bold"
+                    android:minLines="1"
+                    android:maxLines="1"
+                    android:transitionName="@string/transition_user_id_item_list_to_item"/>
+
+                <TextView
+                    android:id="@+id/item_list_created_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_list_created_margin_start"
+                    android:textSize="@dimen/item_list_created_text_size"
+                    android:textColor="@color/item_list_created_text_color"
+                    android:minLines="1"
+                    android:maxLines="1"
+                    android:transitionName="@string/transition_created_item_list_to_item"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/item_list_title_text"
@@ -45,7 +66,8 @@
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:minLines="2"
-                android:maxLines="4"/>
+                android:maxLines="4"
+                android:transitionName="@string/transition_title_item_list_to_item"/>
 
             <com.google.android.flexbox.FlexboxLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"

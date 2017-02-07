@@ -44,6 +44,7 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
     public View getView(int position, View convertView, ViewGroup parent) {
         class ViewHolder {
             private TextView userIdTextView;
+            private TextView createdTextView;
             private TextView titleTextView;
             private FlexboxLayout tagFlexbox;
             private ImageView imageView;
@@ -55,6 +56,7 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
             convertView = this.inflater.inflate(R.layout.item_list, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.userIdTextView = (TextView) convertView.findViewById(R.id.item_list_user_id_text);
+            viewHolder.createdTextView = (TextView) convertView.findViewById(R.id.item_list_created_text);
             viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.item_list_title_text);
             viewHolder.tagFlexbox = (FlexboxLayout) convertView.findViewById(R.id.item_list_tag_flexbox);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.item_list_image);
@@ -65,11 +67,13 @@ public final class ItemListAdapter<T extends BaseItem> extends ArrayAdapter<T> {
 
         final T item = this.getItem(position);
         if (item != null) {
-            String userId = item.getUser().getId() + "が" + item.getCreatedAtString() + "に投稿しました";
-            String title = item.getTitle();
-            String imageUrl = item.getUser().getImageUrlString();
+            final String userId = item.getUser().getId();
+            final String created = item.getCreatedAtString() + "に投稿しました";
+            final String title = item.getTitle();
+            final String imageUrl = item.getUser().getImageUrlString();
 
             viewHolder.userIdTextView.setText(userId);
+            viewHolder.createdTextView.setText(created);
             viewHolder.titleTextView.setText(title);
 
             viewHolder.tagFlexbox.removeAllViews();

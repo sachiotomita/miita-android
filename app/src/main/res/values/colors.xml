@@ -12,6 +12,7 @@
 
     <!-- Item List Row -->
     <color name="item_list_user_id_text_color">#000000</color>
+    <color name="item_list_created_text_color">#000000</color>
     <color name="item_list_tag_text_color">#555</color>
     <color name="item_list_tag_background_color">#fff</color>
     <color name="item_list_tag_border_color">#555</color>

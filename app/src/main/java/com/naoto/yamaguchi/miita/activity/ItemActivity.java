@@ -60,7 +60,7 @@ public class ItemActivity extends AppCompatActivity
     private View userView;
     private ImageView userImageView;
     private TextView userIdTextView;
-    private TextView descTextView;
+    private TextView createdTextView;
 
     // FIXME: model -> presenter or viewModel
     private ItemModel model;
@@ -90,7 +90,7 @@ public class ItemActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                supportFinishAfterTransition();
                 return true;
             case R.id.action_share:
                 ShareUtil.share(this, this.item);
@@ -140,22 +140,23 @@ public class ItemActivity extends AppCompatActivity
         });
 
         this.titleTextView = (TextView) findViewById(R.id.item_header_title);
+        this.titleTextView.setTransitionName(getString(R.string.transition_title_item_list_to_item));
         this.titleTextView.setText(this.item.getTitle());
 
         this.userImageView = (ImageView) findViewById(R.id.item_header_user_image);
+        this.userImageView.setTransitionName(getString(R.string.transition_image_item_list_to_item));
         ImageFetcher.getInstance()
                 .setContext(this)
                 .fetch(this.item.getUser().getImageUrlString(), this.userImageView);
 
         this.userIdTextView = (TextView) findViewById(R.id.item_header_user_id);
+        this.userIdTextView.setTransitionName(getString(R.string.transition_user_id_item_list_to_item));
         this.userIdTextView.setText(this.item.getUser().getId());
 
-        this.descTextView = (TextView) findViewById(R.id.item_header_desc);
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(this.item.getCreatedAt());
-        final String desc = this.item.getUser().getId() + "が" + calendar.get(Calendar.YEAR) + "年"
-                + calendar.get(Calendar.MONTH) + "月" + calendar.get(Calendar.DAY_OF_MONTH) + "日に投稿しました";
-        this.descTextView.setText(desc);
+        this.createdTextView = (TextView) findViewById(R.id.item_header_created);
+        this.createdTextView.setTransitionName(getString(R.string.transition_created_item_list_to_item));
+        final String desc = this.item.getCreatedAtString() + "に投稿しました";
+        this.createdTextView.setText(desc);
 
         this.spinner = (ProgressBar) findViewById(R.id.progress_bar);
         this.spinner.setVisibility(View.VISIBLE);
