@@ -2,11 +2,14 @@ package com.naoto.yamaguchi.miita.activity;
 
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.Item;
@@ -110,10 +113,13 @@ public class TagItemActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(Item item) {
+    public void onItemClick(Item item, Pair<View, String>... sharedElements) {
         final Intent intent = new Intent(TagItemActivity.this, ItemActivity.class);
+        final ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(TagItemActivity.this, sharedElements);
+
         intent.putExtra(INTENT_ITEM_KEY, item);
-        startActivity(intent);
+        startActivity(intent, optionsCompat.toBundle());
     }
 
     @Override

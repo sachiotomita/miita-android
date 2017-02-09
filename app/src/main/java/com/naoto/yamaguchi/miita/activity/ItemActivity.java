@@ -10,22 +10,27 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.analytics.Analytics;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
+import com.naoto.yamaguchi.miita.util.logger.Logger;
+import com.naoto.yamaguchi.miita.util.share.ShareUtil;
 
 import java.util.Calendar;
 
@@ -52,7 +57,10 @@ public class ItemActivity extends AppCompatActivity
     private CurrentUser currentUser;
 
     private TextView titleTextView;
-    private TextView descTextView;
+    private View userView;
+    private ImageView userImageView;
+    private TextView userIdTextView;
+    private TextView createdTextView;
 
     // FIXME: model -> presenter or viewModel
     private ItemModel model;
@@ -70,6 +78,26 @@ public class ItemActivity extends AppCompatActivity
         this.setLayout();
         this.checkStock();
         this.loadBody();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+            case R.id.action_share:
+                ShareUtil.share(this, this.item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void init() {
@@ -103,15 +131,32 @@ public class ItemActivity extends AppCompatActivity
                 ColorStateList.valueOf(getResources().getColor(R.color.defaultButton))
         );
 
+        this.userView = findViewById(R.id.item_header_user_view);
+        this.userView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: transition user activity
+            }
+        });
+
         this.titleTextView = (TextView) findViewById(R.id.item_header_title);
+        this.titleTextView.setTransitionName(getString(R.string.transition_title_item_list_to_item));
         this.titleTextView.setText(this.item.getTitle());
 
-        this.descTextView = (TextView) findViewById(R.id.item_header_desc);
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(this.item.getCreatedAt());
-        final String desc = this.item.getUser().getId() + "が" + calendar.get(Calendar.YEAR) + "年"
-                + calendar.get(Calendar.MONTH) + "月" + calendar.get(Calendar.DAY_OF_MONTH) + "日に投稿しました";
-        this.descTextView.setText(desc);
+        this.userImageView = (ImageView) findViewById(R.id.item_header_user_image);
+        this.userImageView.setTransitionName(getString(R.string.transition_image_item_list_to_item));
+        ImageFetcher.getInstance()
+                .setContext(this)
+                .fetch(this.item.getUser().getImageUrlString(), this.userImageView);
+
+        this.userIdTextView = (TextView) findViewById(R.id.item_header_user_id);
+        this.userIdTextView.setTransitionName(getString(R.string.transition_user_id_item_list_to_item));
+        this.userIdTextView.setText(this.item.getUser().getId());
+
+        this.createdTextView = (TextView) findViewById(R.id.item_header_created);
+        this.createdTextView.setTransitionName(getString(R.string.transition_created_item_list_to_item));
+        final String desc = this.item.getCreatedAtString() + "に投稿しました";
+        this.createdTextView.setText(desc);
 
         this.spinner = (ProgressBar) findViewById(R.id.progress_bar);
         this.spinner.setVisibility(View.VISIBLE);
@@ -252,17 +297,6 @@ public class ItemActivity extends AppCompatActivity
                     stockButton.setEnabled(true);
                 }
             });
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
