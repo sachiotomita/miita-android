@@ -8,7 +8,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Response;
 import com.naoto.yamaguchi.miita.dao.DaoFactory;
 import com.naoto.yamaguchi.miita.dao.StockItemDao;
-import com.naoto.yamaguchi.miita.entity.StockItem;
+import com.naoto.yamaguchi.miita.entity.api.StockItem;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.service.StockItemService;

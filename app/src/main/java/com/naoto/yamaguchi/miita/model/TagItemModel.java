@@ -6,7 +6,7 @@ import com.naoto.yamaguchi.miita.api.API;
 import com.naoto.yamaguchi.miita.api.Callback;
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Response;
-import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.ui.Item;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.service.TagItemService;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;

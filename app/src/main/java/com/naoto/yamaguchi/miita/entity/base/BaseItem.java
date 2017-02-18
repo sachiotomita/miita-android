@@ -1,7 +1,7 @@
 package com.naoto.yamaguchi.miita.entity.base;
 
-import com.naoto.yamaguchi.miita.entity.ItemTag;
-import com.naoto.yamaguchi.miita.entity.User;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
+import com.naoto.yamaguchi.miita.entity.api.User;
 
 import java.util.Date;
 import java.util.List;

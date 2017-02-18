@@ -3,7 +3,7 @@ package com.naoto.yamaguchi.miita.presenter;
 import android.content.Context;
 import android.content.Intent;
 
-import com.naoto.yamaguchi.miita.entity.User;
+import com.naoto.yamaguchi.miita.entity.api.User;
 import com.naoto.yamaguchi.miita.model.CurrentUserModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;

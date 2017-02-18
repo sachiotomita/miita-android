@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.presenter;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.entity.FollowTag;
+import com.naoto.yamaguchi.miita.entity.api.FollowTag;
 import com.naoto.yamaguchi.miita.model.FollowTagModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.model.base.RequestType;

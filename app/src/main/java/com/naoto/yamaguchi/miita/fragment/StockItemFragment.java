@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.adapter.ItemListAdapter;
-import com.naoto.yamaguchi.miita.entity.ItemTag;
-import com.naoto.yamaguchi.miita.entity.StockItem;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
+import com.naoto.yamaguchi.miita.entity.api.StockItem;
 import com.naoto.yamaguchi.miita.presenter.StockItemPresenter;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;

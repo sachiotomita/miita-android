@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.presenter;
 
 import android.content.Context;
 
-import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.ui.Item;
 import com.naoto.yamaguchi.miita.model.ModelFactory;
 import com.naoto.yamaguchi.miita.model.TagItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;

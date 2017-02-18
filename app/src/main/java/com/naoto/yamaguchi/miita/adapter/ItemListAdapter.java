@@ -1,7 +1,6 @@
 package com.naoto.yamaguchi.miita.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,12 @@ import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.entity.ItemTag;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
-import com.naoto.yamaguchi.miita.task.DownloadImageTask;
 import com.naoto.yamaguchi.miita.view.tagview.MiitaTagView;
 import com.naoto.yamaguchi.miita.view.tagview.TagClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

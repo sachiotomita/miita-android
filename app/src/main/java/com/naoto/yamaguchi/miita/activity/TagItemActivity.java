@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.entity.Item;
-import com.naoto.yamaguchi.miita.entity.ItemTag;
-import com.naoto.yamaguchi.miita.entity.Tag;
+import com.naoto.yamaguchi.miita.entity.ui.Item;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
+import com.naoto.yamaguchi.miita.entity.ui.Tag;
 import com.naoto.yamaguchi.miita.fragment.TagItemFragment;
 import com.naoto.yamaguchi.miita.util.fragment.FragmentRouter;
 

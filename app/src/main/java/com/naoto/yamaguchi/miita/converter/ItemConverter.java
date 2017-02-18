@@ -1,6 +1,6 @@
 package com.naoto.yamaguchi.miita.converter;
 
-import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.ui.Item;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
 /**

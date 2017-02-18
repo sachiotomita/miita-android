@@ -2,8 +2,8 @@ package com.naoto.yamaguchi.miita.mapper;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.naoto.yamaguchi.miita.entity.AllItem;
-import com.naoto.yamaguchi.miita.entity.ItemTag;
+import com.naoto.yamaguchi.miita.entity.api.AllItem;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 import com.naoto.yamaguchi.miita.helper.JSONHelper;
 
 import org.junit.After;

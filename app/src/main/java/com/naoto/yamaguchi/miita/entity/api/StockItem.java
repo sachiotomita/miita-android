@@ -1,10 +1,11 @@
-package com.naoto.yamaguchi.miita.entity;
+package com.naoto.yamaguchi.miita.entity.api;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 
 import java.util.ArrayList;
 import java.util.Arrays;

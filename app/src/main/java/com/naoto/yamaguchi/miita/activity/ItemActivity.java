@@ -22,17 +22,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.naoto.yamaguchi.miita.R;
-import com.naoto.yamaguchi.miita.entity.Item;
+import com.naoto.yamaguchi.miita.entity.ui.Item;
 import com.naoto.yamaguchi.miita.imagefetcher.ImageFetcher;
 import com.naoto.yamaguchi.miita.model.ItemModel;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.oauth.CurrentUser;
 import com.naoto.yamaguchi.miita.util.analytics.Analytics;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
-import com.naoto.yamaguchi.miita.util.logger.Logger;
 import com.naoto.yamaguchi.miita.util.share.ShareUtil;
-
-import java.util.Calendar;
 
 /**
  * TODO

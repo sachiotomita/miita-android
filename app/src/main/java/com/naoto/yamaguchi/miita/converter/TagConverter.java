@@ -1,6 +1,6 @@
 package com.naoto.yamaguchi.miita.converter;
 
-import com.naoto.yamaguchi.miita.entity.Tag;
+import com.naoto.yamaguchi.miita.entity.ui.Tag;
 import com.naoto.yamaguchi.miita.entity.base.BaseTag;
 
 /**

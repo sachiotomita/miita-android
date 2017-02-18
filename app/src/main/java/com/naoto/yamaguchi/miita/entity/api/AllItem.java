@@ -1,9 +1,10 @@
-package com.naoto.yamaguchi.miita.entity;
+package com.naoto.yamaguchi.miita.entity.api;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
 
 import java.util.ArrayList;
@@ -12,13 +13,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * General Item Entity.
- * <p>
- * Created by naoto on 16/07/17.
- */
-public class Item implements BaseItem, Parcelable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+/**
+ * All Item Entity.
+ * Realm Table
+ * - id
+ * - title
+ * - body
+ * - url string
+ * - createdAt
+ * - tagsString
+ * - User
+ * <p>
+ * Created by naoto on 16/06/25.
+ */
+public class AllItem extends RealmObject implements BaseItem, Parcelable {
+
+    @PrimaryKey
     private String id;
     private String title;
     private String body;
@@ -27,7 +40,7 @@ public class Item implements BaseItem, Parcelable {
     private String tagsString;
     private User user;
 
-    public Item() {
+    public AllItem() {
     }
 
     @Override
@@ -138,19 +151,19 @@ public class Item implements BaseItem, Parcelable {
         parcel.writeParcelable(this.user, i);
     }
 
-    public static final Parcelable.Creator<Item> CREATOR = new Creator<Item>() {
+    public static final Parcelable.Creator<AllItem> CREATOR = new Creator<AllItem>() {
         @Override
-        public Item createFromParcel(Parcel parcel) {
-            return new Item(parcel);
+        public AllItem createFromParcel(Parcel parcel) {
+            return new AllItem(parcel);
         }
 
         @Override
-        public Item[] newArray(int i) {
-            return new Item[i];
+        public AllItem[] newArray(int i) {
+            return new AllItem[i];
         }
     };
 
-    private Item(Parcel in) {
+    private AllItem(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
         this.body = in.readString();

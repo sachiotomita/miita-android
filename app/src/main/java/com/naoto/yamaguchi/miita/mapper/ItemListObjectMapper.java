@@ -1,8 +1,8 @@
 package com.naoto.yamaguchi.miita.mapper;
 
-import com.naoto.yamaguchi.miita.entity.ItemTag;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 import com.naoto.yamaguchi.miita.entity.base.BaseItem;
-import com.naoto.yamaguchi.miita.entity.User;
+import com.naoto.yamaguchi.miita.entity.api.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

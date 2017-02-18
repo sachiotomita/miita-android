@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.entity;
+package com.naoto.yamaguchi.miita.entity.api;
 
 import android.os.Parcel;
 import android.os.Parcelable;

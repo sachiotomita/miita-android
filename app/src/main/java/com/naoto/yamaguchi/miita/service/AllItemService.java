@@ -3,7 +3,7 @@ package com.naoto.yamaguchi.miita.service;
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
-import com.naoto.yamaguchi.miita.entity.AllItem;
+import com.naoto.yamaguchi.miita.entity.api.AllItem;
 import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 

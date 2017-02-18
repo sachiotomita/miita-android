@@ -1,6 +1,6 @@
 package com.naoto.yamaguchi.miita.view.tagview;
 
-import com.naoto.yamaguchi.miita.entity.ItemTag;
+import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 
 /**
  * Tag View Click Event.

@@ -8,7 +8,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Response;
 import com.naoto.yamaguchi.miita.dao.AllItemDao;
 import com.naoto.yamaguchi.miita.dao.DaoFactory;
-import com.naoto.yamaguchi.miita.entity.AllItem;
+import com.naoto.yamaguchi.miita.entity.api.AllItem;
 import com.naoto.yamaguchi.miita.model.base.OnModelListener;
 import com.naoto.yamaguchi.miita.service.AllItemService;
 import com.naoto.yamaguchi.miita.model.base.RequestType;

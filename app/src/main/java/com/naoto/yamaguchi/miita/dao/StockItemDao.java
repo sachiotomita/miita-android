@@ -1,7 +1,7 @@
 package com.naoto.yamaguchi.miita.dao;
 
 import com.naoto.yamaguchi.miita.dao.base.BaseDao;
-import com.naoto.yamaguchi.miita.entity.StockItem;
+import com.naoto.yamaguchi.miita.entity.api.StockItem;
 
 /**
  * Created by naoto on 16/06/30.

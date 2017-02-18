@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import com.naoto.yamaguchi.miita.R;
 import com.naoto.yamaguchi.miita.adapter.TagListAdapter;
-import com.naoto.yamaguchi.miita.entity.FollowTag;
+import com.naoto.yamaguchi.miita.entity.api.FollowTag;
 import com.naoto.yamaguchi.miita.presenter.FollowTagPresenter;
 import com.naoto.yamaguchi.miita.util.exception.MiitaException;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
