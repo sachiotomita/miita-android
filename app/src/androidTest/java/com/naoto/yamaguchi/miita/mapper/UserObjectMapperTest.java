@@ -2,6 +2,7 @@ package com.naoto.yamaguchi.miita.mapper;
 
 import com.naoto.yamaguchi.miita.entity.api.User;
 import com.naoto.yamaguchi.miita.helper.JSONHelper;
+import com.naoto.yamaguchi.miita.parser.UserObjectMapper;
 
 import org.junit.After;
 import org.junit.Before;

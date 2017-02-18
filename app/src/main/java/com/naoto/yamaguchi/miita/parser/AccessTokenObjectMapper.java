@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.mapper;
+package com.naoto.yamaguchi.miita.parser;
 
 import org.json.JSONException;
 import org.json.JSONObject;

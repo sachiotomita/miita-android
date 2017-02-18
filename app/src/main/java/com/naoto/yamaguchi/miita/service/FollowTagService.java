@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.api.FollowTag;
-import com.naoto.yamaguchi.miita.mapper.TagListObjectMapper;
+import com.naoto.yamaguchi.miita.parser.TagListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;

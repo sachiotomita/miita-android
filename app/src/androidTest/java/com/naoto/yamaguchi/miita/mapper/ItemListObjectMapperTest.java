@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.naoto.yamaguchi.miita.entity.api.AllItem;
 import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 import com.naoto.yamaguchi.miita.helper.JSONHelper;
+import com.naoto.yamaguchi.miita.parser.ItemListObjectMapper;
 
 import org.junit.After;
 import org.junit.Before;

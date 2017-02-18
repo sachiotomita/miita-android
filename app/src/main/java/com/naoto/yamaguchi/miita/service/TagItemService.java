@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.ui.Item;
-import com.naoto.yamaguchi.miita.mapper.ItemListObjectMapper;
+import com.naoto.yamaguchi.miita.parser.ItemListObjectMapper;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;

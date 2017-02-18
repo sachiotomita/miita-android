@@ -1,4 +1,4 @@
-package com.naoto.yamaguchi.miita.mapper;
+package com.naoto.yamaguchi.miita.parser;
 
 import com.naoto.yamaguchi.miita.entity.api.User;
 
