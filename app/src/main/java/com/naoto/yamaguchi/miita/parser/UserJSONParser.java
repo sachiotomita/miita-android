@@ -10,7 +10,7 @@ import org.json.JSONObject;
  * <p>
  * Created by naoto on 16/06/29.
  */
-public final class UserObjectMapper {
+public final class UserJSONParser {
 
     private static final String ID_KEY = "id";
     private static final String NAME_KEY = "name";
@@ -19,45 +19,43 @@ public final class UserObjectMapper {
     private static final String FOLLOWEES_COUNT_KEY = "followees_count";
     private static final String FOLLOWERS_COUNT_KEY = "followers_count";
 
-    public static User map(JSONObject json) throws JSONException {
+    public static User parse(JSONObject json) throws JSONException {
         try {
-            User user = parse(json);
-            return user;
+            return p_parse(json);
         } catch (JSONException e) {
             throw e;
         }
     }
 
-    public static User map(String jsonString) throws JSONException {
+    public static User parse(String jsonString) throws JSONException {
         try {
-            JSONObject json = new JSONObject(jsonString);
-            User user = parse(json);
-            return user;
+            final JSONObject json = new JSONObject(jsonString);
+            return p_parse(json);
         } catch (JSONException e) {
             throw e;
         }
     }
 
-    private static User parse(JSONObject json) throws JSONException {
+    private static User p_parse(JSONObject json) throws JSONException {
         try {
-            User user = new User();
+            final User user = new User();
 
-            String id = json.getString(ID_KEY);
+            final String id = json.getString(ID_KEY);
             user.setId(id);
 
-            String name = json.getString(NAME_KEY);
+            final String name = json.getString(NAME_KEY);
             user.setName(name);
 
-            String description = json.getString(DESCRIPTION_KEY);
+            final String description = json.getString(DESCRIPTION_KEY);
             user.setDescription(description);
 
-            String imageUrlString = json.getString(IMAGE_KEY);
+            final String imageUrlString = json.getString(IMAGE_KEY);
             user.setImageUrlString(imageUrlString);
 
-            int followeesCount = json.getInt(FOLLOWEES_COUNT_KEY);
+            final int followeesCount = json.getInt(FOLLOWEES_COUNT_KEY);
             user.setFolloweesCount(followeesCount);
 
-            int followersCount = json.getInt(FOLLOWERS_COUNT_KEY);
+            final int followersCount = json.getInt(FOLLOWERS_COUNT_KEY);
             user.setFollowersCount(followersCount);
 
             return user;

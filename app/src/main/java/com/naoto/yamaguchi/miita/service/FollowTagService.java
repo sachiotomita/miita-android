@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.api.FollowTag;
-import com.naoto.yamaguchi.miita.parser.TagListObjectMapper;
+import com.naoto.yamaguchi.miita.parser.TagListJSONParser;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;
@@ -61,7 +61,7 @@ public final class FollowTagService implements RequestType<List<FollowTag>> {
     @Override
     public List<FollowTag> processResponse(String response) throws HttpException {
         try {
-            return TagListObjectMapper.map(FollowTag.class, response);
+            return TagListJSONParser.parse(FollowTag.class, response);
         } catch (JSONException | IllegalAccessException | InstantiationException e) {
             return null;
         }

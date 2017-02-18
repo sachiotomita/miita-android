@@ -2,7 +2,7 @@ package com.naoto.yamaguchi.miita.mapper;
 
 import com.naoto.yamaguchi.miita.entity.api.User;
 import com.naoto.yamaguchi.miita.helper.JSONHelper;
-import com.naoto.yamaguchi.miita.parser.UserObjectMapper;
+import com.naoto.yamaguchi.miita.parser.UserJSONParser;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,11 +11,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Unit Test {@link UserObjectMapper}
+ * Unit Test {@link UserJSONParser}
  *
  * Created by naoto on 2017/01/22.
  */
-public class UserObjectMapperTest {
+public class UserJSONParserTest {
     @Before
     public void setUp() throws Exception {
         // NOOP
@@ -30,7 +30,7 @@ public class UserObjectMapperTest {
     public void map() throws Exception {
         final String jsonString = JSONHelper.getInstance()
                 .getJSONString("user_response.json");
-        final User user = UserObjectMapper.map(jsonString);
+        final User user = UserJSONParser.map(jsonString);
 
         assertNotNull(user);
 

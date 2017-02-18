@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.ui.Item;
-import com.naoto.yamaguchi.miita.parser.ItemListObjectMapper;
+import com.naoto.yamaguchi.miita.parser.ItemListJSONParser;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;
@@ -62,7 +62,7 @@ public final class TagItemService implements RequestType<List<Item>> {
     @Override
     public List<Item> processResponse(String response) throws HttpException {
         try {
-            return ItemListObjectMapper.map(response, Item.class);
+            return ItemListJSONParser.parse(response, Item.class);
         } catch (JSONException | IllegalAccessException | InstantiationException |
                 ParseException e) {
             return null;

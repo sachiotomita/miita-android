@@ -20,7 +20,7 @@ import java.util.Locale;
  * <p>
  * Created by naoto on 16/06/25.
  */
-public final class ItemListObjectMapper {
+public final class ItemListJSONParser {
 
     private static final String ID_KEY = "id";
     private static final String TITLE_KEY = "title";
@@ -31,7 +31,7 @@ public final class ItemListObjectMapper {
     private static final String USER_KEY = "user";
 
     /**
-     * usage: ItemListObjectMapper.map(jsonArray, AllItem.class);
+     * usage: ItemListJSONParser.map(jsonArray, AllItem.class);
      *
      * @param jsonString
      * @param aClass
@@ -40,44 +40,44 @@ public final class ItemListObjectMapper {
      * @throws JSONException, IllegalAccessException, InstantiationException
      */
     // TODO: 引数の順番入れ替える
-    public static <T extends BaseItem> List<T> map(String jsonString, Class<T> aClass)
+    public static <T extends BaseItem> List<T> parse(String jsonString, Class<T> aClass)
             throws JSONException, IllegalAccessException, InstantiationException,
             ParseException {
         try {
-            List<T> itemList = new ArrayList<>();
-            JSONArray jsonArray = new JSONArray(jsonString);
+            final List<T> itemList = new ArrayList<>();
+            final JSONArray jsonArray = new JSONArray(jsonString);
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                T item = aClass.newInstance();
-                JSONObject itemJson = jsonArray.getJSONObject(i);
+                final T item = aClass.newInstance();
+                final JSONObject itemJson = jsonArray.getJSONObject(i);
 
-                String id = itemJson.getString(ID_KEY);
+                final String id = itemJson.getString(ID_KEY);
                 item.setId(id);
 
-                String title = itemJson.getString(TITLE_KEY);
+                final String title = itemJson.getString(TITLE_KEY);
                 item.setTitle(title);
 
-                String body = itemJson.getString(BODY_KEY);
+                final String body = itemJson.getString(BODY_KEY);
                 item.setBody(body);
 
-                String urlString = itemJson.getString(URL_KEY);
+                final String urlString = itemJson.getString(URL_KEY);
                 item.setUrlString(urlString);
 
                 // TODO: check format
                 // http://d.hatena.ne.jp/drambuie/20110219/p1
                 // - yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-                String createdAtString = itemJson.getString(CREATED_AT_KEY);
-                SimpleDateFormat df =
+                final String createdAtString = itemJson.getString(CREATED_AT_KEY);
+                final SimpleDateFormat df =
                         new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.JAPAN);
-                Date createdAt = df.parse(createdAtString);
+                final Date createdAt = df.parse(createdAtString);
                 item.setCreatedAt(createdAt);
 
-                JSONArray tagsArray = itemJson.getJSONArray(TAG_KEY);
-                List<ItemTag> tags = ItemTagListObjectMapper.map(ItemTag.class, tagsArray);
+                final JSONArray tagsArray = itemJson.getJSONArray(TAG_KEY);
+                final List<ItemTag> tags = ItemTagListJSONParser.parse(ItemTag.class, tagsArray);
                 item.setTags(tags);
 
-                JSONObject userJson = itemJson.getJSONObject(USER_KEY);
-                User user = UserObjectMapper.map(userJson);
+                final JSONObject userJson = itemJson.getJSONObject(USER_KEY);
+                final User user = UserJSONParser.parse(userJson);
                 item.setUser(user);
 
                 itemList.add(item);

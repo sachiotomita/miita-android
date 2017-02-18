@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.api.AllItem;
-import com.naoto.yamaguchi.miita.parser.ItemListObjectMapper;
+import com.naoto.yamaguchi.miita.parser.ItemListJSONParser;
 import com.naoto.yamaguchi.miita.util.preference.PerPage;
 
 import org.json.JSONException;
@@ -56,7 +56,7 @@ public final class AllItemService implements RequestType<List<AllItem>> {
     @Override
     public List<AllItem> processResponse(String response) throws HttpException {
         try {
-            return ItemListObjectMapper.map(response, AllItem.class);
+            return ItemListJSONParser.parse(response, AllItem.class);
         } catch (JSONException | IllegalAccessException | InstantiationException |
                 ParseException e) {
             return null;

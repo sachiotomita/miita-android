@@ -5,7 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.naoto.yamaguchi.miita.entity.api.AllItem;
 import com.naoto.yamaguchi.miita.entity.ui.ItemTag;
 import com.naoto.yamaguchi.miita.helper.JSONHelper;
-import com.naoto.yamaguchi.miita.parser.ItemListObjectMapper;
+import com.naoto.yamaguchi.miita.parser.ItemListJSONParser;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,12 +17,12 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Unit Test {@link ItemListObjectMapper}
+ * Unit Test {@link ItemListJSONParser}
  *
  * Created by naoto on 2016/12/31.
  */
 @RunWith(AndroidJUnit4.class)
-public class ItemListObjectMapperTest {
+public class ItemListJSONParserTest {
     @Before
     public void setUp() throws Exception {
         // NOOP
@@ -37,7 +37,7 @@ public class ItemListObjectMapperTest {
     public void map() throws Exception {
         final String jsonString = JSONHelper.getInstance()
                 .getJSONString("all_item_response.json");
-        final List<AllItem> items = ItemListObjectMapper.map(jsonString, AllItem.class);
+        final List<AllItem> items = ItemListJSONParser.map(jsonString, AllItem.class);
         assertNotNull(items);
         assertEquals(1, items.size());
 

@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
 import com.naoto.yamaguchi.miita.entity.api.User;
-import com.naoto.yamaguchi.miita.parser.UserObjectMapper;
+import com.naoto.yamaguchi.miita.parser.UserJSONParser;
 
 import org.json.JSONException;
 
@@ -38,7 +38,7 @@ public class AuthUserService implements RequestType<User> {
     @Override
     public User processResponse(String response) throws HttpException {
         try {
-            return UserObjectMapper.map(response);
+            return UserJSONParser.parse(response);
         } catch (JSONException e) {
             return null;
         }

@@ -4,7 +4,7 @@ import com.naoto.yamaguchi.miita.Constants;
 import com.naoto.yamaguchi.miita.api.HttpException;
 import com.naoto.yamaguchi.miita.api.Method;
 import com.naoto.yamaguchi.miita.api.RequestType;
-import com.naoto.yamaguchi.miita.parser.AccessTokenObjectMapper;
+import com.naoto.yamaguchi.miita.parser.AccessTokenJSONParser;
 
 import org.json.JSONException;
 
@@ -52,7 +52,7 @@ public final class AuthorizeService implements RequestType<String> {
     @Override
     public String processResponse(String response) throws HttpException {
         try {
-            return AccessTokenObjectMapper.map(response);
+            return AccessTokenJSONParser.parse(response);
         } catch (JSONException e) {
             return null;
         }

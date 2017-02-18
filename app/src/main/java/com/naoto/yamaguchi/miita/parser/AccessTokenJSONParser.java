@@ -8,13 +8,13 @@ import org.json.JSONObject;
  * <p>
  * Created by naoto on 16/06/30.
  */
-public final class AccessTokenObjectMapper {
+public final class AccessTokenJSONParser {
     private static final String TOKEN_KEY = "token";
 
-    public static String map(String jsonString) throws JSONException {
+    public static String parse(String jsonString) throws JSONException {
         try {
-            JSONObject json = new JSONObject(jsonString);
-            String token = json.getString(TOKEN_KEY);
+            final JSONObject json = new JSONObject(jsonString);
+            final String token = json.getString(TOKEN_KEY);
             return token;
         } catch (JSONException e) {
             throw e;
